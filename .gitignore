@@ -12,6 +12,13 @@ runs/
 # Lithuanian maturities); rebuilt automatically.
 cache/
 
+# Experimental model outputs (rebuilt by model_testing/breaks.py).
+model_testing/output/
+
+# Local notes and helpers for AI assistants; not part of the project.
+CLAUDE.md
+local/
+
 # Editor / OS
 .vscode/
 .idea/

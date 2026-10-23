@@ -860,3 +860,52 @@ Charts for any measure a country doesn't publish are skipped automatically.
   or zero-coupon curves vs one specific bond's clearing or average yield), so a
   few basis points between line and dot is normal. The UK gap is a little
   larger because the DMO's file gives only each gilt's maturity year.
+
+## Experimental
+
+Work in progress, kept in [`model_testing/`](model_testing/) and separate
+from the main pipeline: it only reads the CSVs in `results/` and nothing else
+depends on it.
+
+### Break detection (ruptures)
+
+[`model_testing/breaks.py`](model_testing/breaks.py) uses
+[ruptures](https://centre-borelli.github.io/ruptures-docs/) to find **break
+dates**: months where a country's auction yields (or bid-to-cover) shifted to
+a new level. Each break is matched against a list of known events in
+[`model_testing/events.csv`](model_testing/events.csv) (2008 crisis, euro
+crisis, ECB negative rates, Brexit, COVID, Ukraine invasion, 2022 rate hikes,
+UK mini-budget, Bank of Japan policy changes), each tagged with the countries
+it should affect.
+
+```bash
+pip install -r model_testing/requirements.txt
+python model_testing/breaks.py                         # auction yields, 2-10Y bucket
+python model_testing/breaks.py --measure bid_to_cover
+python model_testing/breaks.py --bucket Long --penalty 1
+```
+
+`--penalty` sets the sensitivity: higher means fewer, bigger breaks. Output
+(gitignored) goes to `model_testing/output/`: every break with its nearest
+event, a per-event hit rate, and a chart per country.
+
+First results (auction yields, 2–10 year bucket, penalty 2, ±6 months):
+
+| | |
+|---|---|
+| Breaks found | 50, in 22 countries |
+| Breaks near a known event | 74% |
+| Events found (country by country) | 47%, vs 18% for a random date |
+
+- **Found well:** the 2022 rate-hiking cycle (18 of 19 countries), the
+  Ukraine invasion (15 of 18), the ECB's 2012 "whatever it takes" and 2014
+  negative rates (4 of 7 euro countries each), Brexit, the UK mini-budget and
+  the Bank of Japan's 2024 exit.
+- **Not found:** the 2010 Greek bailout and COVID. Yields didn't settle at a
+  new level then (COVID was a short spike in already-low yields), so a
+  level-shift model doesn't flag them.
+- **Bid-to-cover:** no link to these events (1% found vs 2% by chance), so
+  demand breaks have other causes.
+- **Breaks with no listed event** are the interesting leads: Norway
+  October 2014 (around the oil-price collapse), Japan and Hungary
+  September 2014, Switzerland September 2024 and others in `breaks.csv`.
