@@ -885,9 +885,10 @@ python model_testing/breaks.py --measure bid_to_cover
 python model_testing/breaks.py --bucket Long --penalty 1
 ```
 
-`--penalty` sets the sensitivity: higher means fewer, bigger breaks. Output
-(gitignored) goes to `model_testing/output/`: every break with its nearest
-event, a per-event hit rate, and a chart per country.
+`--penalty` sets the sensitivity: higher means fewer, bigger breaks. Each
+setting gets its own folder in [`model_testing/results/`](model_testing/results/)
+with a summary page, every break with its nearest event, a per-event hit rate
+and a chart per country; `results/README.md` compares all settings tested.
 
 First results (auction yields, 2–10 year bucket, penalty 2, ±6 months):
 

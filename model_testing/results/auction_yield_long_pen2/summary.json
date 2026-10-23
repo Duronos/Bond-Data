@@ -1,0 +1,13 @@
+{
+  "folder": "auction_yield_long_pen2",
+  "measure": "auction_yield",
+  "bucket": "Long",
+  "penalty": 2.0,
+  "min_months": 6,
+  "tolerance": 6,
+  "breaks": 45,
+  "countries": 22,
+  "breaks_near_event": 0.6,
+  "events_found": 0.40594059405940597,
+  "chance": 0.1784275288591131
+}

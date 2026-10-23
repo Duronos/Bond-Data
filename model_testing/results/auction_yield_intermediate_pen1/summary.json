@@ -1,0 +1,13 @@
+{
+  "folder": "auction_yield_intermediate_pen1",
+  "measure": "auction_yield",
+  "bucket": "Intermediate",
+  "penalty": 1.0,
+  "min_months": 6,
+  "tolerance": 6,
+  "breaks": 75,
+  "countries": 22,
+  "breaks_near_event": 0.6,
+  "events_found": 0.5409836065573771,
+  "chance": 0.24533179248817139
+}

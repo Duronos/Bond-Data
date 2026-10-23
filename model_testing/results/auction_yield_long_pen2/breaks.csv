@@ -1,0 +1,46 @@
+country,break_month,nearest_event,event_date,months_off
+United States,2011-06-01,,,
+United States,2019-05-01,,,
+United States,2022-09-01,Fed starts raising rates (global hiking cycle),2022-03-16,5.6
+Canada,2011-08-01,,,
+Canada,2014-12-01,,,
+Canada,2022-06-01,Fed starts raising rates (global hiking cycle),2022-03-16,2.5
+United Kingdom,2011-11-01,,,
+United Kingdom,2016-01-01,Brexit referendum,2016-06-23,-5.7
+United Kingdom,2022-09-01,UK mini-budget (gilt crisis),2022-09-23,-0.7
+Germany,2010-03-01,Euro debt crisis begins (first Greek bailout),2010-05-02,-2.0
+Germany,2014-10-01,ECB introduces negative interest rates,2014-06-05,3.9
+Germany,2022-09-01,Fed starts raising rates (global hiking cycle),2022-03-16,5.6
+Japan,2015-12-01,Bank of Japan introduces negative interest rates,2016-01-29,-1.9
+Japan,2022-08-01,Fed starts raising rates (global hiking cycle),2022-03-16,4.5
+Japan,2025-02-01,,,
+Austria,2011-08-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,-3.3
+Austria,2014-07-01,ECB introduces negative interest rates,2014-06-05,0.9
+Austria,2022-11-01,,,
+Belgium,2012-05-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-2.8
+Belgium,2014-11-01,ECB starts quantitative easing,2015-03-09,-4.2
+Czech Republic,2014-05-01,,,
+Czech Republic,2021-11-01,Russia invades Ukraine,2022-02-24,-3.8
+Denmark,2022-05-01,Fed starts raising rates (global hiking cycle),2022-03-16,1.5
+Finland,2022-05-01,Fed starts raising rates (global hiking cycle),2022-03-16,1.5
+France,2010-05-01,Euro debt crisis begins (first Greek bailout),2010-05-02,-0.0
+France,2014-07-01,ECB introduces negative interest rates,2014-06-05,0.9
+France,2022-11-01,,,
+Hungary,2014-04-01,,,
+Hungary,2022-03-01,Russia invades Ukraine,2022-02-24,0.2
+Ireland,2019-04-01,,,
+Italy,2014-06-01,ECB introduces negative interest rates,2014-06-05,-0.1
+Italy,2019-06-01,,,
+Italy,2022-05-01,Fed starts raising rates (global hiking cycle),2022-03-16,1.5
+Lithuania,2022-02-01,Russia invades Ukraine,2022-02-24,-0.8
+Netherlands,2012-01-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,1.7
+Netherlands,2014-12-01,ECB starts quantitative easing,2015-03-09,-3.2
+Norway,2025-02-01,,,
+Poland,2012-06-01,,,
+Slovakia,2022-06-01,Fed starts raising rates (global hiking cycle),2022-03-16,2.5
+South Korea,2022-03-01,Russia invades Ukraine,2022-02-24,0.2
+South Korea,2026-05-01,,,
+Switzerland,2011-09-01,,,
+Switzerland,2015-01-01,,,
+Switzerland,2022-02-01,Russia invades Ukraine,2022-02-24,-0.8
+European Union,2023-02-01,,,

@@ -3,7 +3,7 @@ Experimental: find break dates (regime changes) in the auction data with
 ruptures, then check them against known historical events (events.csv).
 
 Standalone: it only reads the monthly CSVs in results/auctions/ (a copy of
-the latest run) and writes to model_testing/output/. Nothing in the main
+the latest run) and writes to model_testing/results/. Nothing in the main
 project imports or depends on this folder.
 
 How it works: ruptures splits each country's monthly series into segments
@@ -15,13 +15,17 @@ Run from the project root:
     python model_testing/breaks.py --measure bid_to_cover
     python model_testing/breaks.py --bucket Long --penalty 1
 
-Outputs (output/<measure>_<bucket>_pen<penalty>/):
+Outputs (results/<measure>_<bucket>_pen<penalty>/):
+    README.md         the results, readable on GitHub
     breaks.csv        every break, with the nearest relevant event (if any)
     sanity_check.csv  each event: in how many countries a break was found nearby
+    summary.json      headline numbers (used for results/README.md)
     charts/<country>.png
+results/README.md compares every setting run so far.
 """
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -103,7 +107,7 @@ def main():
 
     events = pd.read_csv(HERE / "events.csv", parse_dates=["date"])
     tolerance = pd.DateOffset(months=args.tolerance)
-    out = HERE / "output" / f"{args.measure}_{args.bucket.lower()}_pen{args.penalty:g}"
+    out = HERE / "results" / f"{args.measure}_{args.bucket.lower()}_pen{args.penalty:g}"
     (out / "charts").mkdir(parents=True, exist_ok=True)
 
     rows, coverage, checked = [], [], []
@@ -154,17 +158,89 @@ def main():
     summary["hit_rate"] = (summary["countries_found"] / summary["countries_checked"]).round(2)
     summary.to_csv(out / "sanity_check.csv", index=False)
 
-    chance = float(np.mean(coverage))
-    hit_rate = checked["found"].mean()
-    matched = (breaks_df["nearest_event"] != "").mean()
-    print(f"{args.measure}, {args.bucket} bucket, penalty {args.penalty}, "
-          f"min segment {args.min_months} months, tolerance ±{args.tolerance} months\n")
-    print(f"{len(breaks_df)} breaks in {breaks_df['country'].nunique()} countries; "
-          f"{matched:.0%} of breaks fall near a known event\n")
-    print(summary.to_string(index=False))
-    print(f"\nOverall: events found {hit_rate:.0%} of the time; "
-          f"a random date would be 'found' {chance:.0%} of the time (chance rate).")
-    print(f"\nSaved to {out.relative_to(HERE.parent)}")
+    stats = {
+        "folder": out.name,
+        "measure": args.measure,
+        "bucket": args.bucket,
+        "penalty": args.penalty,
+        "min_months": args.min_months,
+        "tolerance": args.tolerance,
+        "breaks": len(breaks_df),
+        "countries": int(breaks_df["country"].nunique()),
+        "breaks_near_event": float((breaks_df["nearest_event"].fillna("") != "").mean()),
+        "events_found": float(checked["found"].mean()),
+        "chance": float(np.mean(coverage)),
+    }
+    (out / "summary.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
+    report = run_report(stats, summary, breaks_df)
+    (out / "README.md").write_text(report, encoding="utf-8")
+    write_index(out.parent)
+    print(report)
+    print(f"Saved to {out.relative_to(HERE.parent)}")
+
+
+def describe(stats: dict) -> str:
+    return (f"{stats['measure'].replace('_', ' ')}, {stats['bucket']} bucket, "
+            f"penalty {stats['penalty']:g}")
+
+
+def run_report(stats: dict, summary: pd.DataFrame, breaks_df: pd.DataFrame) -> str:
+    """One run's results as a markdown page (also printed to the console)."""
+    unmatched = breaks_df[breaks_df["nearest_event"].fillna("") == ""]
+    lines = [
+        f"# Breaks: {describe(stats)}",
+        "",
+        f"Settings: shortest segment {stats['min_months']} months; a break within "
+        f"±{stats['tolerance']} months of an event counts as a match.",
+        "",
+        "| | |", "|---|---|",
+        f"| Breaks found | {stats['breaks']}, in {stats['countries']} countries |",
+        f"| Breaks near a known event | {stats['breaks_near_event']:.0%} |",
+        f"| Events found (country by country) | {stats['events_found']:.0%} |",
+        f"| Chance rate (a random date) | {stats['chance']:.0%} |",
+        "",
+        "## Each event",
+        "",
+        "| Date | Event | Countries checked | Found | Hit rate |",
+        "|---|---|:-:|:-:|:-:|",
+        *[f"| {r.date} | {r.event} | {r.countries_checked} | {r.countries_found} | {r.hit_rate:.0%} |"
+          for r in summary.itertuples()],
+        "",
+        "## Breaks with no listed event",
+        "",
+        "Leads worth looking into: something changed, but it isn't in events.csv.",
+        "",
+        *([f"- {r.country}: {r.break_month}" for r in unmatched.itertuples()] or ["- none"]),
+        "",
+        "## Files",
+        "",
+        "- [breaks.csv](breaks.csv): every break and its nearest event",
+        "- [sanity_check.csv](sanity_check.csv): the event table above",
+        "- [charts/](charts/): one chart per country (red dashed = break found, "
+        "grey dotted = known event)",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def write_index(results: Path):
+    """results/README.md: one row per run folder, rebuilt after every run."""
+    runs = [json.loads(p.read_text(encoding="utf-8"))
+            for p in sorted(results.glob("*/summary.json"))]
+    lines = [
+        "# Break detection results",
+        "",
+        "One folder per setting tested by `breaks.py`; open a folder's README for "
+        "the event-by-event table, the unmatched breaks and the charts. An events "
+        "rate well above the chance rate means the breaks line up with real events.",
+        "",
+        "| Run | Breaks | Near an event | Events found | Chance rate |",
+        "|---|:-:|:-:|:-:|:-:|",
+        *[f"| [{describe(r)}]({r['folder']}/) | {r['breaks']} | {r['breaks_near_event']:.0%} "
+          f"| {r['events_found']:.0%} | {r['chance']:.0%} |" for r in runs],
+        "",
+    ]
+    (results / "README.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 def chart(series, breaks, events, country, args, path):

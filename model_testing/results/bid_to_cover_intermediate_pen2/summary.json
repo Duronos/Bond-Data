@@ -1,0 +1,13 @@
+{
+  "folder": "bid_to_cover_intermediate_pen2",
+  "measure": "bid_to_cover",
+  "bucket": "Intermediate",
+  "penalty": 2.0,
+  "min_months": 6,
+  "tolerance": 6,
+  "breaks": 8,
+  "countries": 5,
+  "breaks_near_event": 0.125,
+  "events_found": 0.009259259259259259,
+  "chance": 0.020613604678432196
+}
