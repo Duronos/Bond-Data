@@ -16,6 +16,12 @@ cache/
 CLAUDE.md
 local/
 
+# API keys. Never commit.
+.env
+
+# Local-only analysis script (calls a paid API); kept out of the repo.
+model_testing/llm_review.py
+
 # Editor / OS
 .vscode/
 .idea/

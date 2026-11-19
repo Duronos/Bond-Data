@@ -4,7 +4,9 @@ Downloads government bond and bill **auction results** from each OECD country's
 official debt office or central bank (plus the European Union's own
 auctions), then charts demand (bid-to-cover), volume, yields and, where the
 central bank buys at auction, the central bank's share, over the last 20
-years, broken down by maturity.
+years, broken down by maturity. It then looks for the months when yields
+shifted to a new level and checks them against known events (see
+[Analysis](#analysis-when-and-why-yields-shifted)).
 
 For the **last 12 months** nothing is averaged: every single auction is shown
 as a dot, next to the **daily market yield** for the same maturity wherever the
@@ -629,6 +631,77 @@ More: [every auction, last 12 months (with the market yield that day)](results/a
 
 ![Government auction yields by country, 2006-2026](docs/images/global_auction_yield_grid_20y.png)
 
+## Analysis: when and why yields shifted
+
+The code in [`model_testing/`](model_testing/) analyses the results: it finds
+the months where a country's auction yields moved to a new level, and checks
+them against known events. It only reads the CSVs in `results/`, so rerun it
+after each refresh of the data.
+
+### Break detection (ruptures)
+
+[`model_testing/breaks.py`](model_testing/breaks.py) uses
+[ruptures](https://centre-borelli.github.io/ruptures-docs/) to find **break
+dates**: months where a country's auction yields (or bid-to-cover) shifted to
+a new level. Each break is matched against a list of known events in
+[`model_testing/events.csv`](model_testing/events.csv) (2008 crisis, euro
+crisis, ECB negative rates, Brexit, COVID, Ukraine invasion, 2022 rate hikes,
+UK mini-budget, Bank of Japan policy changes), each tagged with the countries
+it should affect.
+
+```bash
+pip install -r model_testing/requirements.txt
+python model_testing/breaks.py                         # auction yields, 2-10Y bucket
+python model_testing/breaks.py --measure bid_to_cover
+python model_testing/breaks.py --bucket Long --penalty 1
+python model_testing/compare_llm.py                    # LLM breaks vs ruptures (below)
+```
+
+`--penalty` sets the sensitivity: higher means fewer, bigger breaks. Each
+setting gets its own folder in [`model_testing/results/`](model_testing/results/)
+with a summary page, every break with its nearest event, a per-event hit rate
+and a chart per country; `results/README.md` compares all settings tested.
+
+Results (run of 19 November 2026; auction yields, 2–10 year bucket, penalty 2, ±6 months):
+
+| | |
+|---|---|
+| Breaks found | 50, in 22 countries |
+| Breaks near a known event | 66% |
+| Events found (country by country) | 43%, vs 17% for a random date |
+
+- **Found well:** the 2022 rate-hiking cycle (17 of 19 countries), the
+  Ukraine invasion (14 of 18), the ECB's 2014 negative rates (5 of 7 euro
+  countries) and 2012 "whatever it takes" (4 of 7), Brexit, the UK
+  mini-budget and the Bank of Japan's 2024 exit.
+- **Not found:** the 2010 Greek bailout, the 2013 taper tantrum and COVID. In
+  the euro area yields were already near zero in 2020; elsewhere the drop
+  was real but small next to each country's 20-year range, so penalty 2
+  drops it (see the LLM comparison below).
+- **Bid-to-cover:** no link to these events (2% found vs 2% by chance), so
+  demand breaks have other causes.
+- **Breaks with no listed event** are the interesting leads: Norway
+  October 2014 (around the oil-price collapse), Japan and Hungary
+  May 2014, Switzerland September 2024 and others in `breaks.csv`.
+
+### LLM analysis vs ruptures
+
+As an independent check, an LLM (Claude Opus 5.5) read the same monthly
+yields and marked its own break dates and causes before ruptures was rerun.
+Details: [`model_testing/results/llm_analysis/`](model_testing/results/llm_analysis/).
+
+- **Same big breaks:** 43 of ruptures' 50 breaks (86%) are also in the
+  LLM's list, and the two agree on the cause for 27 of the 33 paired breaks
+  with a known event.
+- **The LLM finds more:** 148 breaks, including the taper tantrum and COVID
+  in several countries. Its high-confidence ones match known events as well
+  as ruptures' breaks do (43% found vs 15% by chance), but no better.
+- **Mislabelled events:** the Czech, Hungarian and Polish breaks in late
+  2021 are credited to the Ukraine invasion by the ±6 month rule, but came
+  before it; the LLM puts them down to each central bank's own hikes.
+- **Data error found:** Finland's 17 November 2026 auction is reported at a
+  3,389% yield, which gives ruptures a false break.
+
 ## Run it
 
 ```bash
@@ -640,7 +713,7 @@ Each run creates a dated folder, with auction results and market yields kept
 apart (they come from different sources):
 
 ```
-runs/2026-10-22_213542_20y/
+runs/2026-11-19_055415_20y/
   auctions/
     auction_totals.csv          auctions per country and maturity bucket
     us/  canada/  france/ ...   one folder per country: charts + CSVs
@@ -686,7 +759,7 @@ The `_grid` versions give each country its own small panel instead.
 
 ## Example charts
 
-These come from the run of 22 October 2026. Each run writes its own copies to
+These come from the run of 19 November 2026. Each run writes its own copies to
 `runs/`; the images here are just a snapshot for this page.
 
 **Demand at auction, all countries.** Bid-to-cover by maturity, one line per
@@ -826,6 +899,9 @@ cache/               downloaded auction pages and lookups for the EU, South Kore
                      Slovakia and Lithuania (gitignored); rebuilt automatically
 results/             copy of the latest run (auctions/ and market_yields/)
 docs/images/         example charts shown in this README
+model_testing/       analysis of results/: break detection (breaks.py), the
+                     LLM comparison (compare_llm.py) and known events (events.csv);
+                     its own results/ and requirements.txt
 ```
 
 ### Adding a country
@@ -860,53 +936,6 @@ Charts for any measure a country doesn't publish are skipped automatically.
   or zero-coupon curves vs one specific bond's clearing or average yield), so a
   few basis points between line and dot is normal. The UK gap is a little
   larger because the DMO's file gives only each gilt's maturity year.
-
-## Experimental
-
-Work in progress, kept in [`model_testing/`](model_testing/) and separate
-from the main pipeline: it only reads the CSVs in `results/` and nothing else
-depends on it.
-
-### Break detection (ruptures)
-
-[`model_testing/breaks.py`](model_testing/breaks.py) uses
-[ruptures](https://centre-borelli.github.io/ruptures-docs/) to find **break
-dates**: months where a country's auction yields (or bid-to-cover) shifted to
-a new level. Each break is matched against a list of known events in
-[`model_testing/events.csv`](model_testing/events.csv) (2008 crisis, euro
-crisis, ECB negative rates, Brexit, COVID, Ukraine invasion, 2022 rate hikes,
-UK mini-budget, Bank of Japan policy changes), each tagged with the countries
-it should affect.
-
-```bash
-pip install -r model_testing/requirements.txt
-python model_testing/breaks.py                         # auction yields, 2-10Y bucket
-python model_testing/breaks.py --measure bid_to_cover
-python model_testing/breaks.py --bucket Long --penalty 1
-```
-
-`--penalty` sets the sensitivity: higher means fewer, bigger breaks. Each
-setting gets its own folder in [`model_testing/results/`](model_testing/results/)
-with a summary page, every break with its nearest event, a per-event hit rate
-and a chart per country; `results/README.md` compares all settings tested.
-
-First results (auction yields, 2–10 year bucket, penalty 2, ±6 months):
-
-| | |
-|---|---|
-| Breaks found | 50, in 22 countries |
-| Breaks near a known event | 74% |
-| Events found (country by country) | 47%, vs 18% for a random date |
-
-- **Found well:** the 2022 rate-hiking cycle (18 of 19 countries), the
-  Ukraine invasion (15 of 18), the ECB's 2012 "whatever it takes" and 2014
-  negative rates (4 of 7 euro countries each), Brexit, the UK mini-budget and
-  the Bank of Japan's 2024 exit.
-- **Not found:** the 2010 Greek bailout and COVID. Yields didn't settle at a
-  new level then (COVID was a short spike in already-low yields), so a
-  level-shift model doesn't flag them.
-- **Bid-to-cover:** no link to these events (1% found vs 2% by chance), so
-  demand breaks have other causes.
-- **Breaks with no listed event** are the interesting leads: Norway
-  October 2014 (around the oil-price collapse), Japan and Hungary
-  September 2014, Switzerland September 2024 and others in `breaks.csv`.
+- Known data error: Finland's State Treasury reports its 17 November 2026
+  4-year auction at a yield of 3,389% (almost certainly 3.389%), which
+  distorts Finland's November 2026 yield charts.

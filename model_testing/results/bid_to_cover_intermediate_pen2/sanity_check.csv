@@ -8,7 +8,7 @@ date,event,countries_checked,countries_found,hit_rate
 2015-03-09,ECB starts quantitative easing,6,0,0.0
 2016-01-29,Bank of Japan introduces negative interest rates,1,0,0.0
 2016-06-23,Brexit referendum,1,1,1.0
-2020-03-11,COVID-19 declared a pandemic,15,0,0.0
+2020-03-11,COVID-19 declared a pandemic,15,1,0.07
 2022-02-24,Russia invades Ukraine,16,0,0.0
 2022-03-16,Fed starts raising rates (global hiking cycle),17,0,0.0
 2022-09-23,UK mini-budget (gilt crisis),1,0,0.0

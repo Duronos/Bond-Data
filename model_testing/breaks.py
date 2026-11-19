@@ -1,5 +1,5 @@
 """
-Experimental: find break dates (regime changes) in the auction data with
+Find break dates (regime changes) in the auction data with
 ruptures, then check them against known historical events (events.csv).
 
 Standalone: it only reads the monthly CSVs in results/auctions/ (a copy of

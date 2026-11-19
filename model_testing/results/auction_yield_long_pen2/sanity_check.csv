@@ -10,6 +10,6 @@ date,event,countries_checked,countries_found,hit_rate
 2016-06-23,Brexit referendum,1,1,1.0
 2020-03-11,COVID-19 declared a pandemic,15,0,0.0
 2022-02-24,Russia invades Ukraine,15,10,0.67
-2022-03-16,Fed starts raising rates (global hiking cycle),15,13,0.87
+2022-03-16,Fed starts raising rates (global hiking cycle),15,11,0.73
 2022-09-23,UK mini-budget (gilt crisis),1,1,1.0
 2024-03-19,Bank of Japan ends negative rates and yield-curve control,1,0,0.0

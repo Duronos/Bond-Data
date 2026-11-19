@@ -1,0 +1,149 @@
+country,break_month,direction,cause,cause_month,confidence
+United States,2007-08,down,"Subprime crisis begins (BNP Paribas freezes funds); Fed starts cutting in Sep 2007",2007-08,high
+United States,2008-11,down,"Lehman collapse (Sep 2008); Fed cuts to near zero (Dec 2008)",2008-09,high
+United States,2011-08,down,"S&P downgrades the US; Fed pledges near-zero rates to mid-2013; euro-crisis flight to safety",2011-08,high
+United States,2013-06,up,"Taper tantrum (Bernanke signals slower bond buying)",2013-05,high
+United States,2016-12,up,"Trump election (reflation trade); Fed hike in Dec 2016",2016-11,medium
+United States,2018-01,up,"Fed hiking speeds up; tax cuts widen the deficit",2018-01,medium
+United States,2019-06,down,"Fed pivots to cuts (first cut Jul 2019); US-China trade war",2019-06,medium
+United States,2020-03,down,"COVID-19; Fed cuts to zero and restarts QE",2020-03,high
+United States,2022-03,up,"Fed starts hiking (Mar 2022) as inflation surges",2022-03,high
+United States,2026-09,up,"No clear cause known (after the LLM's knowledge cutoff); yields rose in many countries at once",,low
+Canada,2008-11,down,"Global financial crisis; Bank of Canada cuts",2008-09,high
+Canada,2011-08,down,"Global flight to safety (US downgrade, euro crisis)",2011-08,medium
+Canada,2015-01,down,"Oil-price collapse; surprise Bank of Canada cut (Jan 2015)",2015-01,high
+Canada,2017-07,up,"Bank of Canada's first hike in seven years (Jul 2017)",2017-07,high
+Canada,2018-01,up,"Further Bank of Canada hikes (Jan 2018)",2018-01,medium
+Canada,2020-03,down,"COVID-19; Bank of Canada cuts to 0.25% and starts QE",2020-03,high
+Canada,2022-04,up,"Bank of Canada hiking cycle (from Mar 2022)",2022-03,high
+Canada,2024-06,down,"Bank of Canada starts cutting (Jun 2024)",2024-06,high
+Canada,2026-06,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+United Kingdom,2008-11,down,"Global financial crisis; Bank of England cuts to 0.5% and starts QE (Mar 2009)",2008-10,high
+United Kingdom,2011-05,down,"Euro crisis spreads; gilts bought as a safe haven",2011-07,low
+United Kingdom,2013-07,up,"Taper tantrum; Bank of England forward guidance",2013-05,medium
+United Kingdom,2016-03,down,"Global fall in yields in early 2016, then the Brexit vote (Jun 2016) and BoE cut + QE (Aug 2016)",2016-06,medium
+United Kingdom,2019-06,down,"Global easing; Brexit uncertainty",2019-06,medium
+United Kingdom,2020-04,down,"COVID-19; Bank of England cuts to 0.1% and expands QE",2020-03,high
+United Kingdom,2022-04,up,"Bank of England hiking cycle (from Dec 2021) as inflation surges",2021-12,high
+United Kingdom,2022-09,up,"Mini-budget gilt crisis (Sep 2022)",2022-09,high
+United Kingdom,2026-05,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Germany,2008-11,down,"Global financial crisis; ECB cuts",2008-10,high
+Germany,2011-08,down,"Euro-crisis peak: flight to Bunds as a safe haven",2011-08,medium
+Germany,2014-08,down,"ECB negative rates (Jun 2014) and expectations of QE",2014-06,medium
+Germany,2016-02,down,"ECB deepens negative rates and expands QE (Mar 2016)",2016-03,medium
+Germany,2019-05,down,"ECB turns dovish again; new easing package (Sep 2019)",2019-06,medium
+Germany,2022-04,up,"Inflation surge after Russia invades Ukraine; ECB signals hikes",2022-02,high
+Germany,2022-09,up,"ECB 75bp hike (Sep 2022)",2022-09,medium
+Germany,2026-04,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Japan,2009-01,down,"Global financial crisis; Bank of Japan cuts to 0.1%",2008-12,medium
+Japan,2010-06,down,"Bank of Japan comprehensive easing (Oct 2010); strong yen",2010-10,low
+Japan,2014-12,down,"Bank of Japan expands QQE (Oct 2014)",2014-10,medium
+Japan,2016-02,down,"Bank of Japan negative interest rates (Jan 2016)",2016-01,high
+Japan,2023-01,up,"Bank of Japan widens the yield-curve-control band (Dec 2022)",2022-12,medium
+Japan,2024-05,up,"Bank of Japan ends negative rates and yield-curve control (Mar 2024)",2024-03,medium
+Japan,2025-01,up,"Bank of Japan hikes to 0.5% (Jan 2025)",2025-01,medium
+Japan,2026-01,up,"Fiscal worries under the new Takaichi government; further BoJ hikes",2025-10,low
+Austria,2009-07,down,"Global financial crisis; ECB cuts to 1%",2009-05,medium
+Austria,2011-07,down,"Euro-crisis flight to safety in core countries",2011-07,medium
+Austria,2014-05,down,"ECB negative rates (Jun 2014) and QE (2015)",2014-06,medium
+Austria,2019-04,down,"ECB turns dovish again; new easing package (Sep 2019)",2019-03,medium
+Austria,2022-04,up,"Inflation surge; ECB hiking cycle",2022-02,high
+Belgium,2009-02,down,"Global financial crisis; ECB cuts",2008-10,medium
+Belgium,2012-07,down,"ECB 'whatever it takes' (Jul 2012) eases euro-crisis spreads",2012-07,medium
+Belgium,2015-04,down,"ECB starts QE (Mar 2015)",2015-03,high
+Belgium,2026-09,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Czech Republic,2010-04,down,"Calm returns after the 2009 central European crisis; CNB cuts (May 2010)",2010-05,low
+Czech Republic,2012-11,down,"CNB cuts to 0.05% (Nov 2012)",2012-11,medium
+Czech Republic,2014-03,down,"CNB currency floor (Nov 2013); ECB easing",2013-11,low
+Czech Republic,2017-09,up,"CNB ends the koruna floor (Apr 2017) and hikes (Aug 2017)",2017-08,high
+Czech Republic,2021-10,up,"CNB's aggressive hiking cycle (from Jun 2021, +125bp in Nov)",2021-06,high
+Czech Republic,2022-03,up,"Inflation surge after Russia invades Ukraine; CNB hikes to 7% (Jun 2022)",2022-02,high
+Czech Republic,2024-01,down,"CNB starts cutting (Dec 2023)",2023-12,medium
+Denmark,2011-08,down,"Euro-crisis flight to safety",2011-08,medium
+Denmark,2012-07,down,"Danmarks Nationalbank negative deposit rate (Jul 2012)",2012-07,high
+Denmark,2014-09,down,"ECB negative rates; DN cuts, then defends the krone peg (Jan-Feb 2015)",2014-09,medium
+Denmark,2019-02,down,"ECB turns dovish again; global easing",2019-03,medium
+Denmark,2022-04,up,"Inflation surge; ECB and DN hiking cycle",2022-02,high
+Denmark,2024-08,down,"ECB and DN start cutting (Jun 2024)",2024-06,medium
+Denmark,2025-11,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Finland,2012-05,down,"Euro-crisis flight to safety in core AAA countries",2012-05,low
+Finland,2015-02,down,"ECB QE (Mar 2015)",2015-01,low
+Finland,2022-03,up,"Inflation surge; ECB hiking cycle",2022-02,medium
+France,2008-11,down,"Global financial crisis; ECB cuts",2008-10,high
+France,2012-07,down,"ECB 'whatever it takes' (Jul 2012)",2012-07,medium
+France,2014-05,down,"ECB negative rates (Jun 2014)",2014-06,medium
+France,2016-02,down,"ECB deepens negative rates (Mar 2016)",2016-03,low
+France,2019-03,down,"ECB turns dovish again; global easing",2019-03,medium
+France,2022-02,up,"Inflation surge; ECB signals and starts hiking",2022-02,high
+France,2026-04,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Hungary,2008-03,up,"Global risk-off hits Hungary; forint crisis, then IMF bailout (Oct 2008)",2008-03,medium
+Hungary,2009-07,down,"Stabilisation under the IMF programme; MNB cuts",2009-07,medium
+Hungary,2011-11,up,"Hungary downgraded to junk; MNB hikes; IMF talks",2011-11,high
+Hungary,2012-08,down,"MNB easing cycle (from Aug 2012)",2012-08,high
+Hungary,2014-05,down,"MNB cuts to record lows; self-financing programme",2014-05,medium
+Hungary,2018-07,up,"Emerging-market sell-off (Turkey, Aug 2018)",2018-07,medium
+Hungary,2019-06,down,"Global easing; MNB stays loose",2019-06,medium
+Hungary,2021-09,up,"MNB hiking cycle (from Jun 2021)",2021-06,high
+Hungary,2022-03,up,"Russia invades Ukraine; MNB hikes to 13%, then an 18% emergency rate (Oct 2022)",2022-02,high
+Hungary,2023-12,down,"MNB cuts as inflation falls (from May 2023)",2023-05,medium
+Hungary,2026-05,down,"Possibly the April 2026 parliamentary election; not confident",2026-04,low
+Ireland,2010-06,up,"Irish banking crisis, then the EU-IMF bailout (Nov 2010)",2010-05,high
+Ireland,2015-05,down,"ECB QE (Mar 2015) after Ireland returns to markets",2015-03,low
+Ireland,2022-09,up,"Inflation surge; ECB hiking cycle",2022-07,medium
+Italy,2009-06,down,"Global financial crisis; ECB cuts to 1%",2009-05,medium
+Italy,2011-07,up,"Euro crisis spreads to Italy",2011-07,high
+Italy,2012-09,down,"ECB 'whatever it takes' (Jul 2012) and OMT (Sep 2012)",2012-07,high
+Italy,2014-04,down,"ECB negative rates (Jun 2014) and QE (2015)",2014-06,medium
+Italy,2018-05,up,"Populist coalition and budget clash with the EU",2018-05,high
+Italy,2019-07,down,"Government change (Aug-Sep 2019); ECB easing",2019-08,high
+Italy,2020-09,down,"ECB pandemic purchases (PEPP) and the EU recovery fund (Jul 2020)",2020-07,medium
+Italy,2022-02,up,"Inflation surge; ECB hiking cycle",2022-02,high
+Italy,2024-08,down,"ECB starts cutting (Jun 2024)",2024-06,medium
+Italy,2026-03,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Lithuania,2010-03,down,"Recovery after the 2009 Baltic crisis",2009-12,medium
+Lithuania,2011-06,up,"Euro-crisis stress",2011-07,low
+Lithuania,2012-09,down,"ECB 'whatever it takes' (Jul 2012) and OMT",2012-07,medium
+Lithuania,2014-09,down,"ECB negative rates; Lithuania joins the euro (Jan 2015)",2014-07,medium
+Lithuania,2019-07,down,"ECB turns dovish again; new easing package (Sep 2019)",2019-06,medium
+Lithuania,2022-02,up,"Inflation surge; ECB hiking cycle",2022-02,high
+Lithuania,2024-01,down,"Markets price ECB cuts (first cut Jun 2024)",2023-12,medium
+Lithuania,2026-07,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Netherlands,2008-11,down,"Global financial crisis; ECB cuts",2008-10,high
+Netherlands,2012-01,down,"Euro-crisis flight to safety; ECB long-term loans (Dec 2011)",2011-12,medium
+Netherlands,2015-01,down,"ECB QE (Jan-Mar 2015)",2015-01,high
+Netherlands,2019-01,down,"ECB turns dovish again",2019-03,low
+Netherlands,2022-03,up,"Inflation surge; ECB hiking cycle",2022-02,high
+Netherlands,2026-06,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Norway,2008-11,down,"Global financial crisis; Norges Bank cuts",2008-10,medium
+Norway,2012-01,down,"Euro-crisis flight to safety; Norges Bank cut (Mar 2012)",2011-12,medium
+Norway,2013-06,up,"Taper tantrum",2013-05,medium
+Norway,2014-11,down,"Oil-price collapse; Norges Bank cut (Dec 2014)",2014-10,high
+Norway,2020-03,down,"COVID-19; Norges Bank cuts to zero",2020-03,high
+Norway,2021-03,up,"Recovery; Norges Bank signals hikes (first hike Sep 2021)",2021-03,medium
+Norway,2022-05,up,"Norges Bank hiking cycle; inflation",2022-03,high
+Norway,2026-04,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Poland,2007-06,up,"NBP hiking cycle (2007)",2007-04,medium
+Poland,2013-01,down,"NBP cuts (from Nov 2012)",2012-11,high
+Poland,2014-10,down,"NBP cut (Oct 2014); ECB QE",2014-10,high
+Poland,2016-11,up,"Global reflation after the US election; Polish rating downgrade earlier in 2016",2016-11,medium
+Poland,2020-03,down,"COVID-19; NBP cuts to 0.1% and starts QE",2020-03,high
+Poland,2022-01,up,"NBP hiking cycle (from Oct 2021); then the Ukraine war",2021-10,high
+Poland,2023-07,down,"NBP surprise 75bp cut (Sep 2023)",2023-09,medium
+Poland,2026-03,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Slovakia,2019-06,down,"ECB turns dovish again; new easing package (Sep 2019)",2019-06,medium
+Slovakia,2022-04,up,"Inflation surge; ECB hiking cycle",2022-02,high
+Slovakia,2024-09,down,"ECB cuts",2024-06,low
+Slovakia,2026-09,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+South Korea,2019-07,down,"Bank of Korea cut (Jul 2019); trade war",2019-07,high
+South Korea,2020-03,down,"COVID-19; Bank of Korea cuts to 0.5%",2020-03,high
+South Korea,2021-07,up,"Bank of Korea's first hike (Aug 2021)",2021-08,high
+South Korea,2022-03,up,"Bank of Korea hiking cycle; global inflation",2022-01,high
+South Korea,2024-07,down,"Markets price Bank of Korea cuts (first cut Oct 2024)",2024-07,medium
+South Korea,2025-11,up,"No clear cause known (after the LLM's knowledge cutoff)",,low
+Switzerland,2012-09,down,"Safe-haven inflows; SNB franc ceiling (Sep 2011)",2011-09,low
+Switzerland,2016-04,down,"SNB negative rates and end of the franc ceiling (Jan 2015)",2015-01,medium
+Switzerland,2022-02,up,"Global inflation; SNB hikes (Jun 2022)",2022-06,high
+Switzerland,2024-02,down,"SNB starts cutting (Mar 2024)",2024-03,high
+European Union,2022-03,up,"Inflation surge; ECB hiking cycle",2022-02,high
+European Union,2024-01,down,"Markets price ECB cuts (first cut Jun 2024)",2023-12,medium
+European Union,2026-09,up,"No clear cause known (after the LLM's knowledge cutoff)",,low

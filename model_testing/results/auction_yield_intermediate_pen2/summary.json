@@ -7,7 +7,7 @@
   "tolerance": 6,
   "breaks": 50,
   "countries": 22,
-  "breaks_near_event": 0.74,
-  "events_found": 0.4672131147540984,
-  "chance": 0.17501105792352495
+  "breaks_near_event": 0.66,
+  "events_found": 0.4344262295081967,
+  "chance": 0.17485355827386181
 }

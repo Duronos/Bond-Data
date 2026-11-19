@@ -1,4 +1,4 @@
-# Extra packages for the experimental scripts in this folder only
+# Extra packages for the analysis scripts in this folder only
 # (the main project doesn't need them).
 ruptures
 pandas

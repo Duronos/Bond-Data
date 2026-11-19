@@ -4,9 +4,9 @@ Settings: shortest segment 6 months; a break within ±6 months of an event count
 
 | | |
 |---|---|
-| Breaks found | 8, in 5 countries |
-| Breaks near a known event | 12% |
-| Events found (country by country) | 1% |
+| Breaks found | 9, in 5 countries |
+| Breaks near a known event | 22% |
+| Events found (country by country) | 2% |
 | Chance rate (a random date) | 2% |
 
 ## Each event
@@ -22,7 +22,7 @@ Settings: shortest segment 6 months; a break within ±6 months of an event count
 | 2015-03-09 | ECB starts quantitative easing | 6 | 0 | 0% |
 | 2016-01-29 | Bank of Japan introduces negative interest rates | 1 | 0 | 0% |
 | 2016-06-23 | Brexit referendum | 1 | 1 | 100% |
-| 2020-03-11 | COVID-19 declared a pandemic | 15 | 0 | 0% |
+| 2020-03-11 | COVID-19 declared a pandemic | 15 | 1 | 7% |
 | 2022-02-24 | Russia invades Ukraine | 16 | 0 | 0% |
 | 2022-03-16 | Fed starts raising rates (global hiking cycle) | 17 | 0 | 0% |
 | 2022-09-23 | UK mini-budget (gilt crisis) | 1 | 0 | 0% |
@@ -32,13 +32,13 @@ Settings: shortest segment 6 months; a break within ±6 months of an event count
 
 Leads worth looking into: something changed, but it isn't in events.csv.
 
-- United States: 2009-09-01
-- United States: 2015-07-01
+- United States: 2009-10-01
+- United States: 2015-03-01
 - United Kingdom: 2011-06-01
 - United Kingdom: 2023-12-01
-- Japan: 2010-02-01
-- Italy: 2024-09-01
-- Poland: 2021-06-01
+- Japan: 2011-11-01
+- Italy: 2024-11-01
+- Poland: 2021-07-01
 
 ## Files
 
