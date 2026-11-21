@@ -17,7 +17,10 @@ from countries._http import get
 AUCTIONS_URL = "https://www.tesoro.es/documents/d/tesoro/11i-xlsx"
 
 # Tenor codes like "L-6m" (Letras), "B-5y" (Bonos), "O-10y" (Obligaciones).
-TENOR = re.compile(r"^[A-Z€i]+-(\d+)([my])$")
+# Also "B-5a" (a = años, years) and green bonds "O(GB)-18y". Not matched, on
+# purpose: syndicated sales ("O-10y (s)"), which aren't auctions, and
+# "O->30y", which gives no exact tenor.
+TENOR = re.compile(r"^[A-Z€i]+(?:\(GB\))?-(\d+)([mya])$")
 
 
 def maturity(auction_date, asset) -> pd.Timestamp:
@@ -31,7 +34,7 @@ def maturity(auction_date, asset) -> pd.Timestamp:
 
 def side(sheet: pd.DataFrame, asset, r1, r2, allotted, rate) -> pd.DataFrame:
     """Each row lists a short-term (bills) and a long-term (bonds) issue side by side."""
-    rows = sheet[sheet[asset].astype(str).str.match(r"^[A-Z€i]+-\d+[my]$")]
+    rows = sheet[sheet[asset].astype(str).str.strip().str.match(TENOR)]
     # Inflation-linked issues ("O€i-10y") quote real yields.
     rows = rows[~rows[asset].astype(str).str.contains("€i")]
     bids = pd.to_numeric(rows[r1], errors="coerce").fillna(0) + pd.to_numeric(rows[r2], errors="coerce").fillna(0)

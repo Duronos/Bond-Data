@@ -76,6 +76,15 @@ START_DATE = END_DATE - pd.DateOffset(years=YEARS)
 RECENT_MONTHS = 12
 RECENT_START = END_DATE - pd.DateOffset(months=RECENT_MONTHS)
 
+# The 20-year monthly tables and charts stop before this (unfinished) month.
+THIS_MONTH = END_DATE.to_period("M").to_timestamp()
+
+# Warn when a source's latest data is older than this: most countries
+# auction every few weeks, so a longer silence usually means a lagging or
+# stalled source (e.g. the US Fiscal Data API stopping mid-October 2026).
+STALE_DAYS = 45
+MARKET_STALE_DAYS = 10
+
 # Each run gets its own timestamped folder under runs/.
 RUNS_DIR = Path(__file__).resolve().parent / "runs"
 
@@ -115,7 +124,10 @@ def fetch_market(country):
     try:
         market = country.fetch_market(RECENT_START, END_DATE)
         market = market[market["date"] >= RECENT_START]
-        print(f"  market yields to {market['date'].max().date()}")
+        latest = market["date"].max()
+        print(f"  market yields to {latest.date()}")
+        if (END_DATE - latest).days > MARKET_STALE_DAYS:
+            print(f"  warning: latest market yield is {(END_DATE - latest).days} days old")
         return market
     except Exception as exc:
         # The auction charts don't depend on this, so carry on without it.
@@ -139,17 +151,21 @@ def main():
         try:
             raw = country.fetch(START_DATE, END_DATE)
             auctions = prepare(raw, START_DATE, END_DATE)
-            monthly = make_monthly_data(auctions, country.volume_divisor)
+            # The current month isn't over, so its totals would show as a dip
+            # at the end of every 20-year chart; those stop at the last full
+            # month. The recent charts still show every auction.
+            monthly = make_monthly_data(auctions[auctions["month"] < THIS_MONTH], country.volume_divisor)
         except Exception as exc:
             # One country's site being down shouldn't sink the whole run.
             print(f"  FAILED: {exc!r}")
             continue
 
-        print(
-            f"  {len(auctions):,} auctions, "
-            f"{auctions['auction_date'].min().date()} to {auctions['auction_date'].max().date()}"
-        )
-        save_outputs(auction_dir / country.code, country.code, monthly, country_plots(country, monthly))
+        last = auctions["auction_date"].max()
+        print(f"  {len(auctions):,} auctions, {auctions['auction_date'].min().date()} to {last.date()}")
+        if auctions.attrs.get("implausible"):
+            print(f"  {auctions.attrs['implausible']} implausible values (source typos) set to missing")
+        if (END_DATE - last).days > STALE_DAYS:
+            print(f"  warning: latest auction is {(END_DATE - last).days} days old; the source may be lagging")
         all_monthly.append(monthly.assign(country=country.name))
         totals.append(
             {
@@ -157,26 +173,38 @@ def main():
                 **auctions["bucket"].value_counts().reindex(BUCKETS, fill_value=0).to_dict(),
                 "total_auctions": len(auctions),
                 "first_auction": auctions["auction_date"].min().date(),
-                "last_auction": auctions["auction_date"].max().date(),
+                "last_auction": last.date(),
             }
         )
+        # Each output is saved separately, so one failing chart costs only
+        # that output, not the rest of the run.
+        try:
+            save_outputs(auction_dir / country.code, country.code, monthly, country_plots(country, monthly))
+        except Exception as exc:
+            print(f"  20-year charts FAILED: {exc!r}")
 
         market = fetch_market(country)
-        try:
-            if market is not None:
+        if market is not None:
+            try:
                 save_market(
                     market_dir / country.code, country.code, market,
                     market_plot(country, market, RECENT_START, END_DATE, RECENT_MONTHS),
                 )
+            except Exception as exc:
+                print(f"  market yield charts FAILED: {exc!r}")
+        try:
             recent = recent_auctions(auctions, market, RECENT_START)
+        except Exception as exc:
+            print(f"  recent auctions FAILED: {exc!r}")
+            continue
+        all_recent.append((country.name, recent, market))
+        try:
             save_recent(
                 auction_dir / country.code, country.code, recent,
                 recent_plots(country, recent, market, RECENT_START, END_DATE, RECENT_MONTHS),
             )
         except Exception as exc:
             print(f"  recent charts FAILED: {exc!r}")
-            continue
-        all_recent.append((country.name, recent, market))
 
     if not all_monthly:
         raise RuntimeError("No country data could be downloaded.")

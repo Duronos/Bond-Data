@@ -59,6 +59,10 @@ EXTRA_SUM_COLUMNS = [
     "indirect_bidder_accepted",
 ]
 
+# Values outside these ranges are treated as source typos (see prepare).
+YIELD_LIMITS = (-3.0, 25.0)  # %
+COVER_LIMITS = (0.0, 50.0)   # bid-to-cover
+
 
 @dataclass
 class Country:
@@ -110,6 +114,19 @@ def prepare(df: pd.DataFrame, start: pd.Timestamp, end: pd.Timestamp) -> pd.Data
         & (df["accepted"] > 0)
     ].copy()
 
+    # Sanity limits. Sources occasionally publish typos (Finland's State
+    # Treasury gives one Nov 2026 auction a 3,389% yield, almost certainly
+    # 3.389%), so values no OECD auction gets near become missing instead of
+    # wrecking the charts. The limits are wide on purpose: Hungary's yields
+    # really reached 15% in 2008-09, Japan's 2012 bills really were 20x+
+    # covered. Checked after the filter above, so the count (in df.attrs,
+    # for the run log) covers only auctions that are kept.
+    bad_yield = ~df["auction_yield"].between(*YIELD_LIMITS) & df["auction_yield"].notna()
+    bad_cover = ~df["bid_to_cover"].between(*COVER_LIMITS) & df["bid_to_cover"].notna()
+    df.loc[bad_yield, "auction_yield"] = np.nan
+    df.loc[bad_cover, "bid_to_cover"] = np.nan
+    implausible = int(bad_yield.sum() + bad_cover.sum())
+
     # Sort each auction into a bucket. right=True makes the upper edge
     # inclusive, so exactly 2 years is Short and exactly 10 is Intermediate.
     df["bucket"] = pd.cut(
@@ -122,6 +139,7 @@ def prepare(df: pd.DataFrame, start: pd.Timestamp, end: pd.Timestamp) -> pd.Data
     # Snap every date to the first of its month (2026-09-17 -> 2026-09-01)
     # so auctions can be grouped by month.
     df["month"] = df["auction_date"].dt.to_period("M").dt.to_timestamp()
+    df.attrs["implausible"] = implausible
     return df
 
 
@@ -186,15 +204,27 @@ def make_monthly_data(df: pd.DataFrame, volume_divisor: float) -> pd.DataFrame:
         rolled.append("nondealer_share_pct")
 
     # 3-month rolling averages make the multi-year charts easier to read.
-    # Grouping by bucket keeps each bucket's average to its own history, and
-    # min_periods=1 lets the first two months average over what exists.
+    # Each bucket is averaged over its own history.
     for col in rolled:
-        monthly[f"{col}_3m"] = (
-            monthly.groupby("bucket", observed=True)[col]
-            .transform(lambda s: s.rolling(3, min_periods=1).mean())
-        )
+        smoothed = pd.Series(np.nan, index=monthly.index)
+        for _, group in monthly.groupby("bucket", observed=True):
+            smoothed[group.index] = rolling_3m(group[col], group["month"])
+        monthly[f"{col}_3m"] = smoothed
 
     return monthly
+
+
+def rolling_3m(values: pd.Series, months: pd.Series) -> pd.Series:
+    """
+    Average over the last three calendar months (this one and the two
+    before), using whichever of them had auctions. Rows exist only for
+    months with auctions, so a plain 3-row window would reach back across
+    gaps: Belgium's March 2023 would have averaged in late 2019.
+    """
+    by_month = pd.Series(values.to_numpy(), index=months.to_numpy())
+    every_month = by_month.reindex(pd.date_range(by_month.index.min(), by_month.index.max(), freq="MS"))
+    averaged = every_month.rolling(3, min_periods=1).mean()
+    return pd.Series(averaged.reindex(by_month.index).to_numpy(), index=values.index)
 
 
 # --------------------------------------------------------------------------
@@ -245,6 +275,25 @@ BID_TO_COVER_FORMULA = (
 )
 
 
+GAP_MONTHS = 6  # lines stop where a series has no data for longer than this
+
+
+def with_segments(data: pd.DataFrame, keys: list[str]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Add a "segment" column that starts a new line wherever a series (one per
+    `keys` combination) skips more than GAP_MONTHS months, so charts don't
+    draw a straight line across years with no auctions. Also return the
+    points that are alone in their segment: a line can't show those, so
+    they're drawn as dots.
+    """
+    data = data.sort_values(keys + ["month"]).copy()
+    months = data["month"].dt.year * 12 + data["month"].dt.month
+    step = months.groupby([data[k] for k in keys], observed=True).diff()
+    data["segment"] = (step.isna() | (step > GAP_MONTHS + 1)).cumsum().astype(str)
+    alone = data.groupby("segment")["segment"].transform("size") == 1
+    return data, data[alone]
+
+
 def wrap(caption: str, width: int = 140) -> str:
     """Break long captions onto several lines so they aren't cut off at the edge."""
     return "\n".join(textwrap.wrap(caption, width))
@@ -258,8 +307,10 @@ def line_chart(data, y, color, title, subtitle, ylab, caption, y_limits=None, fa
     color="country"  a line per country; with facet=True, a separate panel
                      per maturity bucket stacked vertically (the global charts)
     """
-    # Drop months missing this metric so lines don't break or plot as 0.
+    # Drop months missing this metric so they don't plot as 0; lines then
+    # break only at real gaps (see with_segments).
     data = data.dropna(subset=[y]).copy()
+    data, alone = with_segments(data, [color] + (["bucket"] if facet and color != "bucket" else []))
     legend_title = "Maturity" if color == "bucket" else "Country"
 
     if color == "country":
@@ -268,7 +319,7 @@ def line_chart(data, y, color, title, subtitle, ylab, caption, y_limits=None, fa
         colors, styles = country_styles(list(data[color].cat.categories))
         data[color] = data[color].cat.remove_unused_categories()
         present = list(data[color].cat.categories)
-        mapping = aes(x="month", y=y, color=color, linetype=color)
+        mapping = aes(x="month", y=y, color=color, linetype=color, group="segment")
         scales = [
             scale_color_manual(values={c: colors[c] for c in present}, name=legend_title),
             scale_linetype_manual(values={c: styles[c] for c in present}, name=legend_title),
@@ -278,14 +329,17 @@ def line_chart(data, y, color, title, subtitle, ylab, caption, y_limits=None, fa
             theme(legend_key_width=36),
         ]
     else:
-        mapping = aes(x="month", y=y, color=color)
+        mapping = aes(x="month", y=y, color=color, group="segment")
         scales = [scale_color_manual(values=BUCKET_COLORS, name=legend_title)]
 
     # plotnine builds charts in layers joined with "+": data and axes
-    # mapping, then the lines, then labels, then axis scale and styling.
+    # mapping, then the lines (and dots for months with no neighbour),
+    # then labels, then axis scale and styling.
     plot = (
         ggplot(data, mapping)
         + geom_line(size=1.0 if not facet else 0.8)
+        + geom_point(alone, aes(x="month", y=y, color=color), size=1.2,
+                     inherit_aes=False, show_legend=False)
         + labs(
             title=title,
             subtitle=subtitle,
@@ -316,6 +370,7 @@ def grid_chart(data, y, title, subtitle, ylab, caption):
     """
     data = data.dropna(subset=[y]).copy()
     data["country"] = data["country"].cat.remove_unused_categories()
+    data, alone = with_segments(data, ["country", "bucket"])
     n_countries = data["country"].nunique()
     n_rows = -(-n_countries // 4)  # ceiling division: 4 panels per row
 
@@ -329,8 +384,10 @@ def grid_chart(data, y, title, subtitle, ylab, caption):
         caption += " Axis capped at the 99th percentile; a few extreme values run off the top."
 
     plot = (
-        ggplot(data, aes(x="month", y=y, color="bucket"))
+        ggplot(data, aes(x="month", y=y, color="bucket", group="segment"))
         + geom_line(size=0.6)
+        + geom_point(alone, aes(x="month", y=y, color="bucket"), size=0.8,
+                     inherit_aes=False, show_legend=False)
         + labs(title=title, subtitle=subtitle, x="Auction month", y=ylab,
                caption=wrap(caption, 170))
         + scale_color_manual(values=BUCKET_COLORS, name="Maturity")

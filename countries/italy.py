@@ -21,11 +21,23 @@ COLUMNS = {
 NOMINAL_TYPES = ("BOT", "BTP", "CTZ", "BTPGREEN")
 
 
+def to_date(values: pd.Series) -> pd.Series:
+    """
+    The history file stores real Excel dates; the current-year file stores
+    text like "09-01-2026" (day first). Parse that text explicitly as
+    day-month-year: left to guess, pandas reads it month first (1 Sep).
+    """
+    text = values.astype(str).str.strip()
+    dayfirst = pd.to_datetime(text, format="%d-%m-%Y", errors="coerce")
+    other = pd.to_datetime(values.where(dayfirst.isna()), errors="coerce", format="mixed")
+    return dayfirst.fillna(other)
+
+
 def read_zip(name: str) -> pd.DataFrame:
     archive = zipfile.ZipFile(io.BytesIO(get(BASE + name).content))
     sheet = pd.read_excel(io.BytesIO(archive.read(archive.namelist()[0])), header=None)
     df = sheet[list(COLUMNS)].rename(columns=COLUMNS)
-    df["auction_date"] = pd.to_datetime(df["auction_date"], errors="coerce", format="mixed")
+    df["auction_date"] = to_date(df["auction_date"])
     return df[df["auction_date"].notna()]
 
 
@@ -48,7 +60,7 @@ def fetch(start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "auction_date": df["auction_date"],
-            "maturity_date": pd.to_datetime(df["maturity_date"], errors="coerce"),
+            "maturity_date": to_date(df["maturity_date"]),
             "bid_to_cover": bids / assigned.where(assigned > 0),
             "accepted": assigned * 1e6,  # EUR millions
             "auction_yield": yields,

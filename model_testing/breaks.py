@@ -60,24 +60,35 @@ EURO = {
 # also changes in how jumpy it is, which "rbf" picks up.
 MODELS = {"auction_yield": "l2", "bid_to_cover": "rbf"}
 
+GAP_MONTHS = 6  # longest run of months without an auction that gets filled in
 
-def load_series(code: str, measure: str, bucket: str) -> pd.Series | None:
-    """One country's monthly median (not the 3-month average), gaps filled."""
+
+def load_stretches(code: str, measure: str, bucket: str, min_length: int) -> list[pd.Series]:
+    """
+    One country's monthly median (not the 3-month average) as a list of
+    unbroken stretches, each at least `min_length` months long.
+
+    ruptures needs evenly spaced data, so a gap of up to GAP_MONTHS months
+    with no auction is filled with a straight line between the months on
+    either side. A longer gap is left empty, which splits the series: each
+    stretch is analysed on its own, so no part of the history is dropped
+    and nothing is invented across a long gap.
+    """
     path = RESULTS / code / f"{code}_auction_20y_monthly.csv"
     if not path.exists():
-        return None
+        return []
     df = pd.read_csv(path, parse_dates=["month"])
     df = df[df["bucket"].str.startswith(bucket)]
     series = df.set_index("month")[measure].dropna()
     if series.empty:
-        return None
-    # Months without an auction: fill gaps of up to 6 months by straight
-    # lines so ruptures sees evenly spaced data; longer gaps stay empty and
-    # the series is cut to its longest unbroken stretch.
-    series = series.asfreq("MS").interpolate(limit=6, limit_area="inside")
-    runs = series.notna().astype(int).groupby(series.isna().cumsum()).cumsum()
-    end = runs.idxmax()
-    return series.loc[end - pd.DateOffset(months=int(runs.max()) - 1):end]
+        return []
+    series = series.asfreq("MS")
+    # Length of the gap each empty month belongs to.
+    gap = series.isna().groupby(series.notna().cumsum()).transform("sum")
+    filled = series.interpolate(limit_area="inside").where(series.notna() | (gap <= GAP_MONTHS))
+    stretch_id = filled.isna().cumsum()[filled.notna()]
+    stretches = [s for _, s in filled.dropna().groupby(stretch_id)]
+    return [s for s in stretches if len(s) >= min_length]
 
 
 def find_breaks(series: pd.Series, model: str, penalty: float, min_months: int) -> list:
@@ -110,18 +121,20 @@ def main():
     out = HERE / "results" / f"{args.measure}_{args.bucket.lower()}_pen{args.penalty:g}"
     (out / "charts").mkdir(parents=True, exist_ok=True)
 
-    rows, coverage, checked = [], [], []
+    rows, checked, analysed = [], [], []
+    near = lambda a, b: abs(a - b) <= pd.Timedelta(days=31 * args.tolerance)
     for code, country in COUNTRIES.items():
-        series = load_series(code, args.measure, args.bucket)
-        if series is None or len(series) < 3 * args.min_months:
+        stretches = load_stretches(code, args.measure, args.bucket, 3 * args.min_months)
+        if not stretches:
             continue
-        breaks = find_breaks(series, MODELS[args.measure], args.penalty, args.min_months)
+        breaks = [b for s in stretches for b in find_breaks(s, MODELS[args.measure], args.penalty, args.min_months)]
         relevant = events[[in_scope(s, country) for s in events["countries"]]]
+        analysed.append((country, [(s.index[0], s.index[-1]) for s in stretches]))
 
         for date in breaks:
             gap = (relevant["date"] - date).abs()
-            near = relevant[gap <= pd.Timedelta(days=31 * args.tolerance)]
-            nearest = near.loc[gap[near.index].idxmin()] if not near.empty else None
+            close = relevant[gap <= pd.Timedelta(days=31 * args.tolerance)]
+            nearest = close.loc[gap[close.index].idxmin()] if not close.empty else None
             rows.append({
                 "country": country, "break_month": date.date(),
                 "nearest_event": nearest["event"] if nearest is not None else "",
@@ -129,23 +142,22 @@ def main():
                 "months_off": round((date - nearest["date"]).days / 30.4, 1) if nearest is not None else "",
             })
 
-        # Which events this country's data covers, and whether a break fell nearby.
-        for _, ev in relevant.iterrows():
-            if series.index[0] + tolerance <= ev["date"] <= series.index[-1] - tolerance:
-                hit = any(abs(b - ev["date"]) <= pd.Timedelta(days=31 * args.tolerance) for b in breaks)
-                checked.append({"event": ev["event"], "date": ev["date"].date(),
-                                "country": country, "found": hit})
+        # Which events each stretch covers (with room either side), whether
+        # a break fell nearby, and the chance rate for that check: the share
+        # of the stretch's months, over the same span, that lie near some
+        # break. A randomly dated event would be matched that often, so the
+        # real hit rate has to beat it to mean anything.
+        for s in stretches:
+            first, last = s.index[0] + tolerance, s.index[-1] - tolerance
+            months = s.index[(s.index >= first) & (s.index <= last)]
+            own = [b for b in breaks if s.index[0] <= b <= s.index[-1]]
+            chance = float(np.mean([any(near(m, b) for b in own) for m in months])) if len(months) else 0.0
+            for _, ev in relevant.iterrows():
+                if first <= ev["date"] <= last:
+                    checked.append({"event": ev["event"], "date": ev["date"].date(), "country": country,
+                                    "found": any(near(ev["date"], b) for b in own), "chance": chance})
 
-        # Chance rate: share of this country's months that lie within the
-        # tolerance of some break. A randomly dated "event" would be matched
-        # this often, so the real hit rate has to beat it to mean anything.
-        months = series.index
-        near_break = np.zeros(len(months), dtype=bool)
-        for b in breaks:
-            near_break |= np.abs((months - b).days) <= 31 * args.tolerance
-        coverage.append(near_break.mean())
-
-        chart(series, breaks, relevant, country, args, out / "charts" / f"{code}.png")
+        chart(stretches, breaks, relevant, country, args, out / "charts" / f"{code}.png")
 
     breaks_df = pd.DataFrame(rows)
     breaks_df.to_csv(out / "breaks.csv", index=False)
@@ -169,10 +181,10 @@ def main():
         "countries": int(breaks_df["country"].nunique()),
         "breaks_near_event": float((breaks_df["nearest_event"].fillna("") != "").mean()),
         "events_found": float(checked["found"].mean()),
-        "chance": float(np.mean(coverage)),
+        "chance": float(checked["chance"].mean()),
     }
     (out / "summary.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
-    report = run_report(stats, summary, breaks_df)
+    report = run_report(stats, summary, breaks_df, analysed)
     (out / "README.md").write_text(report, encoding="utf-8")
     write_index(out.parent)
     print(report)
@@ -184,9 +196,10 @@ def describe(stats: dict) -> str:
             f"penalty {stats['penalty']:g}")
 
 
-def run_report(stats: dict, summary: pd.DataFrame, breaks_df: pd.DataFrame) -> str:
+def run_report(stats: dict, summary: pd.DataFrame, breaks_df: pd.DataFrame, analysed: list) -> str:
     """One run's results as a markdown page (also printed to the console)."""
     unmatched = breaks_df[breaks_df["nearest_event"].fillna("") == ""]
+    spans = lambda stretches: ", ".join(f"{a:%Y-%m} to {b:%Y-%m}" for a, b in stretches)
     lines = [
         f"# Breaks: {describe(stats)}",
         "",
@@ -198,6 +211,9 @@ def run_report(stats: dict, summary: pd.DataFrame, breaks_df: pd.DataFrame) -> s
         f"| Breaks near a known event | {stats['breaks_near_event']:.0%} |",
         f"| Events found (country by country) | {stats['events_found']:.0%} |",
         f"| Chance rate (a random date) | {stats['chance']:.0%} |",
+        "",
+        "The chance rate is worked out for each event check over the same span of "
+        "that country's data, so the two rates compare like for like.",
         "",
         "## Each event",
         "",
@@ -211,6 +227,17 @@ def run_report(stats: dict, summary: pd.DataFrame, breaks_df: pd.DataFrame) -> s
         "Leads worth looking into: something changed, but it isn't in events.csv.",
         "",
         *([f"- {r.country}: {r.break_month}" for r in unmatched.itertuples()] or ["- none"]),
+        "",
+        "## Data analysed",
+        "",
+        f"Gaps of up to {GAP_MONTHS} months without an auction are filled with a straight "
+        "line; a longer gap splits the series, and each stretch of at least "
+        f"{3 * stats['min_months']} months is analysed on its own. A break can't be placed "
+        f"within {stats['min_months']} months of a stretch's start or end.",
+        "",
+        "| Country | Months analysed |",
+        "|---|---|",
+        *[f"| {country} | {spans(stretches)} |" for country, stretches in analysed],
         "",
         "## Files",
         "",
@@ -243,9 +270,10 @@ def write_index(results: Path):
     (results / "README.md").write_text("\n".join(lines), encoding="utf-8")
 
 
-def chart(series, breaks, events, country, args, path):
+def chart(stretches, breaks, events, country, args, path):
     fig, ax = plt.subplots(figsize=(12, 4.5))
-    ax.plot(series.index, series.values, color="#2a78d6", lw=1.4, label=args.measure)
+    for i, s in enumerate(stretches):  # a gap between stretches = no data there
+        ax.plot(s.index, s.values, color="#2a78d6", lw=1.4, label=args.measure if i == 0 else None)
     for i, ev in enumerate(events.itertuples()):
         ax.axvline(ev.date, color="#999999", ls=":", lw=1, label="Known event" if i == 0 else None)
     for i, b in enumerate(breaks):

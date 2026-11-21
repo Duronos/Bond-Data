@@ -92,6 +92,16 @@ def parse_detail(html: str, auction_date: pd.Timestamp, title: str) -> dict | No
         return None
     received = number(field("amount received"))
     accepted = number(field("amount accepted"))
+    # A few pages have typos in the amount received (an extra digit,
+    # "7,1565"; a lost decimal point; the amount accepted copied in). The
+    # page's own ratio (bids / amount offered) gives the amount back, so use
+    # it when the two disagree by 2x or more. Smaller gaps are left alone:
+    # either figure could be the wrong one.
+    offered = number(field("amount offered"))
+    published = number(next((v for k, v in values.items() if "cover" in k), None)) / 100
+    check = published * offered
+    if check > 0 and not 0.5 <= received / check <= 2:
+        received = check
     rate = number(field("highest accepted rate") or field("accepted rate"))
     if rate > 20:
         # At least one page has a typo (an "accepted rate" of 301.4%, likely

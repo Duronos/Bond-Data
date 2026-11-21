@@ -40,6 +40,10 @@ def column(df: pd.DataFrame, starts_with: str) -> pd.Series:
 def bonds(df: pd.DataFrame, units: float, yield_scale: float) -> pd.DataFrame:
     # Fixed-rate bonds only; floating-rate bonds quote a discount margin, not a yield.
     df = df[column(df, "Coupon").astype(str).str.strip() != "Float"]
+    # Koruna bonds only: since 2022 a few are sold in euros (amounts in EUR,
+    # euro yields), which would be mixed into CZK totals and medians.
+    if any(c.startswith("Currency") for c in df.columns):
+        df = df[column(df, "Currency").astype(str).str.strip().str.upper() == "CZK"]
     bids = pd.to_numeric(column(df, "Total Amount Bid"), errors="coerce")
     sold = pd.to_numeric(column(df, "Total Amount Sold"), errors="coerce")
     return pd.DataFrame(

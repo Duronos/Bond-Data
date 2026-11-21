@@ -38,14 +38,22 @@ Austria,2022-07-01,Fed starts raising rates (global hiking cycle),2022-03-16,3.5
 Belgium,2008-12-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,2.5
 Belgium,2012-04-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-3.8
 Belgium,2014-10-01,ECB introduces negative interest rates,2014-06-05,3.9
+Belgium,2026-02-01,,,
 Czech Republic,2010-03-01,,,
 Czech Republic,2012-09-01,,,
 Czech Republic,2014-05-01,,,
 Czech Republic,2017-09-01,,,
 Czech Republic,2021-11-01,Russia invades Ukraine,2022-02-24,-3.8
+Denmark,2010-07-01,,,
+Denmark,2011-10-01,,,
+Denmark,2012-08-01,,,
 Denmark,2022-01-01,Russia invades Ukraine,2022-02-24,-1.8
 Denmark,2022-11-01,,,
-Finland,2026-06-01,,,
+Finland,2011-12-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,0.7
+Finland,2016-09-01,,,
+Finland,2017-12-01,,,
+Finland,2018-10-01,,,
+Finland,2022-04-01,Fed starts raising rates (global hiking cycle),2022-03-16,0.5
 France,2009-02-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,4.6
 France,2012-06-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-1.8
 France,2014-07-01,ECB introduces negative interest rates,2014-06-05,0.9
@@ -57,6 +65,9 @@ Hungary,2014-10-01,,,
 Hungary,2021-06-01,,,
 Hungary,2022-04-01,Fed starts raising rates (global hiking cycle),2022-03-16,0.5
 Hungary,2023-12-01,,,
+Ireland,2018-06-01,,,
+Ireland,2020-05-01,COVID-19 declared a pandemic,2020-03-11,1.7
+Ireland,2021-03-01,,,
 Italy,2009-01-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,3.6
 Italy,2011-07-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,-4.3
 Italy,2012-10-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,2.2
@@ -71,6 +82,7 @@ Lithuania,2022-04-01,Fed starts raising rates (global hiking cycle),2022-03-16,0
 Netherlands,2008-11-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,1.5
 Netherlands,2011-10-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,-1.3
 Netherlands,2014-04-01,ECB introduces negative interest rates,2014-06-05,-2.1
+Netherlands,2022-08-01,Fed starts raising rates (global hiking cycle),2022-03-16,4.5
 Norway,2008-12-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,2.5
 Norway,2010-03-01,,,
 Norway,2011-11-01,,,
@@ -81,12 +93,16 @@ Poland,2012-10-01,,,
 Poland,2014-06-01,,,
 Poland,2020-04-01,COVID-19 declared a pandemic,2020-03-11,0.7
 Poland,2021-12-01,Russia invades Ukraine,2022-02-24,-2.8
+Slovakia,2012-05-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-2.8
+Slovakia,2014-06-01,ECB introduces negative interest rates,2014-06-05,-0.1
 Slovakia,2022-07-01,Fed starts raising rates (global hiking cycle),2022-03-16,3.5
 South Korea,2019-04-01,,,
 South Korea,2022-03-01,Russia invades Ukraine,2022-02-24,0.2
 South Korea,2024-09-01,,,
 South Korea,2025-12-01,,,
 Spain,2026-04-01,,,
+Switzerland,2013-06-01,US taper tantrum (Fed signals slower bond buying),2013-05-22,0.3
+Switzerland,2017-02-01,,,
 Switzerland,2022-03-01,Russia invades Ukraine,2022-02-24,0.2
 Switzerland,2024-09-01,,,
 European Union,2022-07-01,Fed starts raising rates (global hiking cycle),2022-03-16,3.5

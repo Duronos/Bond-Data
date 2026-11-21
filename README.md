@@ -659,26 +659,33 @@ python model_testing/compare_llm.py                    # LLM breaks vs ruptures 
 
 `--penalty` sets the sensitivity: higher means fewer, bigger breaks. Each
 setting gets its own folder in [`model_testing/results/`](model_testing/results/)
-with a summary page, every break with its nearest event, a per-event hit rate
-and a chart per country; `results/README.md` compares all settings tested.
+with a summary page, every break with its nearest event, a per-event hit rate,
+the months analysed per country and a chart per country; `results/README.md`
+compares all settings tested.
 
-Results (run of 19 November 2026; auction yields, 2–10 year bucket, penalty 2, ±6 months):
+Months without an auction are filled in only across gaps of up to 6 months
+(a straight line between the months either side). A longer gap splits a
+country's series, and each stretch of at least 18 months is analysed on its
+own, so nothing is invented across long gaps and no years are skipped. The
+chance rate is worked out over the same span as each event check.
+
+Results (run of 21 November 2026; auction yields, 2–10 year bucket, penalty 2, ±6 months):
 
 | | |
 |---|---|
-| Breaks found | 50, in 22 countries |
-| Breaks near a known event | 66% |
-| Events found (country by country) | 43%, vs 17% for a random date |
+| Breaks found | 60, in 22 countries |
+| Breaks near a known event | 65% |
+| Events found (country by country) | 46%, vs 19% for a random date |
 
-- **Found well:** the 2022 rate-hiking cycle (17 of 19 countries), the
-  Ukraine invasion (14 of 18), the ECB's 2014 negative rates (5 of 7 euro
-  countries) and 2012 "whatever it takes" (4 of 7), Brexit, the UK
+- **Found well:** the 2022 rate-hiking cycle (19 of 20 countries), the
+  Ukraine invasion (16 of 19), the ECB's 2014 negative rates (6 of 8 euro
+  countries) and 2012 "whatever it takes" (5 of 8), Brexit, the UK
   mini-budget and the Bank of Japan's 2024 exit.
-- **Not found:** the 2010 Greek bailout, the 2013 taper tantrum and COVID. In
-  the euro area yields were already near zero in 2020; elsewhere the drop
-  was real but small next to each country's 20-year range, so penalty 2
-  drops it (see the LLM comparison below).
-- **Bid-to-cover:** no link to these events (2% found vs 2% by chance), so
+- **Not found:** the 2010 Greek bailout, the 2013 taper tantrum (1 of 18)
+  and COVID. In the euro area yields were already near zero in 2020;
+  elsewhere the drop was real but small next to each country's 20-year
+  range, so penalty 2 drops it (see the LLM comparison below).
+- **Bid-to-cover:** no link to these events (2% found vs 3% by chance), so
   demand breaks have other causes.
 - **Breaks with no listed event** are the interesting leads: Norway
   October 2014 (around the oil-price collapse), Japan and Hungary
@@ -690,17 +697,18 @@ As an independent check, an LLM (Claude Opus 5.5) read the same monthly
 yields and marked its own break dates and causes before ruptures was rerun.
 Details: [`model_testing/results/llm_analysis/`](model_testing/results/llm_analysis/).
 
-- **Same big breaks:** 43 of ruptures' 50 breaks (86%) are also in the
-  LLM's list, and the two agree on the cause for 27 of the 33 paired breaks
+- **Same big breaks:** 47 of ruptures' 60 breaks (78%) are also in the
+  LLM's list, and the two agree on the cause for 29 of the 36 paired breaks
   with a known event.
-- **The LLM finds more:** 148 breaks, including the taper tantrum and COVID
-  in several countries. Its high-confidence ones match known events as well
-  as ruptures' breaks do (43% found vs 15% by chance), but no better.
+- **The LLM finds more:** 148 breaks (133 of them where ruptures can look),
+  including the taper tantrum and COVID in several countries. Its
+  high-confidence ones match known events about as well as ruptures' breaks
+  do (41% found vs 16% by chance, against 46% vs 19%), no better.
 - **Mislabelled events:** the Czech, Hungarian and Polish breaks in late
   2021 are credited to the Ukraine invasion by the ±6 month rule, but came
   before it; the LLM puts them down to each central bank's own hikes.
-- **Data error found:** Finland's 17 November 2026 auction is reported at a
-  3,389% yield, which gives ruptures a false break.
+- **Data error found:** Finland's 17 November 2026 auction is published at a
+  3,389% yield; values like that are now left out as typos (see Caveats).
 
 ## Run it
 
@@ -713,7 +721,7 @@ Each run creates a dated folder, with auction results and market yields kept
 apart (they come from different sources):
 
 ```
-runs/2026-11-19_055415_20y/
+runs/2026-11-21_020600_20y/
   auctions/
     auction_totals.csv          auctions per country and maturity bucket
     us/  canada/  france/ ...   one folder per country: charts + CSVs
@@ -748,7 +756,12 @@ needed a sweetener, **below** means strong demand.
 **20 years (`_20y` files): monthly averages.** Auctions are grouped by time to
 maturity: **Short** (≤2 years), **Intermediate** (2–10 years), **Long**
 (>10 years). Monthly figures are medians (bid-to-cover, yield) or sums
-(volume), smoothed with a 3-month rolling average.
+(volume), smoothed with a 3-month rolling average over calendar months (this
+month and the two before, using whichever had auctions). Where a series has
+no auctions for more than 6 months the line stops, so gaps show as gaps; a
+month with no neighbour is drawn as a dot. The 20-year charts and monthly
+CSVs stop at the last full month: the current month's auctions appear only
+on the 12-month charts.
 
 Countries define these measures slightly differently (e.g. clearing vs average
 yield), so compare **trends** across countries more than exact levels.
@@ -759,7 +772,7 @@ The `_grid` versions give each country its own small panel instead.
 
 ## Example charts
 
-These come from the run of 19 November 2026. Each run writes its own copies to
+These come from the run of 21 November 2026. Each run writes its own copies to
 `runs/`; the images here are just a snapshot for this page.
 
 **Demand at auction, all countries.** Bid-to-cover by maturity, one line per
@@ -796,10 +809,10 @@ the ECB raised rates in 2022-23.
 | Canada | Bank of Canada Valet API | 2006 | ✓ | Clearing (high yield) | ✓ (BoC) | |
 | United Kingdom | UK Debt Management Office | 2006 | ✓ | Average (yield at average accepted price) | | Gilts only; T-bills are sold separately |
 | Germany | Finanzagentur | 2006 | ✓ | Average (weighted average yield) | | |
-| Japan | Ministry of Finance | 2006 | ✓ | Clearing (yield at lowest accepted price) | | Published with a ~1 month lag |
+| Japan | Ministry of Finance | 2006 | ✓ | Clearing (yield at lowest accepted price) | | Published with a ~1 month lag. No 3-month bills before Feb 2009 (the MOF file only has them from when financing bills and T-bills were merged), so short-term counts and volume jump then |
 | Austria | OeKB (auction agent) | 2007 | | Issue yield (as published) | | Bonds only; total bids not published |
 | Belgium | Belgian Debt Agency | 2006 | ✓ | Average (weighted average yield) | | Parsed from PDFs |
-| Czech Republic | Czech National Bank | 2006 | ✓ | Clearing (maximum accepted yield); bills: average | | T-bill data ends in 2021 (no later file published). The Ministry of Finance's purchases of its own bills (large in 2020–21) are left out of bid-to-cover and volume, as for bonds, and kept in an `issuer_retained` column; bill cover = investor bids ÷ the larger of the amount offered and the amount sold |
+| Czech Republic | Czech National Bank | 2006 | ✓ | Clearing (maximum accepted yield); bills: average | | T-bill data ends in 2021 (no later file published). The Ministry of Finance's purchases of its own bills (large in 2020–21) are left out of bid-to-cover and volume, as for bonds, and kept in an `issuer_retained` column; bill cover = investor bids ÷ the larger of the amount offered and the amount sold. The few euro-denominated bonds (2022, 2024) are excluded |
 | Denmark | Danmarks Nationalbank | 2008 | ✓ | Clearing (cut-off price/rate) | | Current year read from the results pages |
 | Finland | State Treasury open data API | 2006 | ✓ | Issue yield (as published) | | Mostly syndications before 2019 |
 | France | Agence France Trésor | 2006 | ✓ | Average (weighted average rate) | | |
@@ -807,11 +820,11 @@ the ECB raised rates in 2022-23.
 | Hungary | ÁKK (via its website's data API) | 2006 | ✓ | Clearing (maximum accepted yield) | | |
 | Ireland | NTMA | 2009 | ✓ | Issue yield (as published) | | Bill history ends in 2022 |
 | Italy | Banca d'Italia | 2006 | ✓ | Allotment yield (see note) | | |
-| Lithuania | Nasdaq Baltic (Vilnius auctions) | 2008 | ✓ | Clearing (maximum accepted yield) | | Maturities looked up per bond on Nasdaq Baltic |
+| Lithuania | Nasdaq Baltic (Vilnius auctions) | 2008 | ✓ | Clearing (maximum accepted yield) | | Maturities looked up per bond on Nasdaq Baltic. Amounts before 2015 are all labelled EUR by the source, but litas bonds' amounts look like unconverted litas (round figures; the source doesn't say which bonds), so the volume chart before 2015 may be overstated up to ~3.45×; bid-to-cover and yields are unaffected |
 | Netherlands | Dutch State Treasury Agency | 2007 | | Issue yield (as published) | | Bids not published |
 | Norway | Norges Bank | 2006 | ✓ | Issue yield (as published) | | |
 | Poland | Ministry of Finance | 2006 | ✓ | Clearing (maximum accepted yield) | | |
-| Slovakia | ARDAL | 2009 | ✓ | Clearing (maximum accepted yield) | | Bonds only; parsed from per-auction PDFs. **Yields from 2017 only**: the 2009–2016 PDFs report prices, not yields (bid-to-cover and volume cover the full period) |
+| Slovakia | ARDAL | 2009 | ✓ | Clearing (maximum accepted yield) | | Bonds only; parsed from per-auction PDFs (the 2009–2016 ones label the clearing yield "maximum interest rate"). Non-competitive top-ups and buy-backs excluded |
 | Slovenia | Ministry of Finance | 2007 | | Issue rate (as published) | | Bills only; bids not published |
 | South Korea | Ministry of Economy and Finance (KTB site) | 2018 | ✓ | Clearing (highest accepted rate) | | KTB bonds only; the English results pages start in 2018 |
 | Spain | Tesoro Público | 2025 | ✓ | Clearing (stop-out/marginal rate) | | Only the last two years are published in bulk |
@@ -936,6 +949,11 @@ Charts for any measure a country doesn't publish are skipped automatically.
   or zero-coupon curves vs one specific bond's clearing or average yield), so a
   few basis points between line and dot is normal. The UK gap is a little
   larger because the DMO's file gives only each gilt's maturity year.
-- Known data error: Finland's State Treasury reports its 17 November 2026
-  4-year auction at a yield of 3,389% (almost certainly 3.389%), which
-  distorts Finland's November 2026 yield charts.
+- Sources occasionally publish typos. Yields outside −3% to 25% and
+  bid-to-cover above 50 are treated as typos and left out (the run log
+  counts them), e.g. Finland's 17 November 2026 auction, published at a
+  3,389% yield. Some loaders also cross-check: South Korea's amount bid is
+  checked against the page's own ratio, and Slovak amounts with malformed
+  digit groups ("339 700 0000") are rejected.
+- A source that stops updating is flagged in the run log (latest auction
+  more than 45 days old, or market yield more than 10 days old).

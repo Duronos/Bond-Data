@@ -54,7 +54,11 @@ def read_page_table(page: str) -> pd.DataFrame:
     table.columns = [str(h).split(",")[0].strip() for h in table.columns]
     table = table[pd.to_datetime(table["Date"], errors="coerce", dayfirst=True).notna()].copy()
     for col in ("Bid", "Sale"):
-        table[col] = table[col].str.replace(",", "", regex=False)
+        # Amounts (DKK millions) are whole numbers; some rows use "." for
+        # thousands instead ("1.700" = 1,700m), so a "." followed by groups
+        # of three digits is a thousands separator, not a decimal point.
+        text = table[col].str.replace(",", "", regex=False).str.strip()
+        table[col] = text.where(~text.str.fullmatch(r"\d{1,3}(\.\d{3})+"), text.str.replace(".", "", regex=False))
     for col in ("Yield", "Cut-off rate"):
         if col in table.columns:
             table[col] = table[col].str.replace(",", ".", regex=False)

@@ -13,7 +13,7 @@ import json
 import re
 import time
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import unquote, urljoin
 
 import pandas as pd
 import pdfplumber
@@ -23,7 +23,8 @@ from common import Country
 from countries._http import HEADERS, get
 
 PAGE = "https://www.ardal.sk/en/government-securities/government-bonds/results-of-gov-bonds-auctions"
-CACHE = Path(__file__).resolve().parent.parent / "cache" / "slovakia" / "parsed.json"
+# Bump the file name when parse_pdf changes, so every PDF is re-read once.
+CACHE = Path(__file__).resolve().parent.parent / "cache" / "slovakia" / "parsed_v2.json"
 REQUEST_PAUSE = 0.5  # seconds between PDF downloads
 
 
@@ -36,7 +37,12 @@ def amount(text: str | None) -> float:
     """'215,500,000' or '1 158 500 000' -> 215500000.0."""
     if not text:
         return float("nan")
-    return float(re.sub(r"[\s,]", "", text))
+    # Digit groups after the first must have exactly three digits: one PDF
+    # has "339 700 0000" (an extra zero), which would read as 10x too large.
+    groups = re.split(r"[\s,]+", text.strip())
+    if any(len(g) != 3 for g in groups[1:]):
+        return float("nan")
+    return float("".join(groups))
 
 
 def to_date(text: str | None) -> str | None:
@@ -51,6 +57,16 @@ def is_buy_back(url_or_text: str) -> bool:
     """Buy-backs (the state repurchasing its bonds) aren't sale auctions."""
     name = url_or_text.rsplit("/", 1)[-1]
     return bool(re.search(r"buy\s*-?\s*back|\bBB\d*\b", name, re.I))
+
+
+def is_non_competitive(url: str) -> bool:
+    """
+    The non-competitive top-up after an auction has its own PDF ("ncgb 228
+    D.pdf", "gb 217 E NK.pdf"). It isn't a separate auction: counting it
+    would add a row with a bid-to-cover of exactly 1.
+    """
+    name = unquote(url.rsplit("/", 1)[-1])
+    return bool(re.match(r"nc", name, re.I) or re.search(r"\bNK\b", name))
 
 
 def parse_pdf(content: bytes) -> dict | None:
@@ -70,8 +86,14 @@ def parse_pdf(content: bytes) -> dict | None:
     bids = amount(first(text, r"Total bids \(EUR\)\s+" + number))
     accepted = amount(first(text, r"Accepted bids \(EUR\)\s+" + number))
     issued = amount(first(text, r"TOTAL ISSUED AMOUNT \(EUR\)\s+" + number))
-    # Older PDFs (around 2009-2012) only report prices, not yields.
-    max_yield = first(text, r"Maximum accepted yield to maturity \(% p\. ?a\.\)\s+(-?[\d.]+)")
+    # The clearing yield: "Maximum accepted yield to maturity" since 2017;
+    # before that, "Maximum interest rate (% p.a.)" in the accepted-bids
+    # section (the first one belongs to all bids), sometimes with a decimal
+    # comma ("2,8471").
+    max_yield = first(text, r"Maximum accepted yield to maturity \(% p\. ?a\.\)\s+(-?[\d.,]+)")
+    if max_yield is None and "Accepted bids" in text:
+        accepted_part = text[text.index("Accepted bids"):]
+        max_yield = first(accepted_part, r"Maximum interest rate \(% p\. ?a\.\)\s+(-?[\d.,]+)")
     if not auction or not maturity:
         return None
     return {
@@ -82,7 +104,7 @@ def parse_pdf(content: bytes) -> dict | None:
         # Total issued includes the non-competitive part; older PDFs only
         # give the competitive amount.
         "issued": issued if issued == issued else accepted,
-        "max_yield": float(max_yield) if max_yield else None,
+        "max_yield": float(max_yield.replace(",", ".")) if max_yield else None,
     }
 
 
@@ -101,14 +123,22 @@ def fetch(start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame:
             continue
         time.sleep(REQUEST_PAUSE)
         response = session.get(url, headers=HEADERS, timeout=60)
-        # A few links on ARDAL's page are broken (404); remember them as None.
-        is_pdf = response.ok and response.content[:4] == b"%PDF"
-        cache[url] = parse_pdf(response.content) if is_pdf else None
+        if response.ok and response.content[:4] == b"%PDF":
+            cache[url] = parse_pdf(response.content)
+        elif response.status_code == 404:
+            # A few links on ARDAL's page are broken; remember them as None.
+            cache[url] = None
+        else:
+            # Anything else (a server error, a bot-check page) may be
+            # temporary: don't cache it, so the next run tries again.
+            print(f"  skipped for now ({response.status_code}): {unquote(url.rsplit('/', 1)[-1])}")
+            continue
         CACHE.write_text(json.dumps(cache), encoding="utf-8")
 
     # Skip buy-back results (file names like "gb 210 BB1.pdf"); older cache
     # entries were parsed before buy-backs were excluded in parse_pdf.
-    df = pd.DataFrame([row for url, row in cache.items() if row and not is_buy_back(url)])
+    df = pd.DataFrame([row for url, row in cache.items()
+                       if row and not is_buy_back(url) and not is_non_competitive(url)])
     df = df.drop_duplicates(subset=["auction_date", "maturity_date", "accepted_competitive"])
     return pd.DataFrame(
         {
@@ -132,7 +162,7 @@ COUNTRY = Country(
     volume_divisor=1e6,
     source="ARDAL (parsed from its per-auction PDFs)",
     yield_note=(
-        "Maximum accepted (clearing) yield, from 2017 only: earlier PDFs report "
-        "prices, not yields. Bonds only; buy-backs excluded."
+        "Maximum accepted (clearing) yield. Bonds only; buy-backs and "
+        "non-competitive top-ups excluded."
     ),
 )

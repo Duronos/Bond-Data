@@ -50,8 +50,10 @@ def fetch(start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame:
                     # also includes a non-competitive top-up after the auction.
                     "bid_to_cover": offered / auctioned.where(auctioned > 0),
                     "accepted": accepted * 1e6,
+                    # A few rows use a decimal comma ("2,24%").
                     "auction_yield": pd.to_numeric(
-                        t[yield_col].astype(str).str.replace("%", ""), errors="coerce"
+                        t[yield_col].astype(str).str.replace("%", "").str.replace(",", "."),
+                        errors="coerce",
                     ),
                 }
             )

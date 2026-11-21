@@ -19,11 +19,16 @@ Austria,2014-03-01,ECB introduces negative interest rates,2014-06-05,-3.2
 Austria,2022-07-01,Fed starts raising rates (global hiking cycle),2022-03-16,3.5
 Belgium,2012-04-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-3.8
 Belgium,2014-10-01,ECB introduces negative interest rates,2014-06-05,3.9
+Belgium,2026-02-01,,,
 Czech Republic,2010-03-01,,,
 Czech Republic,2012-09-01,,,
 Czech Republic,2021-11-01,Russia invades Ukraine,2022-02-24,-3.8
+Denmark,2011-10-01,,,
 Denmark,2022-06-01,Fed starts raising rates (global hiking cycle),2022-03-16,2.5
-Finland,2026-06-01,,,
+Finland,2011-12-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,0.7
+Finland,2017-12-01,,,
+Finland,2018-10-01,,,
+Finland,2022-04-01,Fed starts raising rates (global hiking cycle),2022-03-16,0.5
 France,2009-02-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,4.6
 France,2012-06-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-1.8
 France,2022-06-01,Fed starts raising rates (global hiking cycle),2022-03-16,2.5
@@ -37,15 +42,20 @@ Lithuania,2014-10-01,ECB introduces negative interest rates,2014-06-05,3.9
 Lithuania,2022-04-01,Fed starts raising rates (global hiking cycle),2022-03-16,0.5
 Netherlands,2008-11-01,Global financial crisis (Lehman Brothers collapses),2008-09-15,1.5
 Netherlands,2012-03-01,Euro crisis peak (Italian 10-year above 7%),2011-11-09,3.7
+Netherlands,2022-08-01,Fed starts raising rates (global hiking cycle),2022-03-16,4.5
 Norway,2010-03-01,,,
 Norway,2014-10-01,,,
 Norway,2022-04-01,Fed starts raising rates (global hiking cycle),2022-03-16,0.5
 Poland,2012-10-01,,,
 Poland,2019-01-01,,,
 Poland,2021-12-01,Russia invades Ukraine,2022-02-24,-2.8
+Slovakia,2012-05-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-2.8
+Slovakia,2014-06-01,ECB introduces negative interest rates,2014-06-05,-0.1
 Slovakia,2022-07-01,Fed starts raising rates (global hiking cycle),2022-03-16,3.5
 South Korea,2022-03-01,Russia invades Ukraine,2022-02-24,0.2
 Spain,2026-04-01,,,
+Switzerland,2013-06-01,US taper tantrum (Fed signals slower bond buying),2013-05-22,0.3
+Switzerland,2017-02-01,,,
 Switzerland,2022-03-01,Russia invades Ukraine,2022-02-24,0.2
 Switzerland,2024-09-01,,,
 European Union,2022-07-01,Fed starts raising rates (global hiking cycle),2022-03-16,3.5

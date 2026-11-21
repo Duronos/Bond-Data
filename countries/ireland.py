@@ -75,12 +75,18 @@ def parse_bills(sheet: pd.DataFrame) -> pd.DataFrame:
     # Some files store yields as decimals, others as percentages.
     if yields.abs().median() < 0.2:
         yields = yields * 100
+    # "Total Amount Sold" includes the non-competitive part; the first
+    # "amount" column is "Competitive Amount Sold". Older sheets with only
+    # one amount column fall back to it.
+    amount = pd.to_numeric(col("total", "amount"), errors="coerce")
+    if amount.isna().all():
+        amount = pd.to_numeric(col("amount"), errors="coerce")
     return pd.DataFrame(
         {
             "auction_date": pd.to_datetime(col("date"), errors="coerce"),
             "maturity_date": pd.to_datetime(col("maturity"), errors="coerce"),
             "bid_to_cover": pd.to_numeric(col("cover"), errors="coerce"),
-            "accepted": pd.to_numeric(col("amount"), errors="coerce") * 1e6,
+            "accepted": amount * 1e6,
             "auction_yield": yields,
         }
     )

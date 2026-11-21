@@ -44,11 +44,20 @@ def maturities(isins: list[str]) -> dict[str, str | None]:
         if isin in known:
             continue
         response = requests.get(INSTRUMENT.format(isin=isin), headers=HEADERS, timeout=60)
-        m = re.search(r"Maturity<span>(\d{2}\.\d{2}\.\d{4})</span>", response.text) if response.ok else None
-        # None = no instrument page (some old bills were never listed).
-        known[isin] = pd.to_datetime(m.group(1), format="%d.%m.%Y").strftime("%Y-%m-%d") if m else None
-        CACHE.write_text(json.dumps(known, indent=0, sort_keys=True), encoding="utf-8")
         time.sleep(0.5)  # be polite: one page per matured bond, first run only
+        m = re.search(r"Maturity<span>(\d{2}\.\d{2}\.\d{4})</span>", response.text) if response.ok else None
+        if m:
+            known[isin] = pd.to_datetime(m.group(1), format="%d.%m.%Y").strftime("%Y-%m-%d")
+        elif response.status_code == 404 or (response.ok and "incapsula" not in response.text.lower()):
+            # None = no instrument page, or one without a maturity (some old
+            # bills were never listed).
+            known[isin] = None
+        else:
+            # A bot-check page or server error may be temporary: don't
+            # remember it, so the next run tries again.
+            print(f"  maturity lookup skipped for now ({response.status_code}): {isin}")
+            continue
+        CACHE.write_text(json.dumps(known, indent=0, sort_keys=True), encoding="utf-8")
 
     CACHE.write_text(json.dumps(known, indent=0, sort_keys=True), encoding="utf-8")
     return known
