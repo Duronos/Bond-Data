@@ -96,7 +96,9 @@ def find_breaks(series: pd.Series, model: str, penalty: float, min_months: int) 
     # Standardise so one penalty works across countries and measures; the
     # penalty is then log(n) x (variance = 1) x the --penalty factor.
     values = ((series - series.mean()) / series.std()).to_numpy().reshape(-1, 1)
-    bkps = rpt.Pelt(model=model, min_size=min_months).fit(values).predict(
+    # jump=1: consider every month as a break date (the default, 5, only
+    # tries every 5th month, which shifts dates by up to 2 months).
+    bkps = rpt.Pelt(model=model, min_size=min_months, jump=1).fit(values).predict(
         pen=penalty * np.log(len(values))
     )
     return [series.index[i] for i in bkps[:-1]]  # the last one is just the series end

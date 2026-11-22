@@ -2,7 +2,7 @@ date,event,countries_checked,countries_found,hit_rate
 2008-09-15,Global financial crisis (Lehman Brothers collapses),12,0,0.0
 2010-05-02,Euro debt crisis begins (first Greek bailout),6,0,0.0
 2011-11-09,Euro crisis peak (Italian 10-year above 7%),7,0,0.0
-2012-07-26,"ECB ""whatever it takes"" (Draghi)",6,0,0.0
+2012-07-26,"ECB ""whatever it takes"" (Draghi)",6,1,0.17
 2013-05-22,US taper tantrum (Fed signals slower bond buying),16,0,0.0
 2014-06-05,ECB introduces negative interest rates,6,0,0.0
 2015-03-09,ECB starts quantitative easing,6,0,0.0

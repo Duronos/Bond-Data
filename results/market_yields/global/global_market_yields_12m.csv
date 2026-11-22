@@ -1,5 +1,4 @@
 date,tenor_months,market_yield,country
-2025-11-21,1.0,4.03,United States
 2025-11-24,1.0,4.03,United States
 2025-11-25,1.0,4.04,United States
 2025-11-26,1.0,4.06,United States
@@ -249,7 +248,6 @@ date,tenor_months,market_yield,country
 2026-11-18,1.0,4.1,United States
 2026-11-19,1.0,4.2,United States
 2026-11-20,1.0,4.19,United States
-2025-11-21,1.5,4.01,United States
 2025-11-24,1.5,4.0,United States
 2025-11-25,1.5,4.0,United States
 2025-11-26,1.5,4.02,United States
@@ -499,7 +497,6 @@ date,tenor_months,market_yield,country
 2026-11-18,1.5,4.24,United States
 2026-11-19,1.5,4.27,United States
 2026-11-20,1.5,4.26,United States
-2025-11-21,2.0,4.0,United States
 2025-11-24,2.0,3.99,United States
 2025-11-25,2.0,3.97,United States
 2025-11-26,2.0,4.0,United States
@@ -749,8 +746,6 @@ date,tenor_months,market_yield,country
 2026-11-18,2.0,4.27,United States
 2026-11-19,2.0,4.29,United States
 2026-11-20,2.0,4.28,United States
-2025-11-21,3.0,3.9,United States
-2025-11-21,3.0,6.15,Hungary
 2025-11-24,3.0,3.91,United States
 2025-11-24,3.0,6.15,Hungary
 2025-11-25,3.0,3.9,United States
@@ -1273,7 +1268,6 @@ date,tenor_months,market_yield,country
 2026-11-19,3.0,5.12,Hungary
 2026-11-20,3.0,4.32,United States
 2026-11-20,3.0,5.12,Hungary
-2025-11-21,4.0,3.84,United States
 2025-11-24,4.0,3.83,United States
 2025-11-25,4.0,3.82,United States
 2025-11-26,4.0,3.86,United States
@@ -1523,8 +1517,6 @@ date,tenor_months,market_yield,country
 2026-11-18,4.0,4.35,United States
 2026-11-19,4.0,4.35,United States
 2026-11-20,4.0,4.32,United States
-2025-11-21,6.0,3.75,United States
-2025-11-21,6.0,6.12,Hungary
 2025-11-24,6.0,3.76,United States
 2025-11-24,6.0,6.12,Hungary
 2025-11-25,6.0,3.75,United States
@@ -2047,13 +2039,6 @@ date,tenor_months,market_yield,country
 2026-11-19,6.0,5.13,Hungary
 2026-11-20,6.0,4.38,United States
 2026-11-20,6.0,5.13,Hungary
-2025-11-21,12.0,3.62,United States
-2025-11-21,12.0,1.94,Germany
-2025-11-21,12.0,0.769,Japan
-2025-11-21,12.0,2.03,Belgium
-2025-11-21,12.0,6.22,Hungary
-2025-11-21,12.0,1.995,Spain
-2025-11-21,12.0,-0.107,Switzerland
 2025-11-24,12.0,3.61,United States
 2025-11-24,12.0,1.96,Germany
 2025-11-24,12.0,2.04,Belgium
@@ -3756,12 +3741,6 @@ date,tenor_months,market_yield,country
 2026-11-20,12.0,2.98,Germany
 2026-11-20,12.0,3.2,Belgium
 2026-11-20,12.0,5.08,Hungary
-2025-11-21,24.0,3.51,United States
-2025-11-21,24.0,2.44,Canada
-2025-11-21,24.0,1.97,Germany
-2025-11-21,24.0,0.959,Japan
-2025-11-21,24.0,2.12,Belgium
-2025-11-21,24.0,-0.118,Switzerland
 2025-11-24,24.0,3.46,United States
 2025-11-24,24.0,2.43,Canada
 2025-11-24,24.0,1.99,Germany
@@ -5231,15 +5210,6 @@ date,tenor_months,market_yield,country
 2026-11-20,24.0,4.63,United States
 2026-11-20,24.0,3.08,Germany
 2026-11-20,24.0,3.35,Belgium
-2025-11-21,36.0,3.5,United States
-2025-11-21,36.0,2.44,Canada
-2025-11-21,36.0,2.04,Germany
-2025-11-21,36.0,1.058,Japan
-2025-11-21,36.0,2.26,Belgium
-2025-11-21,36.0,6.55,Hungary
-2025-11-21,36.0,3.811,Norway
-2025-11-21,36.0,2.298,Spain
-2025-11-21,36.0,-0.103,Switzerland
 2025-11-24,36.0,3.49,United States
 2025-11-24,36.0,2.42,Canada
 2025-11-24,36.0,2.07,Germany
@@ -7457,9 +7427,6 @@ date,tenor_months,market_yield,country
 2026-11-20,36.0,3.09,Germany
 2026-11-20,36.0,3.52,Belgium
 2026-11-20,36.0,5.48,Hungary
-2025-11-21,48.0,1.214,Japan
-2025-11-21,48.0,2.43,Belgium
-2025-11-21,48.0,-0.072,Switzerland
 2025-11-24,48.0,2.43,Belgium
 2025-11-24,48.0,-0.086,Switzerland
 2025-11-25,48.0,1.235,Japan
@@ -8181,16 +8148,6 @@ date,tenor_months,market_yield,country
 2026-11-19,48.0,2.118,Japan
 2026-11-19,48.0,3.75,Belgium
 2026-11-20,48.0,3.69,Belgium
-2025-11-21,60.0,3.62,United States
-2025-11-21,60.0,2.77,Canada
-2025-11-21,60.0,3.885,United Kingdom
-2025-11-21,60.0,2.24,Germany
-2025-11-21,60.0,1.324,Japan
-2025-11-21,60.0,2.61,Belgium
-2025-11-21,60.0,6.57,Hungary
-2025-11-21,60.0,3.913,Norway
-2025-11-21,60.0,2.571,Spain
-2025-11-21,60.0,-0.032,Switzerland
 2025-11-24,60.0,3.61,United States
 2025-11-24,60.0,2.76,Canada
 2025-11-24,60.0,3.928,United Kingdom
@@ -10657,9 +10614,6 @@ date,tenor_months,market_yield,country
 2026-11-20,60.0,3.13,Germany
 2026-11-20,60.0,3.83,Belgium
 2026-11-20,60.0,5.52,Hungary
-2025-11-21,72.0,1.402,Japan
-2025-11-21,72.0,2.76,Belgium
-2025-11-21,72.0,0.013,Switzerland
 2025-11-24,72.0,2.76,Belgium
 2025-11-24,72.0,-0.008,Switzerland
 2025-11-25,72.0,1.428,Japan
@@ -11381,13 +11335,6 @@ date,tenor_months,market_yield,country
 2026-11-19,72.0,2.326,Japan
 2026-11-19,72.0,3.97,Belgium
 2026-11-20,72.0,3.92,Belgium
-2025-11-21,84.0,3.82,United States
-2025-11-21,84.0,2.91,Canada
-2025-11-21,84.0,2.46,Germany
-2025-11-21,84.0,1.506,Japan
-2025-11-21,84.0,2.9,Belgium
-2025-11-21,84.0,3.965,Norway
-2025-11-21,84.0,0.058,Switzerland
 2025-11-24,84.0,3.8,United States
 2025-11-24,84.0,2.9,Canada
 2025-11-24,84.0,2.48,Germany
@@ -13105,9 +13052,6 @@ date,tenor_months,market_yield,country
 2026-11-20,84.0,4.8,United States
 2026-11-20,84.0,3.23,Germany
 2026-11-20,84.0,4.0,Belgium
-2025-11-21,96.0,1.605,Japan
-2025-11-21,96.0,3.04,Belgium
-2025-11-21,96.0,0.102,Switzerland
 2025-11-24,96.0,3.03,Belgium
 2025-11-24,96.0,0.078,Switzerland
 2025-11-25,96.0,1.628,Japan
@@ -13829,9 +13773,6 @@ date,tenor_months,market_yield,country
 2026-11-19,96.0,2.599,Japan
 2026-11-19,96.0,4.17,Belgium
 2026-11-20,96.0,4.11,Belgium
-2025-11-21,108.0,1.699,Japan
-2025-11-21,108.0,3.17,Belgium
-2025-11-21,108.0,0.143,Switzerland
 2025-11-24,108.0,3.16,Belgium
 2025-11-24,108.0,0.118,Switzerland
 2025-11-25,108.0,1.722,Japan
@@ -14553,16 +14494,6 @@ date,tenor_months,market_yield,country
 2026-11-19,108.0,2.731,Japan
 2026-11-19,108.0,4.29,Belgium
 2026-11-20,108.0,4.24,Belgium
-2025-11-21,120.0,4.06,United States
-2025-11-21,120.0,3.2,Canada
-2025-11-21,120.0,4.5272,United Kingdom
-2025-11-21,120.0,2.76,Germany
-2025-11-21,120.0,1.792,Japan
-2025-11-21,120.0,3.29,Belgium
-2025-11-21,120.0,7.14,Hungary
-2025-11-21,120.0,4.097,Norway
-2025-11-21,120.0,3.201,Spain
-2025-11-21,120.0,0.181,Switzerland
 2025-11-24,120.0,4.04,United States
 2025-11-24,120.0,3.18,Canada
 2025-11-24,120.0,4.5529,United Kingdom
@@ -17029,7 +16960,6 @@ date,tenor_months,market_yield,country
 2026-11-20,120.0,3.39,Germany
 2026-11-20,120.0,4.35,Belgium
 2026-11-20,120.0,5.5,Hungary
-2025-11-21,132.0,3.4,Belgium
 2025-11-24,132.0,3.38,Belgium
 2025-11-25,132.0,3.33,Belgium
 2025-11-26,132.0,3.34,Belgium
@@ -17277,7 +17207,6 @@ date,tenor_months,market_yield,country
 2026-11-18,132.0,4.51,Belgium
 2026-11-19,132.0,4.51,Belgium
 2026-11-20,132.0,4.45,Belgium
-2025-11-21,144.0,3.49,Belgium
 2025-11-24,144.0,3.47,Belgium
 2025-11-25,144.0,3.42,Belgium
 2025-11-26,144.0,3.43,Belgium
@@ -17525,7 +17454,6 @@ date,tenor_months,market_yield,country
 2026-11-18,144.0,4.59,Belgium
 2026-11-19,144.0,4.59,Belgium
 2026-11-20,144.0,4.54,Belgium
-2025-11-21,156.0,3.57,Belgium
 2025-11-24,156.0,3.55,Belgium
 2025-11-25,156.0,3.5,Belgium
 2025-11-26,156.0,3.51,Belgium
@@ -17773,7 +17701,6 @@ date,tenor_months,market_yield,country
 2026-11-18,156.0,4.66,Belgium
 2026-11-19,156.0,4.66,Belgium
 2026-11-20,156.0,4.61,Belgium
-2025-11-21,168.0,3.65,Belgium
 2025-11-24,168.0,3.63,Belgium
 2025-11-25,168.0,3.58,Belgium
 2025-11-26,168.0,3.59,Belgium
@@ -18021,11 +17948,6 @@ date,tenor_months,market_yield,country
 2026-11-18,168.0,4.72,Belgium
 2026-11-19,168.0,4.73,Belgium
 2026-11-20,168.0,4.67,Belgium
-2025-11-21,180.0,3.1,Germany
-2025-11-21,180.0,2.369,Japan
-2025-11-21,180.0,3.71,Belgium
-2025-11-21,180.0,7.43,Hungary
-2025-11-21,180.0,3.635,Spain
 2025-11-24,180.0,3.1,Germany
 2025-11-24,180.0,3.7,Belgium
 2025-11-24,180.0,7.36,Hungary
@@ -19251,7 +19173,6 @@ date,tenor_months,market_yield,country
 2026-11-20,180.0,3.58,Germany
 2026-11-20,180.0,4.73,Belgium
 2026-11-20,180.0,5.56,Hungary
-2025-11-21,192.0,3.78,Belgium
 2025-11-24,192.0,3.76,Belgium
 2025-11-25,192.0,3.72,Belgium
 2025-11-26,192.0,3.72,Belgium
@@ -19499,7 +19420,6 @@ date,tenor_months,market_yield,country
 2026-11-18,192.0,4.81,Belgium
 2026-11-19,192.0,4.83,Belgium
 2026-11-20,192.0,4.78,Belgium
-2025-11-21,204.0,3.84,Belgium
 2025-11-24,204.0,3.82,Belgium
 2025-11-25,204.0,3.78,Belgium
 2025-11-26,204.0,3.78,Belgium
@@ -19747,7 +19667,6 @@ date,tenor_months,market_yield,country
 2026-11-18,204.0,4.85,Belgium
 2026-11-19,204.0,4.87,Belgium
 2026-11-20,204.0,4.82,Belgium
-2025-11-21,216.0,3.9,Belgium
 2025-11-24,216.0,3.88,Belgium
 2025-11-25,216.0,3.84,Belgium
 2025-11-26,216.0,3.84,Belgium
@@ -19995,7 +19914,6 @@ date,tenor_months,market_yield,country
 2026-11-18,216.0,4.89,Belgium
 2026-11-19,216.0,4.91,Belgium
 2026-11-20,216.0,4.86,Belgium
-2025-11-21,228.0,3.96,Belgium
 2025-11-24,228.0,3.94,Belgium
 2025-11-25,228.0,3.89,Belgium
 2025-11-26,228.0,3.9,Belgium
@@ -20243,13 +20161,6 @@ date,tenor_months,market_yield,country
 2026-11-18,228.0,4.92,Belgium
 2026-11-19,228.0,4.94,Belgium
 2026-11-20,228.0,4.89,Belgium
-2025-11-21,240.0,4.67,United States
-2025-11-21,240.0,5.0727,United Kingdom
-2025-11-21,240.0,3.27,Germany
-2025-11-21,240.0,2.794,Japan
-2025-11-21,240.0,4.01,Belgium
-2025-11-21,240.0,7.56,Hungary
-2025-11-21,240.0,0.332,Switzerland
 2025-11-24,240.0,4.64,United States
 2025-11-24,240.0,5.0855,United Kingdom
 2025-11-24,240.0,3.27,Germany
@@ -21969,7 +21880,6 @@ date,tenor_months,market_yield,country
 2026-11-20,240.0,3.69,Germany
 2026-11-20,240.0,4.93,Belgium
 2026-11-20,240.0,5.61,Hungary
-2025-11-21,252.0,4.06,Belgium
 2025-11-24,252.0,4.04,Belgium
 2025-11-25,252.0,3.99,Belgium
 2025-11-26,252.0,4.0,Belgium
@@ -22217,7 +22127,6 @@ date,tenor_months,market_yield,country
 2026-11-18,252.0,4.98,Belgium
 2026-11-19,252.0,5.0,Belgium
 2026-11-20,252.0,4.95,Belgium
-2025-11-21,264.0,4.11,Belgium
 2025-11-24,264.0,4.09,Belgium
 2025-11-25,264.0,4.04,Belgium
 2025-11-26,264.0,4.04,Belgium
@@ -22465,7 +22374,6 @@ date,tenor_months,market_yield,country
 2026-11-18,264.0,5.0,Belgium
 2026-11-19,264.0,5.02,Belgium
 2026-11-20,264.0,4.97,Belgium
-2025-11-21,276.0,4.15,Belgium
 2025-11-24,276.0,4.12,Belgium
 2025-11-25,276.0,4.08,Belgium
 2025-11-26,276.0,4.08,Belgium
@@ -22713,7 +22621,6 @@ date,tenor_months,market_yield,country
 2026-11-18,276.0,5.02,Belgium
 2026-11-19,276.0,5.04,Belgium
 2026-11-20,276.0,4.99,Belgium
-2025-11-21,288.0,4.18,Belgium
 2025-11-24,288.0,4.16,Belgium
 2025-11-25,288.0,4.11,Belgium
 2025-11-26,288.0,4.12,Belgium
@@ -22961,8 +22868,6 @@ date,tenor_months,market_yield,country
 2026-11-18,288.0,5.03,Belgium
 2026-11-19,288.0,5.05,Belgium
 2026-11-20,288.0,5.0,Belgium
-2025-11-21,300.0,3.174,Japan
-2025-11-21,300.0,4.21,Belgium
 2025-11-24,300.0,4.18,Belgium
 2025-11-25,300.0,3.182,Japan
 2025-11-25,300.0,4.14,Belgium
@@ -23450,7 +23355,6 @@ date,tenor_months,market_yield,country
 2026-11-19,300.0,4.038,Japan
 2026-11-19,300.0,5.06,Belgium
 2026-11-20,300.0,5.01,Belgium
-2025-11-21,312.0,4.23,Belgium
 2025-11-24,312.0,4.21,Belgium
 2025-11-25,312.0,4.16,Belgium
 2025-11-26,312.0,4.16,Belgium
@@ -23698,7 +23602,6 @@ date,tenor_months,market_yield,country
 2026-11-18,312.0,5.05,Belgium
 2026-11-19,312.0,5.07,Belgium
 2026-11-20,312.0,5.02,Belgium
-2025-11-21,324.0,4.25,Belgium
 2025-11-24,324.0,4.22,Belgium
 2025-11-25,324.0,4.17,Belgium
 2025-11-26,324.0,4.18,Belgium
@@ -23946,7 +23849,6 @@ date,tenor_months,market_yield,country
 2026-11-18,324.0,5.06,Belgium
 2026-11-19,324.0,5.07,Belgium
 2026-11-20,324.0,5.02,Belgium
-2025-11-21,336.0,4.26,Belgium
 2025-11-24,336.0,4.23,Belgium
 2025-11-25,336.0,4.18,Belgium
 2025-11-26,336.0,4.19,Belgium
@@ -24194,7 +24096,6 @@ date,tenor_months,market_yield,country
 2026-11-18,336.0,5.06,Belgium
 2026-11-19,336.0,5.07,Belgium
 2026-11-20,336.0,5.01,Belgium
-2025-11-21,348.0,4.26,Belgium
 2025-11-24,348.0,4.23,Belgium
 2025-11-25,348.0,4.18,Belgium
 2025-11-26,348.0,4.19,Belgium
@@ -24442,13 +24343,6 @@ date,tenor_months,market_yield,country
 2026-11-18,348.0,5.05,Belgium
 2026-11-19,348.0,5.06,Belgium
 2026-11-20,348.0,5.01,Belgium
-2025-11-21,360.0,4.71,United States
-2025-11-21,360.0,3.66,Canada
-2025-11-21,360.0,3.37,Germany
-2025-11-21,360.0,3.291,Japan
-2025-11-21,360.0,4.26,Belgium
-2025-11-21,360.0,4.051,Spain
-2025-11-21,360.0,0.267,Switzerland
 2025-11-24,360.0,4.68,United States
 2025-11-24,360.0,3.64,Canada
 2025-11-24,360.0,3.36,Germany
@@ -26158,7 +26052,6 @@ date,tenor_months,market_yield,country
 2026-11-20,360.0,5.31,United States
 2026-11-20,360.0,3.79,Germany
 2026-11-20,360.0,5.0,Belgium
-2025-11-21,480.0,3.551,Japan
 2025-11-25,480.0,3.561,Japan
 2025-11-26,480.0,3.552,Japan
 2025-11-27,480.0,3.557,Japan

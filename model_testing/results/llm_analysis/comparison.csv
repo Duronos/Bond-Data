@@ -1,47 +1,47 @@
 country,ruptures_break,llm_break,ruptures_event,llm_cause,llm_cause_month,llm_confidence,same_cause,ruptures_could_see
-Austria,2009-08-01,2009-07-01,,Global financial crisis; ECB cuts to 1%,2009-05,medium,,True
+Austria,2009-10-01,2009-07-01,,Global financial crisis; ECB cuts to 1%,2009-05,medium,,True
 Austria,,2011-07-01,,Euro-crisis flight to safety in core countries,2011-07,medium,,True
-Austria,2014-03-01,2014-05-01,ECB introduces negative interest rates,ECB negative rates (Jun 2014) and QE (2015),2014-06,medium,True,True
+Austria,2014-05-01,2014-05-01,ECB introduces negative interest rates,ECB negative rates (Jun 2014) and QE (2015),2014-06,medium,True,True
 Austria,,2019-04-01,,ECB turns dovish again; new easing package (Sep 2019),2019-03,medium,,True
-Austria,2022-07-01,2022-04-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
-Belgium,2026-02-01,,,,,,,True
+Austria,2022-08-01,2022-04-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
+Belgium,2026-03-01,,,,,,,True
 Belgium,,2009-02-01,,Global financial crisis; ECB cuts,2008-10,medium,,True
 Belgium,2012-04-01,2012-07-01,"ECB ""whatever it takes"" (Draghi)",ECB 'whatever it takes' (Jul 2012) eases euro-crisis spreads,2012-07,medium,True,True
-Belgium,2014-10-01,2015-04-01,ECB introduces negative interest rates,ECB starts QE (Mar 2015),2015-03,high,False,True
+Belgium,2014-11-01,2015-04-01,ECB starts quantitative easing,ECB starts QE (Mar 2015),2015-03,high,True,True
 Belgium,,2026-09-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,False
-Canada,2008-08-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; Bank of Canada cuts,2008-09,high,True,True
-Canada,2011-07-01,2011-08-01,,"Global flight to safety (US downgrade, euro crisis)",2011-08,medium,,True
+Canada,2008-11-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; Bank of Canada cuts,2008-09,high,True,True
+Canada,2011-08-01,2011-08-01,,"Global flight to safety (US downgrade, euro crisis)",2011-08,medium,,True
 Canada,,2015-01-01,,Oil-price collapse; surprise Bank of Canada cut (Jan 2015),2015-01,high,,True
 Canada,,2017-07-01,,Bank of Canada's first hike in seven years (Jul 2017),2017-07,high,,True
 Canada,,2018-01-01,,Further Bank of Canada hikes (Jan 2018),2018-01,medium,,True
 Canada,,2020-03-01,,COVID-19; Bank of Canada cuts to 0.25% and starts QE,2020-03,high,,True
-Canada,2022-05-01,2022-04-01,Fed starts raising rates (global hiking cycle),Bank of Canada hiking cycle (from Mar 2022),2022-03,high,True,True
+Canada,2022-04-01,2022-04-01,Fed starts raising rates (global hiking cycle),Bank of Canada hiking cycle (from Mar 2022),2022-03,high,True,True
 Canada,,2024-06-01,,Bank of Canada starts cutting (Jun 2024),2024-06,high,,True
 Canada,,2026-06-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,False
-Czech Republic,2010-03-01,2010-04-01,,Calm returns after the 2009 central European crisis; CNB cuts (May 2010),2010-05,low,,True
-Czech Republic,2012-09-01,2012-11-01,,CNB cuts to 0.05% (Nov 2012),2012-11,medium,,True
+Czech Republic,2010-04-01,2010-04-01,,Calm returns after the 2009 central European crisis; CNB cuts (May 2010),2010-05,low,,True
+Czech Republic,2012-11-01,2012-11-01,,CNB cuts to 0.05% (Nov 2012),2012-11,medium,,True
 Czech Republic,,2014-03-01,,CNB currency floor (Nov 2013); ECB easing,2013-11,low,,True
 Czech Republic,,2017-09-01,,CNB ends the koruna floor (Apr 2017) and hikes (Aug 2017),2017-08,high,,True
 Czech Republic,2021-11-01,2021-10-01,Russia invades Ukraine,"CNB's aggressive hiking cycle (from Jun 2021, +125bp in Nov)",2021-06,high,False,True
 Czech Republic,,2022-03-01,,Inflation surge after Russia invades Ukraine; CNB hikes to 7% (Jun 2022),2022-02,high,,True
 Czech Republic,,2024-01-01,,CNB starts cutting (Dec 2023),2023-12,medium,,True
-Denmark,2011-10-01,2011-08-01,,Euro-crisis flight to safety,2011-08,medium,,True
+Denmark,2011-08-01,2011-08-01,,Euro-crisis flight to safety,2011-08,medium,,True
 Denmark,,2012-07-01,,Danmarks Nationalbank negative deposit rate (Jul 2012),2012-07,high,,True
 Denmark,,2014-09-01,,"ECB negative rates; DN cuts, then defends the krone peg (Jan-Feb 2015)",2014-09,medium,,False
 Denmark,,2019-02-01,,ECB turns dovish again; global easing,2019-03,medium,,True
-Denmark,2022-06-01,2022-04-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB and DN hiking cycle,2022-02,high,True,True
+Denmark,2022-09-01,2022-04-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB and DN hiking cycle,2022-02,high,True,True
 Denmark,,2024-08-01,,ECB and DN start cutting (Jun 2024),2024-06,medium,,True
 Denmark,,2025-11-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,True
-European Union,2022-07-01,2022-03-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
+European Union,2022-09-01,2022-03-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
 European Union,,2024-01-01,,Markets price ECB cuts (first cut Jun 2024),2023-12,medium,,True
 European Union,,2026-09-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,False
-Finland,2017-12-01,,,,,,,True
-Finland,2018-10-01,,,,,,,True
-Finland,2011-12-01,2012-05-01,Euro crisis peak (Italian 10-year above 7%),Euro-crisis flight to safety in core AAA countries,2012-05,low,False,True
+Finland,2017-11-01,,,,,,,True
+Finland,2018-11-01,,,,,,,True
+Finland,2011-11-01,2012-05-01,Euro crisis peak (Italian 10-year above 7%),Euro-crisis flight to safety in core AAA countries,2012-05,low,False,True
 Finland,,2015-02-01,,ECB QE (Mar 2015),2015-01,low,,False
-Finland,2022-04-01,2022-03-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,medium,True,True
-France,2009-02-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; ECB cuts,2008-10,high,True,True
-France,2012-06-01,2012-07-01,"ECB ""whatever it takes"" (Draghi)",ECB 'whatever it takes' (Jul 2012),2012-07,medium,True,True
+Finland,2022-05-01,2022-03-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,medium,True,True
+France,2008-12-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; ECB cuts,2008-10,high,True,True
+France,2012-07-01,2012-07-01,"ECB ""whatever it takes"" (Draghi)",ECB 'whatever it takes' (Jul 2012),2012-07,medium,True,True
 France,,2014-05-01,,ECB negative rates (Jun 2014),2014-06,medium,,True
 France,,2016-02-01,,ECB deepens negative rates (Mar 2016),2016-03,low,,True
 France,,2019-03-01,,ECB turns dovish again; global easing,2019-03,medium,,True
@@ -50,7 +50,7 @@ France,,2026-04-01,,No clear cause known (after the LLM's knowledge cutoff),,low
 Germany,2009-10-01,,,,,,,True
 Germany,,2008-11-01,,Global financial crisis; ECB cuts,2008-10,high,,True
 Germany,,2011-08-01,,Euro-crisis peak: flight to Bunds as a safe haven,2011-08,medium,,True
-Germany,2014-10-01,2014-08-01,ECB introduces negative interest rates,ECB negative rates (Jun 2014) and expectations of QE,2014-06,medium,True,True
+Germany,2014-11-01,2014-08-01,ECB starts quantitative easing,ECB negative rates (Jun 2014) and expectations of QE,2014-06,medium,False,True
 Germany,,2016-02-01,,ECB deepens negative rates and expands QE (Mar 2016),2016-03,medium,,True
 Germany,,2019-05-01,,ECB turns dovish again; new easing package (Sep 2019),2019-06,medium,,True
 Germany,,2022-04-01,,Inflation surge after Russia invades Ukraine; ECB signals hikes,2022-02,high,,True
@@ -59,12 +59,12 @@ Germany,,2026-04-01,,No clear cause known (after the LLM's knowledge cutoff),,lo
 Hungary,,2008-03-01,,"Global risk-off hits Hungary; forint crisis, then IMF bailout (Oct 2008)",2008-03,medium,,True
 Hungary,,2009-07-01,,Stabilisation under the IMF programme; MNB cuts,2009-07,medium,,True
 Hungary,,2011-11-01,,Hungary downgraded to junk; MNB hikes; IMF talks,2011-11,high,,True
-Hungary,2012-09-01,2012-08-01,,MNB easing cycle (from Aug 2012),2012-08,high,,True
-Hungary,2014-05-01,2014-05-01,,MNB cuts to record lows; self-financing programme,2014-05,medium,,True
+Hungary,2012-10-01,2012-08-01,,MNB easing cycle (from Aug 2012),2012-08,high,,True
+Hungary,2014-06-01,2014-05-01,,MNB cuts to record lows; self-financing programme,2014-05,medium,,True
 Hungary,,2018-07-01,,"Emerging-market sell-off (Turkey, Aug 2018)",2018-07,medium,,True
 Hungary,,2019-06-01,,Global easing; MNB stays loose,2019-06,medium,,True
-Hungary,2021-11-01,2021-09-01,Russia invades Ukraine,MNB hiking cycle (from Jun 2021),2021-06,high,False,True
-Hungary,,2022-03-01,,"Russia invades Ukraine; MNB hikes to 13%, then an 18% emergency rate (Oct 2022)",2022-02,high,,True
+Hungary,,2021-09-01,,MNB hiking cycle (from Jun 2021),2021-06,high,,True
+Hungary,2022-01-01,2022-03-01,Russia invades Ukraine,"Russia invades Ukraine; MNB hikes to 13%, then an 18% emergency rate (Oct 2022)",2022-02,high,True,True
 Hungary,,2023-12-01,,MNB cuts as inflation falls (from May 2023),2023-05,medium,,True
 Hungary,,2026-05-01,,Possibly the April 2026 parliamentary election; not confident,2026-04,low,,True
 Ireland,,2010-06-01,,"Irish banking crisis, then the EU-IMF bailout (Nov 2010)",2010-05,high,,False
@@ -73,58 +73,57 @@ Ireland,,2022-09-01,,Inflation surge; ECB hiking cycle,2022-07,medium,,False
 Italy,,2009-06-01,,Global financial crisis; ECB cuts to 1%,2009-05,medium,,True
 Italy,,2011-07-01,,Euro crisis spreads to Italy,2011-07,high,,True
 Italy,,2012-09-01,,ECB 'whatever it takes' (Jul 2012) and OMT (Sep 2012),2012-07,high,,True
-Italy,2014-01-01,2014-04-01,ECB introduces negative interest rates,ECB negative rates (Jun 2014) and QE (2015),2014-06,medium,True,True
+Italy,2013-11-01,2014-04-01,US taper tantrum (Fed signals slower bond buying),ECB negative rates (Jun 2014) and QE (2015),2014-06,medium,False,True
 Italy,,2018-05-01,,Populist coalition and budget clash with the EU,2018-05,high,,True
 Italy,,2019-07-01,,Government change (Aug-Sep 2019); ECB easing,2019-08,high,,True
 Italy,,2020-09-01,,ECB pandemic purchases (PEPP) and the EU recovery fund (Jul 2020),2020-07,medium,,True
 Italy,2022-05-01,2022-02-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
 Italy,,2024-08-01,,ECB starts cutting (Jun 2024),2024-06,medium,,True
 Italy,,2026-03-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,True
-Japan,2014-05-01,,,,,,,True
-Japan,2009-05-01,2009-01-01,,Global financial crisis; Bank of Japan cuts to 0.1%,2008-12,medium,,True
+Japan,2009-09-01,,,,,,,True
+Japan,,2009-01-01,,Global financial crisis; Bank of Japan cuts to 0.1%,2008-12,medium,,True
 Japan,,2010-06-01,,Bank of Japan comprehensive easing (Oct 2010); strong yen,2010-10,low,,True
-Japan,,2014-12-01,,Bank of Japan expands QQE (Oct 2014),2014-10,medium,,True
+Japan,2014-12-01,2014-12-01,,Bank of Japan expands QQE (Oct 2014),2014-10,medium,,True
 Japan,,2016-02-01,,Bank of Japan negative interest rates (Jan 2016),2016-01,high,,True
 Japan,,2023-01-01,,Bank of Japan widens the yield-curve-control band (Dec 2022),2022-12,medium,,True
-Japan,2024-05-01,2024-05-01,Bank of Japan ends negative rates and yield-curve control,Bank of Japan ends negative rates and yield-curve control (Mar 2024),2024-03,medium,True,True
+Japan,2024-04-01,2024-05-01,Bank of Japan ends negative rates and yield-curve control,Bank of Japan ends negative rates and yield-curve control (Mar 2024),2024-03,medium,True,True
 Japan,,2025-01-01,,Bank of Japan hikes to 0.5% (Jan 2025),2025-01,medium,,True
-Japan,2026-01-01,2026-01-01,,Fiscal worries under the new Takaichi government; further BoJ hikes,2025-10,low,,True
+Japan,2025-12-01,2026-01-01,,Fiscal worries under the new Takaichi government; further BoJ hikes,2025-10,low,,True
 Lithuania,,2010-03-01,,Recovery after the 2009 Baltic crisis,2009-12,medium,,False
 Lithuania,,2011-06-01,,Euro-crisis stress,2011-07,low,,True
 Lithuania,2012-09-01,2012-09-01,"ECB ""whatever it takes"" (Draghi)",ECB 'whatever it takes' (Jul 2012) and OMT,2012-07,medium,True,True
-Lithuania,2014-10-01,2014-09-01,ECB introduces negative interest rates,ECB negative rates; Lithuania joins the euro (Jan 2015),2014-07,medium,True,True
+Lithuania,2014-09-01,2014-09-01,ECB introduces negative interest rates,ECB negative rates; Lithuania joins the euro (Jan 2015),2014-07,medium,True,True
 Lithuania,,2019-07-01,,ECB turns dovish again; new easing package (Sep 2019),2019-06,medium,,True
-Lithuania,2022-04-01,2022-02-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
+Lithuania,2022-06-01,2022-02-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
 Lithuania,,2024-01-01,,Markets price ECB cuts (first cut Jun 2024),2023-12,medium,,True
 Lithuania,,2026-07-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,False
 Netherlands,2008-11-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; ECB cuts,2008-10,high,True,True
-Netherlands,2012-03-01,2012-01-01,Euro crisis peak (Italian 10-year above 7%),Euro-crisis flight to safety; ECB long-term loans (Dec 2011),2011-12,medium,True,True
+Netherlands,2011-12-01,2012-01-01,Euro crisis peak (Italian 10-year above 7%),Euro-crisis flight to safety; ECB long-term loans (Dec 2011),2011-12,medium,True,True
 Netherlands,,2015-01-01,,ECB QE (Jan-Mar 2015),2015-01,high,,True
 Netherlands,,2019-01-01,,ECB turns dovish again,2019-03,low,,False
-Netherlands,2022-08-01,2022-03-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
+Netherlands,2022-07-01,2022-03-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
 Netherlands,,2026-06-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,False
 Norway,2010-03-01,,,,,,,True
 Norway,,2008-11-01,,Global financial crisis; Norges Bank cuts,2008-10,medium,,True
 Norway,,2012-01-01,,Euro-crisis flight to safety; Norges Bank cut (Mar 2012),2011-12,medium,,True
 Norway,,2013-06-01,,Taper tantrum,2013-05,medium,,True
-Norway,2014-10-01,2014-11-01,,Oil-price collapse; Norges Bank cut (Dec 2014),2014-10,high,,True
+Norway,2014-11-01,2014-11-01,,Oil-price collapse; Norges Bank cut (Dec 2014),2014-10,high,,True
 Norway,,2020-03-01,,COVID-19; Norges Bank cuts to zero,2020-03,high,,True
 Norway,,2021-03-01,,Recovery; Norges Bank signals hikes (first hike Sep 2021),2021-03,medium,,True
-Norway,2022-04-01,2022-05-01,Fed starts raising rates (global hiking cycle),Norges Bank hiking cycle; inflation,2022-03,high,True,True
+Norway,2022-05-01,2022-05-01,Fed starts raising rates (global hiking cycle),Norges Bank hiking cycle; inflation,2022-03,high,True,True
 Norway,,2026-04-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,True
-Poland,2019-01-01,,,,,,,True
 Poland,,2007-06-01,,NBP hiking cycle (2007),2007-04,medium,,True
-Poland,2012-10-01,2013-01-01,,NBP cuts (from Nov 2012),2012-11,high,,True
+Poland,2012-12-01,2013-01-01,US taper tantrum (Fed signals slower bond buying),NBP cuts (from Nov 2012),2012-11,high,False,True
 Poland,,2014-10-01,,NBP cut (Oct 2014); ECB QE,2014-10,high,,True
 Poland,,2016-11-01,,Global reflation after the US election; Polish rating downgrade earlier in 2016,2016-11,medium,,True
 Poland,,2020-03-01,,COVID-19; NBP cuts to 0.1% and starts QE,2020-03,high,,True
-Poland,2021-12-01,2022-01-01,Russia invades Ukraine,NBP hiking cycle (from Oct 2021); then the Ukraine war,2021-10,high,False,True
+Poland,2022-02-01,2022-01-01,Russia invades Ukraine,NBP hiking cycle (from Oct 2021); then the Ukraine war,2021-10,high,False,True
 Poland,,2023-07-01,,NBP surprise 75bp cut (Sep 2023),2023-09,medium,,True
 Poland,,2026-03-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,True
-Slovakia,2012-05-01,,"ECB ""whatever it takes"" (Draghi)",,,,,True
-Slovakia,2014-06-01,,ECB introduces negative interest rates,,,,,True
+Slovakia,2012-02-01,,Euro crisis peak (Italian 10-year above 7%),,,,,True
+Slovakia,2014-03-01,,ECB introduces negative interest rates,,,,,True
 Slovakia,,2019-06-01,,ECB turns dovish again; new easing package (Sep 2019),2019-06,medium,,True
-Slovakia,2022-07-01,2022-04-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
+Slovakia,2022-06-01,2022-04-01,Fed starts raising rates (global hiking cycle),Inflation surge; ECB hiking cycle,2022-02,high,True,True
 Slovakia,,2024-09-01,,ECB cuts,2024-06,low,,True
 Slovakia,,2026-09-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,False
 South Korea,,2019-07-01,,Bank of Korea cut (Jul 2019); trade war,2019-07,high,,True
@@ -133,30 +132,28 @@ South Korea,,2021-07-01,,Bank of Korea's first hike (Aug 2021),2021-08,high,,Tru
 South Korea,2022-03-01,2022-03-01,Russia invades Ukraine,Bank of Korea hiking cycle; global inflation,2022-01,high,True,True
 South Korea,,2024-07-01,,Markets price Bank of Korea cuts (first cut Oct 2024),2024-07,medium,,True
 South Korea,,2025-11-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,True
-Spain,2026-04-01,,,,,,,True
-Switzerland,2013-06-01,,US taper tantrum (Fed signals slower bond buying),,,,,True
-Switzerland,2017-02-01,,,,,,,True
-Switzerland,2024-09-01,,,,,,,True
-Switzerland,,2012-09-01,,Safe-haven inflows; SNB franc ceiling (Sep 2011),2011-09,low,,True
+Spain,2026-03-01,,,,,,,True
+Switzerland,2016-10-01,,,,,,,True
+Switzerland,2013-03-01,2012-09-01,US taper tantrum (Fed signals slower bond buying),Safe-haven inflows; SNB franc ceiling (Sep 2011),2011-09,low,False,True
 Switzerland,,2016-04-01,,SNB negative rates and end of the franc ceiling (Jan 2015),2015-01,medium,,False
-Switzerland,2022-03-01,2022-02-01,Russia invades Ukraine,Global inflation; SNB hikes (Jun 2022),2022-06,high,False,True
-Switzerland,,2024-02-01,,SNB starts cutting (Mar 2024),2024-03,high,,True
-United Kingdom,2008-12-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; Bank of England cuts to 0.5% and starts QE (Mar 2009),2008-10,high,True,True
+Switzerland,2022-04-01,2022-02-01,Fed starts raising rates (global hiking cycle),Global inflation; SNB hikes (Jun 2022),2022-06,high,True,True
+Switzerland,2024-08-01,2024-02-01,,SNB starts cutting (Mar 2024),2024-03,high,,True
+United Kingdom,2008-11-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Global financial crisis; Bank of England cuts to 0.5% and starts QE (Mar 2009),2008-10,high,True,True
 United Kingdom,,2011-05-01,,Euro crisis spreads; gilts bought as a safe haven,2011-07,low,,True
 United Kingdom,,2013-07-01,,Taper tantrum; Bank of England forward guidance,2013-05,medium,,True
-United Kingdom,2016-01-01,2016-03-01,Brexit referendum,"Global fall in yields in early 2016, then the Brexit vote (Jun 2016) and BoE cut + QE (Aug 2016)",2016-06,medium,True,True
+United Kingdom,2015-12-01,2016-03-01,,"Global fall in yields in early 2016, then the Brexit vote (Jun 2016) and BoE cut + QE (Aug 2016)",2016-06,medium,,True
 United Kingdom,,2019-06-01,,Global easing; Brexit uncertainty,2019-06,medium,,True
 United Kingdom,,2020-04-01,,COVID-19; Bank of England cuts to 0.1% and expands QE,2020-03,high,,True
 United Kingdom,,2022-04-01,,Bank of England hiking cycle (from Dec 2021) as inflation surges,2021-12,high,,True
 United Kingdom,2022-09-01,2022-09-01,UK mini-budget (gilt crisis),Mini-budget gilt crisis (Sep 2022),2022-09,high,True,True
 United Kingdom,,2026-05-01,,No clear cause known (after the LLM's knowledge cutoff),,low,,True
 United States,,2007-08-01,,Subprime crisis begins (BNP Paribas freezes funds); Fed starts cutting in Sep 2007,2007-08,high,,True
-United States,2008-12-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Lehman collapse (Sep 2008); Fed cuts to near zero (Dec 2008),2008-09,high,True,True
+United States,2008-11-01,2008-11-01,Global financial crisis (Lehman Brothers collapses),Lehman collapse (Sep 2008); Fed cuts to near zero (Dec 2008),2008-09,high,True,True
 United States,,2011-08-01,,S&P downgrades the US; Fed pledges near-zero rates to mid-2013; euro-crisis flight to safety,2011-08,high,,True
 United States,,2013-06-01,,Taper tantrum (Bernanke signals slower bond buying),2013-05,high,,True
 United States,,2016-12-01,,Trump election (reflation trade); Fed hike in Dec 2016,2016-11,medium,,True
 United States,,2018-01-01,,Fed hiking speeds up; tax cuts widen the deficit,2018-01,medium,,True
 United States,,2019-06-01,,Fed pivots to cuts (first cut Jul 2019); US-China trade war,2019-06,medium,,True
 United States,,2020-03-01,,COVID-19; Fed cuts to zero and restarts QE,2020-03,high,,True
-United States,2022-04-01,2022-03-01,Fed starts raising rates (global hiking cycle),Fed starts hiking (Mar 2022) as inflation surges,2022-03,high,True,True
+United States,2022-06-01,2022-03-01,Fed starts raising rates (global hiking cycle),Fed starts hiking (Mar 2022) as inflation surges,2022-03,high,True,True
 United States,,2026-09-01,,No clear cause known (after the LLM's knowledge cutoff); yields rose in many countries at once,,low,,False

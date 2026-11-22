@@ -4,10 +4,10 @@ Settings: shortest segment 6 months; a break within ±6 months of an event count
 
 | | |
 |---|---|
-| Breaks found | 107, in 23 countries |
-| Breaks near a known event | 55% |
-| Events found (country by country) | 60% |
-| Chance rate (a random date) | 31% |
+| Breaks found | 122, in 23 countries |
+| Breaks near a known event | 56% |
+| Events found (country by country) | 59% |
+| Chance rate (a random date) | 33% |
 
 The chance rate is worked out for each event check over the same span of that country's data, so the two rates compare like for like.
 
@@ -16,17 +16,17 @@ The chance rate is worked out for each event check over the same span of that co
 | Date | Event | Countries checked | Found | Hit rate |
 |---|---|:-:|:-:|:-:|
 | 2008-09-15 | Global financial crisis (Lehman Brothers collapses) | 14 | 10 | 71% |
-| 2010-05-02 | Euro debt crisis begins (first Greek bailout) | 8 | 1 | 12% |
+| 2010-05-02 | Euro debt crisis begins (first Greek bailout) | 8 | 2 | 25% |
 | 2011-11-09 | Euro crisis peak (Italian 10-year above 7%) | 9 | 7 | 78% |
-| 2012-07-26 | ECB "whatever it takes" (Draghi) | 8 | 6 | 75% |
+| 2012-07-26 | ECB "whatever it takes" (Draghi) | 8 | 5 | 62% |
 | 2013-05-22 | US taper tantrum (Fed signals slower bond buying) | 18 | 3 | 17% |
-| 2014-06-05 | ECB introduces negative interest rates | 8 | 8 | 100% |
+| 2014-06-05 | ECB introduces negative interest rates | 8 | 7 | 88% |
 | 2015-03-09 | ECB starts quantitative easing | 8 | 3 | 38% |
 | 2016-01-29 | Bank of Japan introduces negative interest rates | 1 | 1 | 100% |
 | 2016-06-23 | Brexit referendum | 1 | 1 | 100% |
 | 2020-03-11 | COVID-19 declared a pandemic | 19 | 4 | 21% |
-| 2022-02-24 | Russia invades Ukraine | 19 | 16 | 84% |
-| 2022-03-16 | Fed starts raising rates (global hiking cycle) | 20 | 20 | 100% |
+| 2022-02-24 | Russia invades Ukraine | 19 | 17 | 89% |
+| 2022-03-16 | Fed starts raising rates (global hiking cycle) | 20 | 19 | 95% |
 | 2022-09-23 | UK mini-budget (gilt crisis) | 1 | 1 | 100% |
 | 2024-03-19 | Bank of Japan ends negative rates and yield-curve control | 1 | 0 | 0% |
 
@@ -34,54 +34,60 @@ The chance rate is worked out for each event check over the same span of that co
 
 Leads worth looking into: something changed, but it isn't in events.csv.
 
-- United States: 2007-09-01
-- United States: 2011-06-01
-- United States: 2017-09-01
-- United States: 2019-05-01
-- Canada: 2011-07-01
-- Canada: 2014-11-01
-- Canada: 2017-10-01
-- Canada: 2021-07-01
-- Canada: 2024-06-01
-- United Kingdom: 2011-06-01
-- Germany: 2009-10-01
+- United States: 2007-11-01
+- United States: 2011-08-01
+- United States: 2016-12-01
+- Canada: 2007-12-01
+- Canada: 2011-08-01
+- Canada: 2015-01-01
+- Canada: 2017-07-01
+- Canada: 2024-08-01
+- United Kingdom: 2011-05-01
+- Germany: 2022-10-01
 - Japan: 2011-06-01
-- Japan: 2024-10-01
+- Japan: 2022-12-01
+- Japan: 2024-11-01
 - Japan: 2026-01-01
-- Austria: 2009-08-01
-- Belgium: 2026-02-01
-- Czech Republic: 2010-03-01
-- Czech Republic: 2012-09-01
+- Austria: 2009-07-01
+- Austria: 2019-04-01
+- Austria: 2022-10-01
+- Belgium: 2026-03-01
+- Czech Republic: 2010-02-01
+- Czech Republic: 2012-08-01
 - Czech Republic: 2014-05-01
 - Czech Republic: 2017-09-01
-- Denmark: 2010-07-01
-- Denmark: 2011-10-01
-- Denmark: 2012-08-01
-- Denmark: 2022-11-01
-- Finland: 2016-09-01
-- Finland: 2017-12-01
-- Finland: 2018-10-01
-- Hungary: 2008-02-01
-- Hungary: 2009-10-01
+- Denmark: 2010-04-01
+- Denmark: 2011-08-01
+- Denmark: 2012-07-01
+- Denmark: 2022-10-01
+- Finland: 2017-04-01
+- Finland: 2017-11-01
+- Finland: 2018-11-01
+- Hungary: 2008-03-01
+- Hungary: 2009-08-01
 - Hungary: 2014-10-01
-- Hungary: 2021-06-01
-- Hungary: 2023-12-01
+- Hungary: 2023-11-01
+- Ireland: 2009-09-01
+- Ireland: 2016-11-01
+- Ireland: 2017-12-01
 - Ireland: 2018-06-01
-- Ireland: 2021-03-01
-- Italy: 2018-03-01
-- Italy: 2019-06-01
+- Ireland: 2021-04-01
+- Italy: 2018-05-01
+- Italy: 2019-07-01
 - Norway: 2010-03-01
-- Norway: 2011-11-01
-- Norway: 2014-10-01
-- Norway: 2023-07-01
+- Norway: 2011-12-01
+- Norway: 2014-11-01
+- Norway: 2023-06-01
 - Poland: 2012-10-01
-- Poland: 2014-06-01
-- South Korea: 2019-04-01
-- South Korea: 2024-09-01
-- South Korea: 2025-12-01
-- Spain: 2026-04-01
-- Switzerland: 2017-02-01
-- Switzerland: 2024-09-01
+- Poland: 2014-07-01
+- Poland: 2023-07-01
+- South Korea: 2019-06-01
+- South Korea: 2024-07-01
+- South Korea: 2026-01-01
+- Spain: 2026-03-01
+- Switzerland: 2012-09-01
+- Switzerland: 2016-10-01
+- Switzerland: 2024-08-01
 
 ## Data analysed
 
@@ -89,7 +95,7 @@ Gaps of up to 6 months without an auction are filled with a straight line; a lon
 
 | Country | Months analysed |
 |---|---|
-| United States | 2006-11 to 2026-10 |
+| United States | 2006-11 to 2026-09 |
 | Canada | 2007-05 to 2026-10 |
 | United Kingdom | 2006-11 to 2026-10 |
 | Germany | 2006-11 to 2026-10 |
@@ -109,7 +115,7 @@ Gaps of up to 6 months without an auction are filled with a straight line; a lon
 | Poland | 2006-12 to 2026-10 |
 | Slovakia | 2009-11 to 2017-11, 2018-10 to 2026-10 |
 | South Korea | 2018-01 to 2026-10 |
-| Spain | 2025-01 to 2026-10 |
+| Spain | 2025-01 to 2026-09 |
 | Switzerland | 2012-03 to 2014-10, 2016-04 to 2018-01, 2019-09 to 2026-10 |
 | European Union | 2021-09 to 2026-10 |
 

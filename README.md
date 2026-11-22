@@ -666,30 +666,32 @@ compares all settings tested.
 Months without an auction are filled in only across gaps of up to 6 months
 (a straight line between the months either side). A longer gap splits a
 country's series, and each stretch of at least 18 months is analysed on its
-own, so nothing is invented across long gaps and no years are skipped. The
-chance rate is worked out over the same span as each event check.
+own, so nothing is invented across long gaps and no years are skipped.
+Every month is tried as a break date. The chance rate is worked out over the
+same span as each event check.
 
-Results (run of 21 November 2026; auction yields, 2–10 year bucket, penalty 2, ±6 months):
+Results (run of 22 November 2026; auction yields, 2–10 year bucket, penalty 2, ±6 months):
 
 | | |
 |---|---|
-| Breaks found | 60, in 22 countries |
-| Breaks near a known event | 65% |
-| Events found (country by country) | 46%, vs 19% for a random date |
+| Breaks found | 59, in 22 countries |
+| Breaks near a known event | 66% |
+| Events found (country by country) | 44%, vs 18% for a random date |
 
 - **Found well:** the 2022 rate-hiking cycle (19 of 20 countries), the
-  Ukraine invasion (16 of 19), the ECB's 2014 negative rates (6 of 8 euro
-  countries) and 2012 "whatever it takes" (5 of 8), Brexit, the UK
-  mini-budget and the Bank of Japan's 2024 exit.
-- **Not found:** the 2010 Greek bailout, the 2013 taper tantrum (1 of 18)
-  and COVID. In the euro area yields were already near zero in 2020;
+  Ukraine invasion (15 of 19), the ECB's 2014 negative rates (5 of 8 euro
+  countries) and 2012 "whatever it takes" (4 of 8), the UK mini-budget and
+  the Bank of Japan's 2024 exit.
+- **Not found:** the 2010 Greek bailout, the 2013 taper tantrum (3 of 18),
+  COVID and Brexit (the UK break is in December 2015, more than 6 months
+  before the vote). In the euro area yields were already near zero in 2020;
   elsewhere the drop was real but small next to each country's 20-year
   range, so penalty 2 drops it (see the LLM comparison below).
-- **Bid-to-cover:** no link to these events (2% found vs 3% by chance), so
+- **Bid-to-cover:** no link to these events (3% found vs 4% by chance), so
   demand breaks have other causes.
 - **Breaks with no listed event** are the interesting leads: Norway
-  October 2014 (around the oil-price collapse), Japan and Hungary
-  May 2014, Switzerland September 2024 and others in `breaks.csv`.
+  November 2014 (around the oil-price collapse), Japan December 2014,
+  Hungary June 2014, Switzerland August 2024 and others in `breaks.csv`.
 
 ### LLM analysis vs ruptures
 
@@ -697,16 +699,17 @@ As an independent check, an LLM (Claude Opus 5.5) read the same monthly
 yields and marked its own break dates and causes before ruptures was rerun.
 Details: [`model_testing/results/llm_analysis/`](model_testing/results/llm_analysis/).
 
-- **Same big breaks:** 47 of ruptures' 60 breaks (78%) are also in the
-  LLM's list, and the two agree on the cause for 29 of the 36 paired breaks
+- **Same big breaks:** 49 of ruptures' 59 breaks (83%) are also in the
+  LLM's list, and the two agree on the cause for 29 of the 37 paired breaks
   with a known event.
 - **The LLM finds more:** 148 breaks (133 of them where ruptures can look),
   including the taper tantrum and COVID in several countries. Its
   high-confidence ones match known events about as well as ruptures' breaks
-  do (41% found vs 16% by chance, against 46% vs 19%), no better.
-- **Mislabelled events:** the Czech, Hungarian and Polish breaks in late
-  2021 are credited to the Ukraine invasion by the ±6 month rule, but came
-  before it; the LLM puts them down to each central bank's own hikes.
+  do (41% found vs 16% by chance, against 44% vs 18%), no better.
+- **Mislabelled events:** the Czech break in November 2021 (and, more
+  narrowly, Hungary's in January 2022) is credited to the Ukraine invasion
+  by the ±6 month rule, but came before it; the LLM puts it down to the
+  central bank's own hikes from mid-2021.
 - **Data error found:** Finland's 17 November 2026 auction is published at a
   3,389% yield; values like that are now left out as typos (see Caveats).
 
@@ -721,7 +724,7 @@ Each run creates a dated folder, with auction results and market yields kept
 apart (they come from different sources):
 
 ```
-runs/2026-11-21_020600_20y/
+runs/2026-11-22_083520_20y/
   auctions/
     auction_totals.csv          auctions per country and maturity bucket
     us/  canada/  france/ ...   one folder per country: charts + CSVs
@@ -761,7 +764,9 @@ month and the two before, using whichever had auctions). Where a series has
 no auctions for more than 6 months the line stops, so gaps show as gaps; a
 month with no neighbour is drawn as a dot. The 20-year charts and monthly
 CSVs stop at the last full month: the current month's auctions appear only
-on the 12-month charts.
+on the 12-month charts. When a source stops partway through a month (no
+auction for much longer than usual, e.g. the US data ending on 15 October
+2026), that month is left out too and the run log says so.
 
 Countries define these measures slightly differently (e.g. clearing vs average
 yield), so compare **trends** across countries more than exact levels.
@@ -772,7 +777,7 @@ The `_grid` versions give each country its own small panel instead.
 
 ## Example charts
 
-These come from the run of 21 November 2026. Each run writes its own copies to
+These come from the run of 22 November 2026. Each run writes its own copies to
 `runs/`; the images here are just a snapshot for this page.
 
 **Demand at auction, all countries.** Bid-to-cover by maturity, one line per

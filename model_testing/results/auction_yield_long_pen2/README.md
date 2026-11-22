@@ -4,10 +4,10 @@ Settings: shortest segment 6 months; a break within ±6 months of an event count
 
 | | |
 |---|---|
-| Breaks found | 64, in 22 countries |
-| Breaks near a known event | 48% |
-| Events found (country by country) | 41% |
-| Chance rate (a random date) | 20% |
+| Breaks found | 68, in 22 countries |
+| Breaks near a known event | 50% |
+| Events found (country by country) | 44% |
+| Chance rate (a random date) | 21% |
 
 The chance rate is worked out for each event check over the same span of that country's data, so the two rates compare like for like.
 
@@ -17,7 +17,7 @@ The chance rate is worked out for each event check over the same span of that co
 |---|---|:-:|:-:|:-:|
 | 2008-09-15 | Global financial crisis (Lehman Brothers collapses) | 9 | 0 | 0% |
 | 2010-05-02 | Euro debt crisis begins (first Greek bailout) | 6 | 2 | 33% |
-| 2011-11-09 | Euro crisis peak (Italian 10-year above 7%) | 7 | 3 | 43% |
+| 2011-11-09 | Euro crisis peak (Italian 10-year above 7%) | 7 | 2 | 29% |
 | 2012-07-26 | ECB "whatever it takes" (Draghi) | 7 | 2 | 29% |
 | 2013-05-22 | US taper tantrum (Fed signals slower bond buying) | 15 | 0 | 0% |
 | 2014-06-05 | ECB introduces negative interest rates | 7 | 7 | 100% |
@@ -26,7 +26,7 @@ The chance rate is worked out for each event check over the same span of that co
 | 2016-06-23 | Brexit referendum | 1 | 1 | 100% |
 | 2020-03-11 | COVID-19 declared a pandemic | 15 | 1 | 7% |
 | 2022-02-24 | Russia invades Ukraine | 17 | 12 | 71% |
-| 2022-03-16 | Fed starts raising rates (global hiking cycle) | 17 | 13 | 76% |
+| 2022-03-16 | Fed starts raising rates (global hiking cycle) | 17 | 17 | 100% |
 | 2022-09-23 | UK mini-budget (gilt crisis) | 1 | 1 | 100% |
 | 2024-03-19 | Bank of Japan ends negative rates and yield-curve control | 1 | 0 | 0% |
 
@@ -34,39 +34,40 @@ The chance rate is worked out for each event check over the same span of that co
 
 Leads worth looking into: something changed, but it isn't in events.csv.
 
-- United States: 2011-09-01
+- United States: 2011-08-01
 - United States: 2019-08-01
-- Canada: 2011-08-01
+- United States: 2023-08-01
+- Canada: 2011-07-01
 - Canada: 2014-12-01
-- United Kingdom: 2011-12-01
-- Germany: 2022-11-01
-- Japan: 2025-03-01
-- Austria: 2022-11-01
-- Belgium: 2026-02-01
-- Czech Republic: 2007-09-01
-- Czech Republic: 2010-06-01
+- United Kingdom: 2011-10-01
+- Japan: 2025-05-01
+- Belgium: 2026-03-01
+- Czech Republic: 2007-05-01
+- Czech Republic: 2010-04-01
 - Czech Republic: 2014-05-01
-- Denmark: 2011-09-01
+- Denmark: 2011-08-01
 - Denmark: 2014-08-01
-- Denmark: 2016-08-01
-- Finland: 2019-04-01
-- France: 2022-11-01
+- Denmark: 2016-05-01
+- Denmark: 2017-12-01
+- Finland: 2019-05-01
 - Hungary: 2014-05-01
 - Ireland: 2015-12-01
-- Ireland: 2017-03-01
-- Ireland: 2018-01-01
-- Italy: 2019-06-01
-- Lithuania: 2021-04-01
+- Ireland: 2017-01-01
+- Ireland: 2018-02-01
+- Italy: 2019-07-01
+- Lithuania: 2021-08-01
 - Netherlands: 2019-06-01
-- Norway: 2025-02-01
-- Poland: 2012-11-01
-- Poland: 2016-12-01
-- Poland: 2019-06-01
-- Poland: 2023-11-01
+- Norway: 2025-03-01
+- Poland: 2012-09-01
+- Poland: 2016-11-01
+- Poland: 2019-05-01
+- Poland: 2023-07-01
 - South Korea: 2026-05-01
-- Switzerland: 2011-09-01
-- Switzerland: 2015-01-01
-- European Union: 2023-02-01
+- Switzerland: 2011-08-01
+- Switzerland: 2014-11-01
+- Switzerland: 2023-12-01
+- European Union: 2022-10-01
+- European Union: 2025-03-01
 
 ## Data analysed
 
@@ -74,11 +75,11 @@ Gaps of up to 6 months without an auction are filled with a straight line; a lon
 
 | Country | Months analysed |
 |---|---|
-| United States | 2007-02 to 2026-10 |
+| United States | 2007-02 to 2026-09 |
 | Canada | 2007-01 to 2026-10 |
 | United Kingdom | 2006-12 to 2026-07 |
 | Germany | 2007-01 to 2026-10 |
-| Japan | 2006-11 to 2026-09 |
+| Japan | 2006-12 to 2026-09 |
 | Austria | 2008-04 to 2026-10 |
 | Belgium | 2009-01 to 2019-11, 2023-03 to 2026-10 |
 | Czech Republic | 2006-11 to 2008-06, 2009-03 to 2012-03, 2013-02 to 2026-09 |
@@ -94,7 +95,7 @@ Gaps of up to 6 months without an auction are filled with a straight line; a lon
 | Poland | 2007-01 to 2013-10, 2014-06 to 2020-07, 2023-01 to 2026-07 |
 | Slovakia | 2011-02 to 2026-10 |
 | South Korea | 2018-01 to 2026-10 |
-| Spain | 2025-01 to 2026-10 |
+| Spain | 2025-01 to 2026-09 |
 | Switzerland | 2010-11 to 2026-09 |
 | European Union | 2022-04 to 2026-10 |
 

@@ -89,31 +89,71 @@ MARKET_STALE_DAYS = 10
 RUNS_DIR = Path(__file__).resolve().parent / "runs"
 
 
-def save_outputs(folder: Path, prefix: str, monthly: pd.DataFrame, plots: dict):
+def table_end(auctions: pd.DataFrame) -> pd.Timestamp:
+    """
+    The 20-year monthly tables stop before this month: the current month
+    (not over yet), or the source's latest month when it seems to have
+    stopped partway through it, i.e. no auction for much longer than its
+    usual spacing (e.g. the US Fiscal Data API stalling on 15 October 2026).
+    A part-filled month would show as a dip at the end of every chart.
+    """
+    last = auctions["auction_date"].max()
+    last_month = last.to_period("M").to_timestamp()
+    if last_month >= THIS_MONTH:
+        return THIS_MONTH
+    year = auctions.loc[auctions["auction_date"] > last - pd.DateOffset(years=1), "auction_date"]
+    usual_gap = year.drop_duplicates().sort_values().diff().dt.days.median()
+    days_left = (last_month + pd.offsets.MonthEnd(0) - last).days
+    if pd.notna(usual_gap) and days_left > max(7, 3 * usual_gap):
+        return last_month
+    return THIS_MONTH
+
+
+def save_charts(folder: Path, prefix: str, suffix: str, make_plots) -> int:
+    """
+    Build and save charts, each on its own, so a failure costs only the
+    charts it affects. Returns how many were saved.
+    """
+    try:
+        plots = make_plots()
+    except Exception as exc:
+        print(f"  charts FAILED: {exc!r}")
+        return 0
+    saved = 0
+    for chart, (plot, formula) in plots.items():
+        try:
+            save_plot(plot, folder / f"{prefix}_{chart}_{suffix}.png", formula=formula)
+            saved += 1
+        except Exception as exc:
+            print(f"  {chart} chart FAILED: {exc!r}")
+    return saved
+
+
+# The save_* functions write the CSV first, then the charts, so the data is
+# kept even if a chart fails. make_plots builds the charts (a function, so
+# building them happens after the CSV is written).
+def save_outputs(folder: Path, prefix: str, monthly: pd.DataFrame, make_plots):
     folder.mkdir(parents=True, exist_ok=True)
     monthly.to_csv(folder / f"{prefix}_auction_{YEARS}y_monthly.csv", index=False)
-    for chart, (plot, formula) in plots.items():
-        save_plot(plot, folder / f"{prefix}_{chart}_{YEARS}y.png", formula=formula)
-    print(f"  saved {len(plots)} charts + CSV to {folder.name}/")
+    saved = save_charts(folder, prefix, f"{YEARS}y", make_plots)
+    print(f"  saved {saved} charts + CSV to {folder.name}/")
 
 
-def save_recent(folder: Path, prefix: str, recent: pd.DataFrame, plots: dict):
+def save_recent(folder: Path, prefix: str, recent: pd.DataFrame, make_plots):
     folder.mkdir(parents=True, exist_ok=True)
     suffix = f"{RECENT_MONTHS}m"
     recent.to_csv(folder / f"{prefix}_recent_auctions_{suffix}.csv", index=False)
-    for chart, (plot, formula) in plots.items():
-        save_plot(plot, folder / f"{prefix}_{chart}_{suffix}.png", formula=formula)
-    print(f"  saved {len(plots)} recent charts ({len(recent)} auctions) to {folder.name}/")
+    saved = save_charts(folder, prefix, suffix, make_plots)
+    print(f"  saved {saved} recent charts ({len(recent)} auctions) to {folder.name}/")
 
 
-def save_market(folder: Path, prefix: str, market: pd.DataFrame, plots: dict):
+def save_market(folder: Path, prefix: str, market: pd.DataFrame, make_plots):
     folder.mkdir(parents=True, exist_ok=True)
     suffix = f"{RECENT_MONTHS}m"
     market.sort_values(["tenor_months", "date"]).to_csv(
         folder / f"{prefix}_market_yields_{suffix}.csv", index=False
     )
-    for chart, (plot, formula) in plots.items():
-        save_plot(plot, folder / f"{prefix}_{chart}_{suffix}.png", formula=formula)
+    save_charts(folder, prefix, suffix, make_plots)
     print(f"  saved market yields to market_yields/{folder.name}/")
 
 
@@ -151,10 +191,10 @@ def main():
         try:
             raw = country.fetch(START_DATE, END_DATE)
             auctions = prepare(raw, START_DATE, END_DATE)
-            # The current month isn't over, so its totals would show as a dip
-            # at the end of every 20-year chart; those stop at the last full
-            # month. The recent charts still show every auction.
-            monthly = make_monthly_data(auctions[auctions["month"] < THIS_MONTH], country.volume_divisor)
+            # The 20-year charts stop at the last full month (see table_end);
+            # the recent charts still show every auction.
+            end_month = table_end(auctions)
+            monthly = make_monthly_data(auctions[auctions["month"] < end_month], country.volume_divisor)
         except Exception as exc:
             # One country's site being down shouldn't sink the whole run.
             print(f"  FAILED: {exc!r}")
@@ -162,6 +202,9 @@ def main():
 
         last = auctions["auction_date"].max()
         print(f"  {len(auctions):,} auctions, {auctions['auction_date'].min().date()} to {last.date()}")
+        if end_month < THIS_MONTH:
+            print(f"  note: nothing after {last.date()}; {end_month:%B %Y} looks unfinished "
+                  "and is left out of the 20-year charts")
         if auctions.attrs.get("implausible"):
             print(f"  {auctions.attrs['implausible']} implausible values (source typos) set to missing")
         if (END_DATE - last).days > STALE_DAYS:
@@ -176,22 +219,23 @@ def main():
                 "last_auction": last.date(),
             }
         )
-        # Each output is saved separately, so one failing chart costs only
-        # that output, not the rest of the run.
+        # Each output is saved separately, so one failure costs only that
+        # output, not the rest of the run.
         try:
-            save_outputs(auction_dir / country.code, country.code, monthly, country_plots(country, monthly))
+            save_outputs(auction_dir / country.code, country.code, monthly,
+                         lambda: country_plots(country, monthly))
         except Exception as exc:
-            print(f"  20-year charts FAILED: {exc!r}")
+            print(f"  20-year outputs FAILED: {exc!r}")
 
         market = fetch_market(country)
         if market is not None:
             try:
                 save_market(
                     market_dir / country.code, country.code, market,
-                    market_plot(country, market, RECENT_START, END_DATE, RECENT_MONTHS),
+                    lambda: market_plot(country, market, RECENT_START, END_DATE, RECENT_MONTHS),
                 )
             except Exception as exc:
-                print(f"  market yield charts FAILED: {exc!r}")
+                print(f"  market yield outputs FAILED: {exc!r}")
         try:
             recent = recent_auctions(auctions, market, RECENT_START)
         except Exception as exc:
@@ -201,10 +245,10 @@ def main():
         try:
             save_recent(
                 auction_dir / country.code, country.code, recent,
-                recent_plots(country, recent, market, RECENT_START, END_DATE, RECENT_MONTHS),
+                lambda: recent_plots(country, recent, market, RECENT_START, END_DATE, RECENT_MONTHS),
             )
         except Exception as exc:
-            print(f"  recent charts FAILED: {exc!r}")
+            print(f"  recent outputs FAILED: {exc!r}")
 
     if not all_monthly:
         raise RuntimeError("No country data could be downloaded.")
@@ -221,20 +265,17 @@ def main():
     combined["country"] = pd.Categorical(
         combined["country"], categories=[c.name for c in countries.ALL], ordered=True
     )
-    save_outputs(auction_dir / "global", "global", combined, global_plots(combined))
-    for chart, (plot, formula) in global_recent_plot(
-        all_recent, [c.name for c in countries.ALL], RECENT_START, END_DATE, RECENT_MONTHS
-    ).items():
-        save_plot(plot, auction_dir / "global" / f"global_{chart}_{RECENT_MONTHS}m.png",
-                  formula=formula)
+    names = [c.name for c in countries.ALL]
+    save_outputs(auction_dir / "global", "global", combined, lambda: global_plots(combined))
+    save_charts(auction_dir / "global", "global", f"{RECENT_MONTHS}m",
+                lambda: global_recent_plot(all_recent, names, RECENT_START, END_DATE, RECENT_MONTHS))
 
     markets = [m.assign(country=name) for name, _, m in all_recent if m is not None]
     if markets:
         markets = pd.concat(markets, ignore_index=True)
         save_market(
             market_dir / "global", "global", markets,
-            global_market_plots(markets, [c.name for c in countries.ALL],
-                                RECENT_START, END_DATE, RECENT_MONTHS),
+            lambda: global_market_plots(markets, names, RECENT_START, END_DATE, RECENT_MONTHS),
         )
 
     print("\nLatest month per country (all maturities, median bid-to-cover / yield):")

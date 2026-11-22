@@ -4,10 +4,10 @@ Settings: shortest segment 6 months; a break within ±6 months of an event count
 
 | | |
 |---|---|
-| Breaks found | 9, in 5 countries |
-| Breaks near a known event | 22% |
-| Events found (country by country) | 2% |
-| Chance rate (a random date) | 3% |
+| Breaks found | 11, in 7 countries |
+| Breaks near a known event | 27% |
+| Events found (country by country) | 3% |
+| Chance rate (a random date) | 4% |
 
 The chance rate is worked out for each event check over the same span of that country's data, so the two rates compare like for like.
 
@@ -18,7 +18,7 @@ The chance rate is worked out for each event check over the same span of that co
 | 2008-09-15 | Global financial crisis (Lehman Brothers collapses) | 12 | 0 | 0% |
 | 2010-05-02 | Euro debt crisis begins (first Greek bailout) | 6 | 0 | 0% |
 | 2011-11-09 | Euro crisis peak (Italian 10-year above 7%) | 7 | 0 | 0% |
-| 2012-07-26 | ECB "whatever it takes" (Draghi) | 6 | 0 | 0% |
+| 2012-07-26 | ECB "whatever it takes" (Draghi) | 6 | 1 | 17% |
 | 2013-05-22 | US taper tantrum (Fed signals slower bond buying) | 16 | 0 | 0% |
 | 2014-06-05 | ECB introduces negative interest rates | 6 | 0 | 0% |
 | 2015-03-09 | ECB starts quantitative easing | 6 | 0 | 0% |
@@ -34,12 +34,13 @@ The chance rate is worked out for each event check over the same span of that co
 
 Leads worth looking into: something changed, but it isn't in events.csv.
 
-- United States: 2009-10-01
-- United States: 2015-03-01
-- United Kingdom: 2011-06-01
-- United Kingdom: 2023-12-01
-- Japan: 2011-11-01
-- Italy: 2024-11-01
+- United States: 2009-06-01
+- United States: 2015-09-01
+- United Kingdom: 2011-03-01
+- United Kingdom: 2024-01-01
+- Japan: 2012-01-01
+- Finland: 2018-11-01
+- Italy: 2024-10-01
 - Poland: 2021-07-01
 
 ## Data analysed
@@ -48,7 +49,7 @@ Gaps of up to 6 months without an auction are filled with a straight line; a lon
 
 | Country | Months analysed |
 |---|---|
-| United States | 2006-11 to 2026-10 |
+| United States | 2006-11 to 2026-09 |
 | Canada | 2007-05 to 2026-10 |
 | United Kingdom | 2006-11 to 2026-10 |
 | Germany | 2006-11 to 2026-10 |
@@ -66,7 +67,7 @@ Gaps of up to 6 months without an auction are filled with a straight line; a lon
 | Poland | 2006-12 to 2026-10 |
 | Slovakia | 2009-11 to 2017-11, 2018-10 to 2026-10 |
 | South Korea | 2018-01 to 2026-10 |
-| Spain | 2025-01 to 2026-10 |
+| Spain | 2025-01 to 2026-09 |
 | Switzerland | 2012-03 to 2014-10, 2016-04 to 2018-01, 2019-09 to 2026-10 |
 | European Union | 2021-09 to 2026-10 |
 

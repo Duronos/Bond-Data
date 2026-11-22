@@ -5,56 +5,56 @@
     "breaks": 133,
     "near_event": 0.47368421052631576,
     "events_found": 0.5777777777777777,
-    "chance": 0.37813330510446314
+    "chance": 0.3782120220469254
   },
   "llm_high_confidence": {
     "breaks": 56,
     "near_event": 0.7142857142857143,
     "events_found": 0.4074074074074074,
-    "chance": 0.1568247838094403
+    "chance": 0.15687845445202814
   },
   "ruptures": {
-    "breaks": 60,
-    "near_event": 0.65,
-    "events_found": 0.45925925925925926,
-    "chance": 0.1852844611938187
+    "breaks": 59,
+    "near_event": 0.6610169491525424,
+    "events_found": 0.43703703703703706,
+    "chance": 0.18409658532041848
   },
-  "pairs": 47,
+  "pairs": 49,
   "same_cause": 29,
-  "pairs_with_event": 36,
+  "pairs_with_event": 37,
   "overlap": [
     {
       "setting": "auction_yield_intermediate_pen0.5",
-      "ruptures_breaks": 107,
+      "ruptures_breaks": 122,
       "llm_breaks": 133,
-      "pairs": 83,
-      "ruptures_found_by_llm": 0.7757009345794392,
-      "llm_found_by_ruptures": 0.6240601503759399,
-      "llm_high_found": 0.8214285714285714,
-      "llm_medium_found": 0.5344827586206896,
-      "llm_low_found": 0.3157894736842105
+      "pairs": 90,
+      "ruptures_found_by_llm": 0.7377049180327869,
+      "llm_found_by_ruptures": 0.6766917293233082,
+      "llm_high_found": 0.8928571428571429,
+      "llm_medium_found": 0.5689655172413793,
+      "llm_low_found": 0.3684210526315789
     },
     {
       "setting": "auction_yield_intermediate_pen1",
-      "ruptures_breaks": 85,
+      "ruptures_breaks": 92,
       "llm_breaks": 133,
-      "pairs": 69,
-      "ruptures_found_by_llm": 0.8117647058823529,
-      "llm_found_by_ruptures": 0.518796992481203,
-      "llm_high_found": 0.6607142857142857,
-      "llm_medium_found": 0.4482758620689655,
-      "llm_low_found": 0.3157894736842105
+      "pairs": 73,
+      "ruptures_found_by_llm": 0.7934782608695652,
+      "llm_found_by_ruptures": 0.5488721804511278,
+      "llm_high_found": 0.6785714285714286,
+      "llm_medium_found": 0.4827586206896552,
+      "llm_low_found": 0.3684210526315789
     },
     {
       "setting": "auction_yield_intermediate_pen2",
-      "ruptures_breaks": 60,
+      "ruptures_breaks": 59,
       "llm_breaks": 133,
-      "pairs": 47,
-      "ruptures_found_by_llm": 0.7833333333333333,
-      "llm_found_by_ruptures": 0.3533834586466165,
-      "llm_high_found": 0.4642857142857143,
+      "pairs": 49,
+      "ruptures_found_by_llm": 0.8305084745762712,
+      "llm_found_by_ruptures": 0.3684210526315789,
+      "llm_high_found": 0.48214285714285715,
       "llm_medium_found": 0.3103448275862069,
-      "llm_low_found": 0.15789473684210525
+      "llm_low_found": 0.21052631578947367
     }
   ]
 }

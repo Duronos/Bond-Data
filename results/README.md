@@ -1,6 +1,6 @@
-# Results: run of 21 November 2026
+# Results: run of 22 November 2026
 
-A copy of the latest run (`runs/2026-11-21_020600_20y/`), in two parts:
+A copy of the latest run (`runs/2026-11-22_083520_20y/`), in two parts:
 
 - [`auctions/`](auctions/): auction results, one folder per country, plus
   [`global/`](auctions/global/) (every country together) and

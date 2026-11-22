@@ -5,9 +5,9 @@
   "penalty": 2.0,
   "min_months": 6,
   "tolerance": 6,
-  "breaks": 60,
+  "breaks": 59,
   "countries": 22,
-  "breaks_near_event": 0.65,
-  "events_found": 0.45925925925925926,
-  "chance": 0.18528446119381872
+  "breaks_near_event": 0.6610169491525424,
+  "events_found": 0.43703703703703706,
+  "chance": 0.18409658532041845
 }
