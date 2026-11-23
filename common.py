@@ -320,9 +320,14 @@ def line_chart(data, y, color, title, subtitle, ylab, caption, y_limits=None, fa
         data[color] = data[color].cat.remove_unused_categories()
         present = list(data[color].cat.categories)
         mapping = aes(x="month", y=y, color=color, linetype=color, group="segment")
+        # Values as lists with explicit breaks and limits: with dicts plotnine
+        # built two legends that didn't match (some countries grey, some
+        # missing). Identical breaks on both scales make it merge them.
         scales = [
-            scale_color_manual(values={c: colors[c] for c in present}, name=legend_title),
-            scale_linetype_manual(values={c: styles[c] for c in present}, name=legend_title),
+            scale_color_manual(values=[colors[c] for c in present], breaks=present, limits=present,
+                               name=legend_title),
+            scale_linetype_manual(values=[styles[c] for c in present], breaks=present, limits=present,
+                                  name=legend_title),
             # Same title and layout on both guides, so they merge into one
             # legend showing each country's colour and line style together.
             guides(color=guide_legend(ncol=6), linetype=guide_legend(ncol=6)),
@@ -723,8 +728,12 @@ def global_market_plots(markets: pd.DataFrame, country_order: list[str], start, 
         plot = (
             ggplot(one, aes(x="date", y="market_yield", color="country", linetype="country"))
             + geom_line(size=0.8)
-            + scale_color_manual(values={c: colors[c] for c in present}, name="Country")
-            + scale_linetype_manual(values={c: styles[c] for c in present}, name="Country")
+            # Lists with explicit breaks, so the two legends merge into one
+            # (see line_chart).
+            + scale_color_manual(values=[colors[c] for c in present], breaks=present, limits=present,
+                                 name="Country")
+            + scale_linetype_manual(values=[styles[c] for c in present], breaks=present, limits=present,
+                                    name="Country")
             + guides(color=guide_legend(ncol=5), linetype=guide_legend(ncol=5))
             + scale_x_datetime(date_breaks="1 month", date_labels="%b %Y", limits=(start, end))
             + labs(
