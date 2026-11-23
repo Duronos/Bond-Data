@@ -5,9 +5,19 @@
   "penalty": 2.0,
   "min_months": 6,
   "tolerance": 6,
-  "breaks": 11,
+  "simulations": 1000,
   "countries": 7,
-  "breaks_near_event": 0.2727272727272727,
-  "events_found": 0.02608695652173913,
-  "chance": 0.0352907374274838
+  "months_analysed": 3973,
+  "breaks": 11,
+  "events_checked": 120,
+  "tp": 3,
+  "fp": 8,
+  "fn": 117,
+  "precision": 0.2727272727272727,
+  "recall": 0.025,
+  "f1": 0.04580152671755725,
+  "baseline_precision": 0.28490909090909083,
+  "baseline_recall": 0.02611666666666667,
+  "baseline_f1": 0.0478473282442748,
+  "p_value": 0.6723276723276723
 }

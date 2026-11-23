@@ -1,12 +1,12 @@
-country,break_month,nearest_event,event_date,months_off
-United States,2009-06-01,,,
-United States,2015-09-01,,,
-United Kingdom,2011-03-01,,,
-United Kingdom,2016-07-01,Brexit referendum,2016-06-23,0.3
-United Kingdom,2024-01-01,,,
-Japan,2012-01-01,,,
-Japan,2020-08-01,COVID-19 declared a pandemic,2020-03-11,4.7
-Belgium,2012-06-01,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-1.8
-Finland,2018-11-01,,,
-Italy,2024-10-01,,,
-Poland,2021-07-01,,,
+country,break_month,outcome,event,event_date,months_off,note
+United States,2009-06-01,FP,,,,
+United States,2015-09-01,FP,,,,
+United Kingdom,2011-03-01,FP,,,,
+United Kingdom,2016-07-01,TP,Brexit referendum,2016-06-23,0.3,
+United Kingdom,2024-01-01,FP,,,,
+Japan,2012-01-01,FP,,,,
+Japan,2020-08-01,TP,COVID-19 declared a pandemic,2020-03-11,4.7,
+Belgium,2012-06-01,TP,"ECB ""whatever it takes"" (Draghi)",2012-07-26,-1.8,
+Finland,2018-11-01,FP,,,,
+Italy,2024-10-01,FP,,,,
+Poland,2021-07-01,FP,,,,

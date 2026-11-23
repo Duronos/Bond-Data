@@ -1,6 +1,7 @@
 # Extra packages for the analysis scripts in this folder only
 # (the main project doesn't need them).
 ruptures
+scipy
 pandas
 numpy
 matplotlib

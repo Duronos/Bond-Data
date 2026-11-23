@@ -1,0 +1,141 @@
+country,date,event,outcome
+United States,2008-09-15,Global financial crisis (Lehman Brothers collapses),FN
+United States,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+United States,2020-03-11,COVID-19 declared a pandemic,TP
+United States,2022-02-24,Russia invades Ukraine,TP
+United States,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+Canada,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+Canada,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Canada,2020-03-11,COVID-19 declared a pandemic,TP
+Canada,2022-02-24,Russia invades Ukraine,FN
+Canada,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+United Kingdom,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+United Kingdom,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+United Kingdom,2016-06-23,Brexit referendum,TP
+United Kingdom,2020-03-11,COVID-19 declared a pandemic,FN
+United Kingdom,2022-02-24,Russia invades Ukraine,FN
+United Kingdom,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+United Kingdom,2022-09-23,UK mini-budget (gilt crisis),TP
+Germany,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+Germany,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Germany,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+Germany,2012-07-26,"ECB ""whatever it takes"" (Draghi)",FN
+Germany,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Germany,2014-06-05,ECB introduces negative interest rates,FN
+Germany,2015-03-09,ECB starts quantitative easing,TP
+Germany,2020-03-11,COVID-19 declared a pandemic,FN
+Germany,2022-02-24,Russia invades Ukraine,FN
+Germany,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Japan,2008-09-15,Global financial crisis (Lehman Brothers collapses),FN
+Japan,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Japan,2016-01-29,Bank of Japan introduces negative interest rates,FN
+Japan,2020-03-11,COVID-19 declared a pandemic,FN
+Japan,2022-02-24,Russia invades Ukraine,FN
+Japan,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+Japan,2024-03-19,Bank of Japan ends negative rates and yield-curve control,FN
+Austria,2008-09-15,Global financial crisis (Lehman Brothers collapses),FN
+Austria,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Austria,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+Austria,2012-07-26,"ECB ""whatever it takes"" (Draghi)",FN
+Austria,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Austria,2014-06-05,ECB introduces negative interest rates,TP
+Austria,2015-03-09,ECB starts quantitative easing,FN
+Austria,2020-03-11,COVID-19 declared a pandemic,FN
+Austria,2022-02-24,Russia invades Ukraine,FN
+Austria,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Belgium,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+Belgium,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Belgium,2011-11-09,Euro crisis peak (Italian 10-year above 7%),FN
+Belgium,2012-07-26,"ECB ""whatever it takes"" (Draghi)",TP
+Belgium,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Belgium,2014-06-05,ECB introduces negative interest rates,FN
+Belgium,2015-03-09,ECB starts quantitative easing,TP
+Czech Republic,2008-09-15,Global financial crisis (Lehman Brothers collapses),FN
+Czech Republic,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Czech Republic,2020-03-11,COVID-19 declared a pandemic,FN
+Czech Republic,2022-02-24,Russia invades Ukraine,TP
+Czech Republic,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+Denmark,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Denmark,2020-03-11,COVID-19 declared a pandemic,FN
+Denmark,2022-02-24,Russia invades Ukraine,FN
+Denmark,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Finland,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Finland,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+Finland,2012-07-26,"ECB ""whatever it takes"" (Draghi)",FN
+Finland,2020-03-11,COVID-19 declared a pandemic,FN
+Finland,2022-02-24,Russia invades Ukraine,FN
+Finland,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+France,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+France,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+France,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+France,2012-07-26,"ECB ""whatever it takes"" (Draghi)",FN
+France,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+France,2014-06-05,ECB introduces negative interest rates,TP
+France,2015-03-09,ECB starts quantitative easing,FN
+France,2020-03-11,COVID-19 declared a pandemic,FN
+France,2022-02-24,Russia invades Ukraine,FN
+France,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Hungary,2008-09-15,Global financial crisis (Lehman Brothers collapses),FN
+Hungary,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Hungary,2020-03-11,COVID-19 declared a pandemic,FN
+Hungary,2022-02-24,Russia invades Ukraine,TP
+Hungary,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+Ireland,2010-05-02,Euro debt crisis begins (first Greek bailout),TP
+Ireland,2020-03-11,COVID-19 declared a pandemic,TP
+Italy,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+Italy,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Italy,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+Italy,2012-07-26,"ECB ""whatever it takes"" (Draghi)",TP
+Italy,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Italy,2014-06-05,ECB introduces negative interest rates,TP
+Italy,2015-03-09,ECB starts quantitative easing,FN
+Italy,2020-03-11,COVID-19 declared a pandemic,FN
+Italy,2022-02-24,Russia invades Ukraine,FN
+Italy,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Lithuania,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Lithuania,2011-11-09,Euro crisis peak (Italian 10-year above 7%),FN
+Lithuania,2012-07-26,"ECB ""whatever it takes"" (Draghi)",TP
+Lithuania,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Lithuania,2014-06-05,ECB introduces negative interest rates,TP
+Lithuania,2015-03-09,ECB starts quantitative easing,FN
+Lithuania,2020-03-11,COVID-19 declared a pandemic,FN
+Lithuania,2022-02-24,Russia invades Ukraine,FN
+Lithuania,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Netherlands,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+Netherlands,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Netherlands,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+Netherlands,2012-07-26,"ECB ""whatever it takes"" (Draghi)",FN
+Netherlands,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Netherlands,2014-06-05,ECB introduces negative interest rates,FN
+Netherlands,2015-03-09,ECB starts quantitative easing,TP
+Netherlands,2020-03-11,COVID-19 declared a pandemic,FN
+Netherlands,2022-02-24,Russia invades Ukraine,FN
+Netherlands,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Norway,2008-09-15,Global financial crisis (Lehman Brothers collapses),TP
+Norway,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Norway,2020-03-11,COVID-19 declared a pandemic,FN
+Norway,2022-02-24,Russia invades Ukraine,FN
+Norway,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+Poland,2008-09-15,Global financial crisis (Lehman Brothers collapses),FN
+Poland,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Poland,2020-03-11,COVID-19 declared a pandemic,FN
+Poland,2022-02-24,Russia invades Ukraine,TP
+Poland,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+Slovakia,2010-05-02,Euro debt crisis begins (first Greek bailout),FN
+Slovakia,2011-11-09,Euro crisis peak (Italian 10-year above 7%),TP
+Slovakia,2012-07-26,"ECB ""whatever it takes"" (Draghi)",FN
+Slovakia,2013-05-22,US taper tantrum (Fed signals slower bond buying),FN
+Slovakia,2014-06-05,ECB introduces negative interest rates,TP
+Slovakia,2015-03-09,ECB starts quantitative easing,FN
+Slovakia,2020-03-11,COVID-19 declared a pandemic,FN
+Slovakia,2022-02-24,Russia invades Ukraine,FN
+Slovakia,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+South Korea,2020-03-11,COVID-19 declared a pandemic,FN
+South Korea,2022-02-24,Russia invades Ukraine,TP
+South Korea,2022-03-16,Fed starts raising rates (global hiking cycle),FN
+Switzerland,2013-05-22,US taper tantrum (Fed signals slower bond buying),TP
+Switzerland,2020-03-11,COVID-19 declared a pandemic,FN
+Switzerland,2022-02-24,Russia invades Ukraine,FN
+Switzerland,2022-03-16,Fed starts raising rates (global hiking cycle),TP
+European Union,2022-02-24,Russia invades Ukraine,TP
+European Union,2022-03-16,Fed starts raising rates (global hiking cycle),TP
