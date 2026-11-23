@@ -4,6 +4,8 @@
   "bucket": "Long",
   "penalty": 2.0,
   "min_months": 6,
+  "events_file": "events.csv",
+  "events_link": "../../events.csv",
   "tolerance": 6,
   "simulations": 1000,
   "countries": 22,

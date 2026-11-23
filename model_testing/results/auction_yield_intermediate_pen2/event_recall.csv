@@ -1,10 +1,10 @@
 date,event,countries_checked,tp,fn,recall
 2008-09-15,Global financial crisis (Lehman Brothers collapses),14,5,9,0.36
-2010-05-02,Euro debt crisis begins (first Greek bailout),10,0,10,0.0
-2011-11-09,Euro crisis peak (Italian 10-year above 7%),9,3,6,0.33
-2012-07-26,"ECB ""whatever it takes"" (Draghi)",9,3,6,0.33
+2010-05-02,Euro debt crisis begins (first Greek bailout),9,0,9,0.0
+2011-11-09,Euro crisis peak (Italian 10-year above 7%),8,3,5,0.38
+2012-07-26,"ECB ""whatever it takes"" (Draghi)",8,2,6,0.25
 2013-05-22,US taper tantrum (Fed signals slower bond buying),18,3,15,0.17
-2014-06-05,ECB introduces negative interest rates,8,3,5,0.38
+2014-06-05,ECB introduces negative interest rates,7,2,5,0.29
 2015-03-09,ECB starts quantitative easing,8,2,6,0.25
 2016-01-29,Bank of Japan introduces negative interest rates,1,0,1,0.0
 2016-06-23,Brexit referendum,1,0,1,0.0

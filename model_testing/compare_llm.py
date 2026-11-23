@@ -5,12 +5,13 @@ made by reading the data without ruptures) with the breaks ruptures found.
 Run from the project root, after breaks.py:
     python model_testing/compare_llm.py
 
-Two comparisons, both with the one-to-one ±6 month matching of scoring.py:
+Two comparisons, both with the one-to-one matching of scoring.py:
 
-1. Against events.csv: precision, recall and F1 for ruptures (main
-   setting), all LLM breaks and the LLM's high-confidence breaks, each
-   against its own random baseline.
-2. Agreement, with the LLM's list as the reference: TP = a ruptures break
+1. Against each events list (events.csv within ±6 months, events_v2.csv
+   within ±3): precision, recall and F1 for ruptures (main setting), all
+   LLM breaks and the LLM's breaks by confidence, each against its own
+   random baseline. The side-by-side table uses events_v2.csv.
+2. Agreement within ±6 months, the LLM's list as the reference: TP = a ruptures break
    the LLM also marked, FP = ruptures only, FN = LLM only.
 
 Only LLM breaks that ruptures could have found count: inside a stretch it
@@ -40,6 +41,7 @@ LLM = RESULTS / "llm_analysis"
 MAIN = "auction_yield_intermediate_pen2"
 SETTINGS = ["auction_yield_intermediate_pen0.5", "auction_yield_intermediate_pen1", MAIN]
 CAUSE_MONTHS = 3  # LLM cause within this many months of the matched event = same cause
+EVENT_LISTS = [(f, breaks.WINDOWS[f]) for f in ["events.csv", "events_v2.csv"]]  # (file, ± months)
 
 
 def load_breaks(path: Path) -> pd.DataFrame:
@@ -88,24 +90,30 @@ def agreement(llm: pd.DataFrame, rup: pd.DataFrame) -> dict:
 
 def main():
     all_llm = load_breaks(LLM / "breaks.csv")
-    events = pd.read_csv(HERE / "events.csv", parse_dates=["date"])
     codes = {name: code for code, name in breaks.COUNTRIES.items()}
     # Every country with 2-10 year yields, including any where the LLM found
     # no break; the same stretches breaks.py analyses.
     stretches = {c: parts for c in sorted(codes)
                  if (parts := breaks.load_stretches(codes[c], "auction_yield", "Intermediate", 18))}
-    relevant = {c: events[[breaks.in_scope(s, c) for s in events["countries"]]] for c in stretches}
     seen = all_llm.apply(lambda r: visible(r["country"], r["break_month"], stretches), axis=1)
     llm, unseen = all_llm[seen], all_llm[~seen]
 
-    # 1. Each method against events.csv.
+    # 1. Each method against each events list (the last one, events_v2, is
+    # used for the side-by-side table).
     rup = load_breaks(RESULTS / MAIN / "breaks.csv")
     rup = rup[rup["country"].isin(stretches)]
-    scores, outcomes = {}, {}
-    for name, found in [("ruptures", rup), ("llm", llm), ("llm_high_confidence", llm[llm["confidence"] == "high"])]:
-        stats, rows, _ = scoring.evaluate(by_country(found), stretches, relevant)
-        scores[name] = stats
-        outcomes[name] = {(r["country"], pd.Timestamp(r["break_month"])): r for r in rows}
+    scores = {}
+    for events_file, months in EVENT_LISTS:
+        events = pd.read_csv(HERE / events_file, parse_dates=["date"])
+        relevant = {c: breaks.relevant_events(events, c) for c in stretches}
+        scores[events_file], outcomes = {}, {}
+        for name, found in [("ruptures", rup), ("llm", llm), ("llm_high_confidence", llm[llm["confidence"] == "high"]),
+                            ("llm_medium_confidence", llm[llm["confidence"] == "medium"]),
+                            ("llm_low_confidence", llm[llm["confidence"] == "low"])]:
+            stats, rows, _ = scoring.evaluate(by_country(found), stretches, relevant,
+                                              tolerance=pd.Timedelta(days=31 * months))
+            scores[events_file][name] = stats
+            outcomes[name] = {(r["country"], pd.Timestamp(r["break_month"])): r for r in rows}
 
     # 2. Agreement at each penalty, the LLM's list as reference.
     overlap = []
@@ -155,9 +163,10 @@ def main():
     summary = {
         "llm_breaks_total": len(all_llm),
         "llm_breaks_ruptures_could_not_see": len(unseen),
+        "windows_months": dict(EVENT_LISTS),
         "vs_events": scores,
         "agreement_main": next(o for o in overlap if o["setting"] == MAIN),
-        "cause_agreement": {"pairs_with_event": len(with_event),
+        "cause_agreement": {"events_file": EVENT_LISTS[-1][0], "pairs_with_event": len(with_event),
                             "same_cause": int((with_event["same_cause"] == True).sum())},  # noqa: E712
         "agreement_by_setting": overlap,
     }
@@ -167,32 +176,35 @@ def main():
 
 
 def chart(scores: dict, overlap: list, path: Path):
-    fig, (left, right) = plt.subplots(1, 2, figsize=(14, 6.2), gridspec_kw={"width_ratios": [1.25, 1]})
+    fig, (*lefts, right) = plt.subplots(1, len(EVENT_LISTS) + 1, figsize=(20, 6.6),
+                                        gridspec_kw={"width_ratios": [1.15] * len(EVENT_LISTS) + [1]})
     metrics = [("precision", "Precision"), ("recall", "Recall"), ("f1", "F1")]
+    width = 0.26
 
-    # Left: each method against events.csv, with its random baseline.
-    scoring.style(left)
+    # Left panels: each method against each events list, with its random baseline.
     names = [("ruptures", "Ruptures (penalty 2)"), ("llm", "LLM, all"),
              ("llm_high_confidence", "LLM, high confidence")]
-    width = 0.26
-    for k, (key, label) in enumerate(names):
-        s = scores[key]
-        xs = [m + (k - 1) * width for m in range(len(metrics))]
-        values = [s[m] for m, _ in metrics]
-        left.bar(xs, values, width=width - 0.03, color=scoring.SERIES[k], zorder=2,
-                 label=f"{label}: {scoring.counts(s)}")
-        for x, v, (m, _) in zip(xs, values, metrics):
-            left.text(x, v + 0.015, f"{v:.0%}" if m != "f1" else f"{v:.2f}", ha="center",
-                      fontsize=8, color=scoring.INK_2)
-            base = s[f"baseline_{m}"]
-            left.plot([x - width / 2.4, x + width / 2.4], [base, base], color=scoring.INK, lw=2, zorder=3)
-    left.plot([], [], color=scoring.INK, lw=2, label="Random baseline (same number of breaks)")
-    left.set_xticks(range(len(metrics)), [m for _, m in metrics])
-    left.set_ylim(0, 1)
-    left.set_ylabel("Score (0 to 1)", color=scoring.INK_2)
-    left.set_title("Against known events (events.csv)", loc="left", color=scoring.INK, fontsize=11)
-    left.legend(loc="upper center", bbox_to_anchor=(0.5, -0.08), frameon=False, fontsize=8.5,
-                labelcolor=scoring.INK_2)
+    for left, (events_file, months) in zip(lefts, EVENT_LISTS):
+        scoring.style(left)
+        for k, (key, label) in enumerate(names):
+            s = scores[events_file][key]
+            xs = [m + (k - 1) * width for m in range(len(metrics))]
+            values = [s[m] for m, _ in metrics]
+            left.bar(xs, values, width=width - 0.03, color=scoring.SERIES[k], zorder=2,
+                     label=f"{label}: {scoring.counts(s)}")
+            for x, v, (m, _) in zip(xs, values, metrics):
+                left.text(x, v + 0.015, f"{v:.0%}" if m != "f1" else f"{v:.2f}", ha="center",
+                          fontsize=8, color=scoring.INK_2)
+                base = s[f"baseline_{m}"]
+                left.plot([x - width / 2.4, x + width / 2.4], [base, base], color=scoring.INK, lw=2, zorder=3)
+        left.plot([], [], color=scoring.INK, lw=2, label="Random baseline (same number of breaks)")
+        left.set_xticks(range(len(metrics)), [m for _, m in metrics])
+        left.set_ylim(0, 1.05)
+        left.set_ylabel("Score (0 to 1)", color=scoring.INK_2)
+        left.set_title(f"Against {events_file}, within ±{months} months", loc="left",
+                       color=scoring.INK, fontsize=11)
+        left.legend(loc="upper center", bbox_to_anchor=(0.5, -0.08), frameon=False, fontsize=8.5,
+                    labelcolor=scoring.INK_2)
 
     # Right: agreement, the LLM's list as reference.
     scoring.style(right)
@@ -208,13 +220,14 @@ def chart(scores: dict, overlap: list, path: Path):
                      fontsize=8.5)
     right.set_ylim(0, 1)
     right.set_ylabel("Score (0 to 1)", color=scoring.INK_2)
-    right.set_title("Ruptures vs the LLM's list (reference)", loc="left", color=scoring.INK, fontsize=11)
+    right.set_title("Ruptures vs the LLM's list (reference), within ±6 months", loc="left",
+                    color=scoring.INK, fontsize=11)
     right.legend(loc="upper center", bbox_to_anchor=(0.5, -0.15), ncol=3, frameon=False, fontsize=8.5,
                  labelcolor=scoring.INK_2)
     right.text(0, -0.36, "TP = break in both lists · FP = ruptures only · FN = LLM only\n"
                "Precision = share of ruptures' breaks the LLM also marked; recall = share of the LLM's breaks ruptures found",
                transform=right.transAxes, fontsize=8, color=scoring.INK_2, va="top")
-    fig.suptitle("Break detection: ruptures and the LLM, scored one break per event within ±6 months",
+    fig.suptitle("Break detection: ruptures and the LLM, scored one break per event",
                  x=0.01, ha="left", color=scoring.INK, fontsize=12)
     fig.tight_layout()
     fig.savefig(path, dpi=120, facecolor="white")

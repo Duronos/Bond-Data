@@ -1,18 +1,18 @@
 # Breaks: auction yield, Intermediate bucket, penalty 0.5
 
-Breaks are scored against [events.csv](../../events.csv), one break per event, within ±6 months; shortest segment 6 months. 122 breaks in 23 countries; 140 country-event pairs checked.
+Breaks are scored against [events.csv](../../events.csv), one break per event, within ±6 months; shortest segment 6 months. 122 breaks in 23 countries; 136 country-event pairs checked.
 
 | | Model | Random baseline |
 |---|:-:|:-:|
-| Precision | **56%** (68 of 122 breaks) | 29% |
-| Recall | **49%** (68 of 140 events) | 26% |
-| F1 | **0.52** | 0.27 |
+| Precision | **53%** (65 of 122 breaks) | 29% |
+| Recall | **48%** (65 of 136 events) | 26% |
+| F1 | **0.50** | 0.27 |
 
-Confusion counts: **68 TP**, **54 FP**, **72 FN** (no true negatives: see below). p-value vs random: ≤ 0.001.
+Confusion counts: **65 TP**, **57 FP**, **71 FN** (no true negatives: see below). p-value vs random: ≤ 0.001.
 
 | Term | Meaning here |
 |---|---|
-| True positive (TP) | a break matched to a known event within ±6 months |
+| True positive (TP) | a break matched to a known event within the window (±6 months for events.csv, ±3 for events_v2.csv) |
 | False positive (FP) | a break with no event left to match (a lead, or noise) |
 | False negative (FN) | a known event with no break matched to it (missed) |
 | Precision | TP / (TP + FP): share of breaks that match an event |
@@ -28,11 +28,11 @@ Accuracy isn't reported: it needs true negatives (months with neither a break no
 | Date | Event | Countries checked | TP | FN | Recall |
 |---|---|:-:|:-:|:-:|:-:|
 | 2008-09-15 | Global financial crisis (Lehman Brothers collapses) | 14 | 10 | 4 | 71% |
-| 2010-05-02 | Euro debt crisis begins (first Greek bailout) | 10 | 3 | 7 | 30% |
-| 2011-11-09 | Euro crisis peak (Italian 10-year above 7%) | 9 | 7 | 2 | 78% |
-| 2012-07-26 | ECB "whatever it takes" (Draghi) | 9 | 3 | 6 | 33% |
+| 2010-05-02 | Euro debt crisis begins (first Greek bailout) | 9 | 2 | 7 | 22% |
+| 2011-11-09 | Euro crisis peak (Italian 10-year above 7%) | 8 | 7 | 1 | 88% |
+| 2012-07-26 | ECB "whatever it takes" (Draghi) | 8 | 2 | 6 | 25% |
 | 2013-05-22 | US taper tantrum (Fed signals slower bond buying) | 18 | 3 | 15 | 17% |
-| 2014-06-05 | ECB introduces negative interest rates | 8 | 5 | 3 | 62% |
+| 2014-06-05 | ECB introduces negative interest rates | 7 | 4 | 3 | 57% |
 | 2015-03-09 | ECB starts quantitative easing | 8 | 3 | 5 | 38% |
 | 2016-01-29 | Bank of Japan introduces negative interest rates | 1 | 1 | 0 | 100% |
 | 2016-06-23 | Brexit referendum | 1 | 1 | 0 | 100% |
@@ -60,7 +60,7 @@ Accuracy isn't reported: it needs true negatives (months with neither a break no
 | Hungary | 3 | 4 | 2 | 43% | 60% | 0.50 |
 | Ireland | 2 | 5 | 0 | 29% | 100% | 0.44 |
 | Italy | 5 | 2 | 5 | 71% | 50% | 0.59 |
-| Lithuania | 4 | 0 | 5 | 100% | 44% | 0.62 |
+| Lithuania | 1 | 3 | 4 | 25% | 20% | 0.22 |
 | Netherlands | 6 | 0 | 4 | 100% | 60% | 0.75 |
 | Norway | 2 | 4 | 3 | 33% | 40% | 0.36 |
 | Poland | 3 | 3 | 2 | 50% | 60% | 0.55 |
@@ -114,6 +114,9 @@ Leads worth looking into: something changed, but it isn't in events.csv (or its 
 - Ireland: 2021-04-01
 - Italy: 2018-05-01
 - Italy: 2019-07-01
+- Lithuania: 2010-04-01
+- Lithuania: 2012-09-01
+- Lithuania: 2014-09-01
 - Norway: 2010-03-01
 - Norway: 2011-12-01
 - Norway: 2014-11-01
@@ -181,7 +184,6 @@ Leads worth looking into: something changed, but it isn't in events.csv (or its 
 - Italy: ECB starts quantitative easing (2015-03-09)
 - Italy: COVID-19 declared a pandemic (2020-03-11)
 - Italy: Russia invades Ukraine (2022-02-24)
-- Lithuania: Euro crisis peak (Italian 10-year above 7%) (2011-11-09)
 - Lithuania: US taper tantrum (Fed signals slower bond buying) (2013-05-22)
 - Lithuania: ECB starts quantitative easing (2015-03-09)
 - Lithuania: COVID-19 declared a pandemic (2020-03-11)

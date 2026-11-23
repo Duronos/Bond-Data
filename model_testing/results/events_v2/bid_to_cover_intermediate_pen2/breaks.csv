@@ -1,0 +1,12 @@
+country,break_month,outcome,event,event_date,months_off,note
+United States,2009-06-01,TP,Fed to buy Treasuries (QE1 expanded),2009-03-18,2.5,
+United States,2015-09-01,FP,,,,
+United Kingdom,2011-03-01,FP,,,,
+United Kingdom,2016-07-01,TP,Brexit referendum + BoE cuts rate and restarts QE (4 Aug 2016),2016-06-23,0.3,
+United Kingdom,2024-01-01,FP,,,,
+Japan,2012-01-01,FP,,,,
+Japan,2020-08-01,FP,,,,
+Belgium,2012-06-01,TP,ECB 'whatever it takes' (Draghi) + ECB announces OMT (6 Sep 2012),2012-07-26,-1.8,
+Finland,2018-11-01,FP,,,,
+Italy,2024-10-01,FP,,,,
+Poland,2021-07-01,FP,,,,

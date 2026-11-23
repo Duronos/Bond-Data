@@ -1,0 +1,108 @@
+date,event,countries_checked,tp,fn,recall
+2007-04-25,NBP starts raising rates,1,0,1,0.0
+2007-06-25,MNB starts cutting rates + BNP Paribas freezes funds; global credit crunch begins (9 Aug 2007),1,0,1,0.0
+2007-08-09,BNP Paribas freezes funds; global credit crunch begins + Northern Rock bank run; BoE emergency support (14 Sep 2007) + Fed starts cutting rates (18 Sep 2007),13,0,13,0.0
+2007-12-04,BoC starts cutting rates,1,0,1,0.0
+2007-12-06,BoE starts cutting rates,1,0,1,0.0
+2008-02-25,Hungary abolishes forint band (free float) + MNB starts raising rates (31 Mar 2008),1,0,1,0.0
+2008-03-16,Bear Stearns rescue; Fed lends to dealers,1,1,0,1.0
+2008-08-07,CNB starts cutting rates + Lehman Brothers collapses (global financial crisis) (15 Sep 2008),1,0,1,0.0
+2008-09-15,Lehman Brothers collapses (global financial crisis) + Irish blanket bank guarantee (30 Sep 2008) + SNB starts cutting rates (coordinated cut) (8 Oct 2008) + ECB starts cutting rates (coordinated cut) (8 Oct 2008) + BoK starts cutting rates (9 Oct 2008) + Norges Bank starts cutting rates (15 Oct 2008) + MNB emergency hike; IMF/EU bailout for Hungary (28 Oct) (22 Oct 2008) + BoJ cuts rates (31 Oct 2008) + Fed announces QE1 (agency debt and MBS) (25 Nov 2008) + NBP starts cutting rates (26 Nov 2008),13,6,7,0.46
+2009-03-05,BoE cuts to 0.5% and starts QE,1,0,1,0.0
+2009-03-18,Fed to buy Treasuries (QE1 expanded),1,0,1,0.0
+2009-10-28,Norges Bank starts raising rates,1,0,1,0.0
+2010-04-23,Greece requests EU/IMF bailout; euro debt crisis begins (S&P cuts Greece to junk 27 Apr) + ECB starts buying government bonds (SMP); EFSF agreed (10 May 2010),9,1,8,0.11
+2010-06-01,BoC starts raising rates,1,0,1,0.0
+2010-10-05,"BoJ comprehensive easing (asset purchases, zero rates)",1,0,1,0.0
+2010-11-03,Fed announces QE2,1,0,1,0.0
+2010-11-29,MNB starts raising rates,1,0,1,0.0
+2011-01-19,NBP starts raising rates,1,0,1,0.0
+2011-04-07,ECB starts raising rates,8,0,8,0.0
+2011-07-08,Euro crisis spreads to Italy and Spain + Second Greek bailout with private-sector losses (21 Jul 2011) + ECB extends bond buying to Italy and Spain (7 Aug 2011),8,3,5,0.38
+2011-08-05,S&P downgrades US after debt-ceiling crisis + Fed Operation Twist (21 Sep 2011),1,0,1,0.0
+2011-10-06,BoE restarts QE,1,0,1,0.0
+2011-10-31,Greek PM calls bailout referendum; euro crisis peaks + ECB starts cutting rates (Draghi) (3 Nov 2011) + Italian 10-year yield above 7%; Berlusconi resigns (12 Nov) (9 Nov 2011) + ECB announces 3-year LTROs (8 Dec 2011),8,3,5,0.38
+2011-11-17,Hungary seeks IMF/EU aid; Moody's cuts to junk (24 Nov); MNB hikes (29 Nov),1,0,1,0.0
+2011-12-14,Norges Bank starts cutting rates,1,0,1,0.0
+2012-04-23,Dutch government collapses over budget cuts,1,0,1,0.0
+2012-06-27,CNB resumes cutting rates (first cut since May 2010),1,0,1,0.0
+2012-07-05,Danmarks Nationalbank introduces negative rates,1,1,0,1.0
+2012-07-26,ECB 'whatever it takes' (Draghi) + ECB announces OMT (6 Sep 2012),8,2,6,0.25
+2012-08-28,MNB starts cutting rates,1,1,0,1.0
+2012-09-13,Fed announces QE3,1,0,1,0.0
+2012-11-07,NBP starts cutting rates,1,1,0,1.0
+2013-02-25,Italian election gives hung parliament + US taper tantrum (Fed signals slower bond buying) (22 May 2013),1,0,1,0.0
+2013-04-04,BoJ launches QQE + US taper tantrum (Fed signals slower bond buying) (22 May 2013),1,0,1,0.0
+2013-05-02,ECB resumes cutting rates (first cut since Jul 2012) + US taper tantrum (22 May 2013),6,0,6,0.0
+2013-05-22,US taper tantrum (Fed signals slower bond buying),10,1,9,0.1
+2013-11-07,CNB sets koruna floor (27 per euro),1,0,1,0.0
+2013-12-18,Fed starts tapering QE3,1,0,1,0.0
+2014-06-04,EU backs Lithuania joining the euro in 2015 (Council decision 23 Jul),1,1,0,1.0
+2014-06-05,ECB introduces negative interest rates,7,3,4,0.43
+2014-10-08,NBP resumes cutting rates,1,0,1,0.0
+2014-11-27,OPEC declines to cut output; oil price collapse + Norges Bank resumes cutting rates (11 Dec 2014) + BoC surprise rate cut (21 Jan 2015),2,1,1,0.5
+2015-01-22,ECB announces QE (public sector purchases) + Heta (Hypo Alpe Adria bad bank) debt moratorium (1 Mar 2015),8,3,5,0.38
+2015-12-16,Fed first rate hike since 2006,1,0,1,0.0
+2016-01-29,BoJ introduces negative interest rates,1,0,1,0.0
+2016-05-20,Fitch returns Hungary to investment grade,1,0,1,0.0
+2016-06-23,Brexit referendum + BoE cuts rate and restarts QE (4 Aug 2016),1,0,1,0.0
+2016-09-21,BoJ introduces yield-curve control + Trump elected US president; global bond sell-off (8 Nov 2016),1,0,1,0.0
+2016-11-08,Trump elected US president; global bond sell-off,19,3,16,0.16
+2017-04-06,CNB ends koruna floor,1,0,1,0.0
+2017-04-23,French election first round (Macron v Le Pen); OAT spread narrows sharply,1,0,1,0.0
+2017-07-12,BoC starts raising rates,1,1,0,1.0
+2017-08-03,CNB starts raising rates,1,1,0,1.0
+2017-11-02,BoE first hike in a decade,1,0,1,0.0
+2018-05-27,Italian government crisis (Savona veto); worst bond day since 1992 + ECB announces end of net asset purchases (14 Jun 2018),1,0,1,0.0
+2018-06-14,ECB announces end of net asset purchases,8,1,7,0.12
+2018-08-02,BoE raises rates after a 9-month pause,1,0,1,0.0
+2018-09-20,Norges Bank starts raising rates,1,0,1,0.0
+2018-09-27,"Italy sets 2.4% deficit target, clash with EU",1,0,1,0.0
+2018-11-30,BoK resumes raising rates (first hike in 12 months),1,0,1,0.0
+2019-07-18,BoK starts cutting rates,1,0,1,0.0
+2019-07-31,Fed starts cutting rates; ends QT,1,0,1,0.0
+2019-08-08,Salvini pulls support for Italian government + ECB cuts deposit rate to -0.5% and restarts QE (12 Sep 2019),1,0,1,0.0
+2019-09-12,ECB cuts deposit rate to -0.5% and restarts QE,8,0,8,0.0
+2020-02-24,COVID-19 market crash (pandemic declared 11 Mar); emergency rate cuts and QE worldwide + ECB launches PEPP (18 Mar 2020) + BoC starts QE (27 Mar 2020) + MNB starts government bond purchases (QE) (7 Apr 2020) + Franco-German proposal for joint EU recovery fund (NGEU) (18 May 2020),19,2,17,0.11
+2020-06-23,MNB cuts base rate (first cut since 2016),1,0,1,0.0
+2021-02-02,Conte government falls; Draghi asked to form government,1,0,1,0.0
+2021-06-22,MNB starts raising rates,1,0,1,0.0
+2021-06-23,CNB starts raising rates,1,0,1,0.0
+2021-08-26,BoK starts raising rates,1,0,1,0.0
+2021-09-23,Norges Bank starts raising rates,1,0,1,0.0
+2021-10-06,NBP starts raising rates,1,0,1,0.0
+2021-10-27,BoC ends QE,1,0,1,0.0
+2021-11-03,Fed starts tapering QE,1,0,1,0.0
+2021-12-16,BoE starts raising rates + Russia invades Ukraine (24 Feb 2022),1,0,1,0.0
+2022-02-24,Russia invades Ukraine + BoC starts raising rates (2 Mar 2022) + Fed starts raising rates (16 Mar 2022) + Fed announces QT from June (4 May 2022),19,9,10,0.47
+2022-06-09,ECB announces end of QE and first hike + Draghi government collapses (resigns 21 Jul) (14 Jul 2022) + ECB first hike since 2011; TPI anti-fragmentation tool (21 Jul 2022),9,9,0,1.0
+2022-06-16,SNB first hike since 2007 (exits negative rates Sep),1,0,1,0.0
+2022-07-21,Nationalbank starts raising rates (exits negative rates 8 Sep),1,1,0,1.0
+2022-09-23,UK mini-budget gilt crisis (BoE gilt buying 28 Sep),1,1,0,1.0
+2022-10-14,Forint slump; MNB emergency 18% deposit tender,1,0,1,0.0
+2022-12-20,BoJ widens YCC band (surprise) + Silicon Valley Bank fails; banking stress (10 Mar 2023),1,1,0,1.0
+2023-03-10,Silicon Valley Bank fails; banking stress + Credit Suisse rescued by UBS takeover (19 Mar 2023) + MNB starts easing (cuts top of rate corridor) (25 Apr 2023),19,0,19,0.0
+2023-09-06,NBP starts cutting rates (surprise 75bp) + Polish election: pro-EU opposition wins (15 Oct 2023),1,0,1,0.0
+2023-12-21,CNB starts cutting rates,1,0,1,0.0
+2024-03-19,BoJ ends negative rates and yield-curve control,1,0,1,0.0
+2024-03-21,SNB starts cutting rates,1,0,1,0.0
+2024-06-05,BoC starts cutting rates,1,1,0,1.0
+2024-06-06,ECB starts cutting rates + Macron calls snap election (9 Jun 2024),10,0,10,0.0
+2024-06-06,Nationalbank starts cutting rates,1,0,1,0.0
+2024-08-01,BoE starts cutting rates,1,0,1,0.0
+2024-09-18,Fed starts cutting rates + Trump re-elected; Treasury yields jump (5 Nov 2024),1,0,1,0.0
+2024-10-11,BoK starts cutting rates + Martial law declared in South Korea (3 Dec 2024),1,1,0,1.0
+2024-12-02,Barnier forces budget; government toppled (4 Dec),1,0,1,0.0
+2025-03-04,Germany agrees debt-brake reform and EUR 500bn fund; worst Bund sell-off since 1990 + US 'Liberation Day' tariffs; global market turmoil (2 Apr 2025),11,0,11,0.0
+2025-04-02,US 'Liberation Day' tariffs; global market turmoil + NBP resumes cutting rates (7 May 2025) + Norges Bank starts cutting rates (19 Jun 2025),11,0,11,0.0
+2025-08-25,Bayrou calls confidence vote; government falls (8 Sep); Lecornu resigns (6 Oct),1,0,1,0.0
+2025-09-07,Ishiba resigns + Takaichi wins LDP leadership; JGB and yen sell-off (4 Oct 2025),1,0,1,0.0
+2025-09-17,Fed resumes cutting after 9-month pause + Fed announces end of QT (1 Dec) (29 Oct 2025),1,0,1,0.0
+2026-01-13,"Takaichi snap-election plan; super-long JGB rout (election 8 Feb) + US and Israel attack Iran; Strait of Hormuz closed, oil surges (28 Feb 2026)",1,1,0,1.0
+2026-02-24,"MNB starts cutting rates + US and Israel attack Iran; Strait of Hormuz closed, oil surges (28 Feb 2026) + Orban loses election; forint and bonds rally (12 Apr 2026)",1,0,1,0.0
+2026-02-28,"US and Israel attack Iran; Strait of Hormuz closed, oil surges + Norges Bank starts raising rates (7 May 2026) + Starmer leadership crisis; gilt yields highest since 2008 (resigns 22 Jun) (12 May 2026)",20,3,17,0.15
+2026-06-11,ECB starts raising rates (energy-driven inflation) + US-Iran ceasefire collapses; new attacks in Strait of Hormuz (8 Jul 2026),11,0,11,0.0
+2026-06-11,Nationalbank starts raising rates + US-Iran ceasefire collapses; new attacks in Strait of Hormuz (8 Jul 2026),1,0,1,0.0
+2026-06-18,CNB starts raising rates + US-Iran ceasefire collapses; new attacks in Strait of Hormuz (8 Jul 2026),1,0,1,0.0
+2026-07-08,US-Iran ceasefire collapses; new attacks in Strait of Hormuz + BoK starts raising rates (16 Jul 2026) + Fed starts raising rates (16 Sep 2026),9,0,9,0.0
+2026-10-01,French 2027 budget; OAT-Bund spread widest since 2012,1,0,1,0.0

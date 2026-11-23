@@ -12,7 +12,7 @@ Confusion counts: **34 TP**, **34 FP**, **84 FN** (no true negatives: see below)
 
 | Term | Meaning here |
 |---|---|
-| True positive (TP) | a break matched to a known event within ±6 months |
+| True positive (TP) | a break matched to a known event within the window (±6 months for events.csv, ±3 for events_v2.csv) |
 | False positive (FP) | a break with no event left to match (a lead, or noise) |
 | False negative (FN) | a known event with no break matched to it (missed) |
 | Precision | TP / (TP + FP): share of breaks that match an event |

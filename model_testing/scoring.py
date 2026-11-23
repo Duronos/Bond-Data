@@ -4,7 +4,8 @@ Scoring for break detection, shared by breaks.py and compare_llm.py.
 A detected break is scored against the known events (events.csv) that fall
 inside the same stretch of a country's data:
 
-    True positive (TP)   a break matched to an event within ±6 months
+    True positive (TP)   a break matched to an event within the window
+                         (±6 months for events.csv, ±3 for events_v2.csv)
     False positive (FP)  a break with no event left to match
     False negative (FN)  an event with no break matched to it
 
@@ -83,13 +84,15 @@ def random_breaks(months: pd.DatetimeIndex, k: int, min_months: int, rng) -> lis
     return list(months[picks])
 
 
-def evaluate(found: dict, stretches: dict, relevant: dict, min_months: int = 6, seed: int = 0):
+def evaluate(found: dict, stretches: dict, relevant: dict, min_months: int = 6, seed: int = 0,
+             tolerance: pd.Timedelta = TOLERANCE):
     """
     Score detected breaks against events, stretch by stretch.
 
     found:     {country: [break months]}
     stretches: {country: [monthly Series]} (the data analysed)
     relevant:  {country: events DataFrame with date, event} (events in scope)
+    tolerance: how far a break may be from its event
 
     Returns (stats, break_rows, event_rows): the totals, one row per break
     (TP/FP and its event) and one row per event checked (TP/FN).
@@ -102,7 +105,7 @@ def evaluate(found: dict, stretches: dict, relevant: dict, min_months: int = 6, 
             start, end = s.index[0], s.index[-1]
             own = [d for d in dates if start <= d <= end]
             pool = events[(events["date"] >= start) & (events["date"] <= end)].reset_index(drop=True)
-            pairs = dict(match(own, list(pool["date"])))
+            pairs = dict(match(own, list(pool["date"]), tolerance))
             hit = set(pairs.values())
             units.append((s.index, len(own), list(pool["date"])))
             for i, d in enumerate(own):
@@ -114,7 +117,7 @@ def evaluate(found: dict, stretches: dict, relevant: dict, min_months: int = 6, 
                         "months_off": round((d - ev["date"]).days / 30.4, 1), "note": "",
                     })
                 else:
-                    close = pool[(pool["date"] - d).abs() <= TOLERANCE]
+                    close = pool[(pool["date"] - d).abs() <= tolerance]
                     break_rows.append({
                         "country": country, "break_month": d.date(), "outcome": "FP",
                         "event": "", "event_date": "", "months_off": "",
@@ -136,7 +139,7 @@ def evaluate(found: dict, stretches: dict, relevant: dict, min_months: int = 6, 
         t = f = n = 0
         for months, k, evs in units:
             b = random_breaks(months, k, min_months, rng)
-            m = len(match(b, evs))
+            m = len(match(b, evs, tolerance))
             t, f, n = t + m, f + len(b) - m, n + len(evs) - m
         draws.append(prf(t, f, n))
     draws = np.array(draws)

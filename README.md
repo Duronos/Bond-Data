@@ -643,15 +643,26 @@ after each refresh of the data.
 [`model_testing/breaks.py`](model_testing/breaks.py) uses
 [ruptures](https://centre-borelli.github.io/ruptures-docs/) to find **break
 dates**: months where a country's auction yields (or bid-to-cover) shifted to
-a new level. Each break is matched against a list of known events in
-[`model_testing/events.csv`](model_testing/events.csv) (2008 crisis, euro
-crisis, ECB negative rates, Brexit, COVID, Ukraine invasion, 2022 rate hikes,
-UK mini-budget, Bank of Japan policy changes), each tagged with the countries
-it should affect.
+a new level. Each break is matched against a list of known events, each
+tagged with the countries it should affect. There are two lists:
+
+- [`events_v2.csv`](model_testing/events_v2.csv) (main): **133 events**,
+  2007-2026, including each country's own central bank turning points
+  (first hike or cut of a cycle, QE, negative rates, currency floors),
+  bailouts and budget crises, political shocks, wars and financial shocks.
+  Every row has a source. It was built by two separate agents, one
+  researching and one reviewing, neither of which saw any results, under
+  rules fixed beforehand
+  ([`event_rules.md`](model_testing/event_rules.md); how the two were
+  merged: [`events_v2_decisions.md`](model_testing/events_v2_decisions.md)).
+- [`events.csv`](model_testing/events.csv): the first list, 14 global and
+  regional events (2008 crisis, euro crisis, COVID, Ukraine, 2022 hikes,
+  Brexit and others), kept for comparison.
 
 ```bash
 pip install -r model_testing/requirements.txt
-python model_testing/breaks.py                         # auction yields, 2-10Y bucket
+python model_testing/breaks.py                         # auction yields, 2-10Y bucket, events.csv
+python model_testing/breaks.py --events events_v2.csv  # the same against events_v2.csv
 python model_testing/breaks.py --measure bid_to_cover
 python model_testing/breaks.py --bucket Long --penalty 1
 python model_testing/compare_llm.py                    # LLM breaks vs ruptures (below)
@@ -659,9 +670,10 @@ python model_testing/compare_llm.py                    # LLM breaks vs ruptures 
 
 `--penalty` sets the sensitivity: higher means fewer, bigger breaks. Each
 setting gets its own folder in [`model_testing/results/`](model_testing/results/)
+(events.csv) or [`model_testing/results/events_v2/`](model_testing/results/events_v2/)
 with a summary page, every break and every event check with its outcome,
-recall by event, scores by country and a chart per country;
-`results/README.md` compares all settings tested.
+recall by event, scores by country and a chart per country; each folder's
+`README.md` compares all settings tested.
 
 Months without an auction are filled in only across gaps of up to 6 months
 (a straight line between the months either side). A longer gap splits a
@@ -672,8 +684,12 @@ Every month is tried as a break date.
 #### How breaks are scored
 
 Each break is matched to at most one event, and each event to at most one
-break, within ±6 months ([`scoring.py`](model_testing/scoring.py)); an event
-is checked when it falls inside a stretch of the country's data.
+break, within a window ([`scoring.py`](model_testing/scoring.py)): **±3
+months for events_v2.csv**, ±6 for events.csv. events_v2.csv has about one
+event per country per year, so with ±6 months random dates would match an
+event about 72% of the time and the test couldn't tell a good model from
+guessing; at ±3 it's about 45%. An event is checked when it falls inside a
+stretch of the country's data.
 
 | Term | Meaning here |
 |---|---|
@@ -688,51 +704,59 @@ is checked when it falls inside a stretch of the country's data.
 
 Accuracy isn't used: it needs true negatives (months with neither a break
 nor an event), and almost every month is one. A model that never finds a
-break would score 97% accuracy here.
+break would score 92% accuracy here (97% on the old list).
 
 #### Results
 
-Run of 22 November 2026; 59 breaks in 22 countries, 140 country-event pairs
-checked (auction yields, 2–10 year bucket, penalty 2):
+Data of 22 November 2026; auction yields, 2–10 year bucket, penalty 2;
+59 breaks in 22 countries, scored against events_v2.csv (355 country-event
+pairs checked):
 
 | | Ruptures | Random baseline |
 |---|:-:|:-:|
-| Precision | **66%** (39 TP of 59 breaks) | 32% |
-| Recall | **28%** (39 TP of 140 events) | 13% |
-| F1 | **0.39** | 0.19 |
+| Precision | **66%** (39 TP of 59 breaks) | 45% |
+| Recall | **11%** (39 TP of 355 events) | 8% |
+| F1 | **0.19** | 0.13 |
 
-39 TP, 20 FP, 101 FN; p-value ≤ 0.001 (no random draw did as well).
+39 TP, 20 FP, 316 FN; p-value ≤ 0.001 (no random draw did as well).
 
-![Precision vs recall for each setting](model_testing/results/settings_comparison.png)
+![Precision vs recall for each setting, events_v2.csv](model_testing/results/events_v2/settings_comparison.png)
 
-| Setting | TP | FP | FN | Precision | Recall | F1 | Random F1 |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Yields 2–10Y, penalty 0.5 | 68 | 54 | 72 | 56% | 49% | 0.52 | 0.27 |
-| Yields 2–10Y, penalty 1 | 52 | 40 | 88 | 57% | 37% | 0.45 | 0.24 |
-| Yields 2–10Y, penalty 2 | 39 | 20 | 101 | 66% | 28% | 0.39 | 0.19 |
-| Yields 10Y+, penalty 2 | 34 | 34 | 84 | 50% | 29% | 0.37 | 0.20 |
-| Bid-to-cover 2–10Y, penalty 2 | 3 | 8 | 117 | 27% | 2% | 0.05 | 0.05 |
+| Setting | events_v2.csv (±3 months): TP / FP / FN | Precision | Recall | F1 | Random F1 | events.csv (±6): TP / FP / FN | F1 | Random F1 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Yields 2–10Y, penalty 0.5 | 84 / 38 / 271 | 69% | 24% | 0.35 | 0.23 | 65 / 57 / 71 | 0.50 | 0.27 |
+| Yields 2–10Y, penalty 1 | 63 / 29 / 292 | 68% | 18% | 0.28 | 0.19 | 50 / 42 / 86 | 0.44 | 0.24 |
+| Yields 2–10Y, penalty 2 | 39 / 20 / 316 | 66% | 11% | 0.19 | 0.13 | 37 / 22 / 99 | 0.38 | 0.19 |
+| Yields 10Y+, penalty 2 | 47 / 21 / 274 | 69% | 15% | 0.24 | 0.15 | 34 / 34 / 84 | 0.37 | 0.20 |
+| Bid-to-cover 2–10Y, penalty 2 | 3 / 8 / 309 | 27% | 1% | 0.02 | 0.03 | 3 / 8 / 113 | 0.05 | 0.05 |
 
-- **Precision vs recall:** a higher penalty gives fewer breaks, so higher
-  precision and lower recall. Penalty 0.5 has the best F1 (0.52); penalty 2
-  is the most precise. Every yield setting beats its random baseline about
-  2 to 1 (p ≤ 0.001).
-- **Recall by event:** the Fed's 2022 hiking cycle 70% (14 of 20
-  countries), the UK mini-budget and the Bank of Japan's 2024 exit (1 of
-  1 each). The invasion of Ukraine scores only 20% because it is three
-  weeks from the Fed's first hike, and one break can count for only one
-  of them: 18 of the 20 countries have a TP for one of the two.
-- **False negatives:** the 2010 Greek bailout (0 of 10), COVID (0 of 20),
-  the 2013 taper tantrum (3 of 18) and Brexit (the UK break is in December
-  2015, more than 6 months before the vote). In the euro area yields were
-  already near zero in 2020; elsewhere the drop was real but small next to
-  each country's 20-year range, so penalty 2 drops it (see the LLM
-  comparison below).
-- **Bid-to-cover:** no better than random (F1 0.05 vs 0.05, p = 0.67), so
-  demand breaks have other causes.
-- **False positives** are the interesting leads: Norway November 2014
-  (around the oil-price collapse), Japan December 2014, Hungary June 2014,
-  Switzerland August 2024 and others in `breaks.csv`.
+- **Ruptures finds real turning points, but only the big ones.** About two
+  thirds of its breaks are within 3 months of an event (random: 45%), and
+  every yield setting beats random (p ≤ 0.001). But recall is low: most
+  events in the longer list (a country's first 25bp cut, a rating change)
+  don't move 2–10 year yields enough, next to each country's 20-year
+  range, to show up as a break.
+- **Penalty 0.5 has the best F1** on both lists; penalty 2 finds fewer
+  breaks at about the same precision.
+- **Recall by type of event** (penalty 2): geopolitical 17%, political
+  13%, monetary 12%, financial 8%, fiscal 6%. At penalty 0.5 geopolitical
+  rises to 38%.
+- **Big misses:** COVID (0 of 19 countries), SVB and Credit Suisse 2023
+  (0 of 19), the 2007 credit crunch (0 of 13), the 2010 Greek bailout
+  (0 of 9) and Trump's 2016 election (1 of 19). Best: Lehman (5 of 13) and
+  Ukraine with the 2022 hikes (6 of 19).
+- **The merge rule costs some matches:** events less than 3 months apart
+  are one event, dated at the first. The Fed's first hike (Mar 2022) is
+  merged into the Ukraine invasion (Feb 2022), so the US break of June
+  2022 is more than 3 months from it and counts as an FP.
+- **Bid-to-cover is no better than random** on either list (p = 0.94 and
+  0.67), so demand breaks have other causes.
+- **False positives** are the leads: Norway March 2010, Japan December
+  2014, Hungary June 2014, Finland 2017 and 2018, Switzerland August 2024
+  and others in `breaks.csv`.
+- **On the old 14-event list** the same breaks score F1 0.38 (random
+  0.19), with recall capped by events weeks apart (the Ukraine invasion
+  and the Fed's first hike count as two events there).
 
 ### LLM analysis vs ruptures
 
@@ -742,26 +766,30 @@ Details: [`model_testing/results/llm_analysis/`](model_testing/results/llm_analy
 
 ![Ruptures and the LLM scored against events and against each other](model_testing/results/llm_analysis/llm_vs_ruptures.png)
 
-| Against events.csv | TP | FP | FN | Precision | Recall | F1 | Random F1 |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Ruptures (penalty 2) | 39 | 20 | 101 | 66% | 28% | 0.39 | 0.19 |
-| LLM, all breaks ruptures could see (133) | 63 | 70 | 77 | 47% | 45% | 0.46 | 0.29 |
-| LLM, high confidence (56) | 40 | 16 | 100 | 71% | 29% | 0.41 | 0.17 |
+| Against events_v2.csv (±3 months) | TP | FP | FN | Precision | Recall | F1 | Random F1 | p-value |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Ruptures (penalty 2) | 39 | 20 | 316 | 66% | 11% | 0.19 | 0.13 | 0.003 |
+| LLM, all breaks ruptures could see (133) | 93 | 40 | 262 | 70% | 26% | 0.38 | 0.25 | ≤ 0.001 |
+| LLM, high confidence (56) | 54 | 2 | 301 | 96% | 15% | 0.26 | 0.13 | ≤ 0.001 |
+| LLM, medium confidence (58) | 29 | 29 | 326 | 50% | 8% | 0.14 | 0.13 | 0.26 |
+| LLM, low confidence (19) | 10 | 9 | 345 | 53% | 3% | 0.05 | 0.05 | 0.32 |
 
-- **Agreement, the LLM's list as reference:** ruptures at penalty 2 has
-  49 TP, 10 FP and 84 FN: precision 83% (its breaks are mostly in the LLM's
-  list), recall 37% (it finds about a third of the LLM's breaks), F1 0.51.
-  At penalty 0.5 the F1 is 0.71. For the 37 TP pairs where ruptures matched
-  an event, the LLM gives the same cause (dated within 3 months) in 29.
-- **Against events, the two are close.** The LLM's high-confidence breaks
-  have slightly higher precision than ruptures (71% vs 66%) at about the
-  same recall; all its breaks trade precision for recall (47% / 45%).
-  The LLM's F1 is higher than ruptures' at penalty 2 but lower than at
-  penalty 0.5 (0.52).
-- **Mislabelled events:** the Czech break in November 2021 (and, more
-  narrowly, Hungary's in January 2022) is matched to the Ukraine invasion
-  by the ±6 month rule, but came before it; the LLM puts it down to the
-  central bank's own hikes from mid-2021.
+- **The LLM's high-confidence breaks are almost all real events:** 54 of
+  56 are within 3 months of one (random: 46%). On the old list it was 71%,
+  because most of its causes are a country's own central bank or politics,
+  which that list didn't have. Its medium and low-confidence breaks are no
+  better than random. Caveat: the LLM picked its breaks knowing the same
+  history the events come from, so this isn't a fully independent test.
+- **Agreement, the LLM's list as reference** (±6 months): ruptures at
+  penalty 2 has 49 TP, 10 FP and 84 FN: precision 83% (its breaks are
+  mostly in the LLM's list), recall 37% (it finds about a third of the
+  LLM's breaks), F1 0.51. At penalty 0.5 the F1 is 0.71. For the 35 pairs
+  where ruptures' break matches an event, the LLM's cause is dated within 3
+  months of that event in 20.
+- **Fewer mislabelled events:** with country events in the list, the
+  Czech break in November 2021 is no longer credited to the Ukraine
+  invasion (it came before it); it is now an FP, just over 4 months after
+  the CNB's first hike (June 2021).
 - **Data error found:** Finland's 17 November 2026 auction is published at a
   3,389% yield; values like that are now left out as typos (see Caveats).
 
@@ -970,7 +998,8 @@ cache/               downloaded auction pages and lookups for the EU, South Kore
 results/             copy of the latest run (auctions/ and market_yields/)
 docs/images/         example charts shown in this README
 model_testing/       analysis of results/: break detection (breaks.py), the
-                     LLM comparison (compare_llm.py) and known events (events.csv);
+                     LLM comparison (compare_llm.py), scoring (scoring.py) and known
+                     events (events_v2.csv, events.csv, with how they were made);
                      its own results/ and requirements.txt
 ```
 

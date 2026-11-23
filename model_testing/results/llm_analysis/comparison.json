@@ -1,48 +1,154 @@
 {
   "llm_breaks_total": 148,
   "llm_breaks_ruptures_could_not_see": 15,
+  "windows_months": {
+    "events.csv": 6,
+    "events_v2.csv": 3
+  },
   "vs_events": {
-    "ruptures": {
-      "breaks": 59,
-      "events_checked": 140,
-      "tp": 39,
-      "fp": 20,
-      "fn": 101,
-      "precision": 0.6610169491525424,
-      "recall": 0.2785714285714286,
-      "f1": 0.3919597989949749,
-      "baseline_precision": 0.316135593220339,
-      "baseline_recall": 0.13322857142857142,
-      "baseline_f1": 0.1874572864321608,
-      "p_value": 0.000999000999000999
+    "events.csv": {
+      "ruptures": {
+        "breaks": 59,
+        "events_checked": 136,
+        "tp": 37,
+        "fp": 22,
+        "fn": 99,
+        "precision": 0.6271186440677966,
+        "recall": 0.27205882352941174,
+        "f1": 0.37948717948717947,
+        "baseline_precision": 0.3063220338983051,
+        "baseline_recall": 0.13288970588235294,
+        "baseline_f1": 0.18536410256410255,
+        "p_value": 0.000999000999000999
+      },
+      "llm": {
+        "breaks": 133,
+        "events_checked": 136,
+        "tp": 60,
+        "fp": 73,
+        "fn": 76,
+        "precision": 0.45112781954887216,
+        "recall": 0.4411764705882353,
+        "f1": 0.44609665427509293,
+        "baseline_precision": 0.2936917293233083,
+        "baseline_recall": 0.2872132352941177,
+        "baseline_f1": 0.2904163568773234,
+        "p_value": 0.000999000999000999
+      },
+      "llm_high_confidence": {
+        "breaks": 56,
+        "events_checked": 136,
+        "tp": 40,
+        "fp": 16,
+        "fn": 96,
+        "precision": 0.7142857142857143,
+        "recall": 0.29411764705882354,
+        "f1": 0.4166666666666667,
+        "baseline_precision": 0.28782142857142856,
+        "baseline_recall": 0.11851470588235294,
+        "baseline_f1": 0.16789583333333336,
+        "p_value": 0.000999000999000999
+      },
+      "llm_medium_confidence": {
+        "breaks": 58,
+        "events_checked": 136,
+        "tp": 19,
+        "fp": 39,
+        "fn": 117,
+        "precision": 0.3275862068965517,
+        "recall": 0.13970588235294118,
+        "f1": 0.1958762886597938,
+        "baseline_precision": 0.3087758620689655,
+        "baseline_recall": 0.13168382352941177,
+        "baseline_f1": 0.18462886597938144,
+        "p_value": 0.42957042957042957
+      },
+      "llm_low_confidence": {
+        "breaks": 19,
+        "events_checked": 136,
+        "tp": 1,
+        "fp": 18,
+        "fn": 135,
+        "precision": 0.05263157894736842,
+        "recall": 0.007352941176470588,
+        "f1": 0.012903225806451613,
+        "baseline_precision": 0.3392631578947368,
+        "baseline_recall": 0.0473970588235294,
+        "baseline_f1": 0.0831741935483871,
+        "p_value": 1.0
+      }
     },
-    "llm": {
-      "breaks": 133,
-      "events_checked": 140,
-      "tp": 63,
-      "fp": 70,
-      "fn": 77,
-      "precision": 0.47368421052631576,
-      "recall": 0.45,
-      "f1": 0.46153846153846156,
-      "baseline_precision": 0.3023383458646617,
-      "baseline_recall": 0.2872214285714285,
-      "baseline_f1": 0.2945860805860806,
-      "p_value": 0.000999000999000999
-    },
-    "llm_high_confidence": {
-      "breaks": 56,
-      "events_checked": 140,
-      "tp": 40,
-      "fp": 16,
-      "fn": 100,
-      "precision": 0.7142857142857143,
-      "recall": 0.2857142857142857,
-      "f1": 0.40816326530612246,
-      "baseline_precision": 0.2908571428571428,
-      "baseline_recall": 0.11634285714285714,
-      "baseline_f1": 0.16620408163265307,
-      "p_value": 0.000999000999000999
+    "events_v2.csv": {
+      "ruptures": {
+        "breaks": 59,
+        "events_checked": 355,
+        "tp": 39,
+        "fp": 20,
+        "fn": 316,
+        "precision": 0.6610169491525424,
+        "recall": 0.10985915492957747,
+        "f1": 0.18840579710144928,
+        "baseline_precision": 0.4546779661016949,
+        "baseline_recall": 0.07556619718309858,
+        "baseline_f1": 0.12959420289855075,
+        "p_value": 0.002997002997002997
+      },
+      "llm": {
+        "breaks": 133,
+        "events_checked": 355,
+        "tp": 93,
+        "fp": 40,
+        "fn": 262,
+        "precision": 0.6992481203007519,
+        "recall": 0.2619718309859155,
+        "f1": 0.38114754098360654,
+        "baseline_precision": 0.4527593984962406,
+        "baseline_recall": 0.16962535211267604,
+        "baseline_f1": 0.24679098360655738,
+        "p_value": 0.000999000999000999
+      },
+      "llm_high_confidence": {
+        "breaks": 56,
+        "events_checked": 355,
+        "tp": 54,
+        "fp": 2,
+        "fn": 301,
+        "precision": 0.9642857142857143,
+        "recall": 0.15211267605633802,
+        "f1": 0.26277372262773724,
+        "baseline_precision": 0.46067857142857144,
+        "baseline_recall": 0.07267042253521126,
+        "baseline_f1": 0.12553771289537716,
+        "p_value": 0.000999000999000999
+      },
+      "llm_medium_confidence": {
+        "breaks": 58,
+        "events_checked": 355,
+        "tp": 29,
+        "fp": 29,
+        "fn": 326,
+        "precision": 0.5,
+        "recall": 0.08169014084507042,
+        "f1": 0.14043583535108958,
+        "baseline_precision": 0.4503620689655172,
+        "baseline_recall": 0.07358028169014084,
+        "baseline_f1": 0.12649394673123487,
+        "p_value": 0.25874125874125875
+      },
+      "llm_low_confidence": {
+        "breaks": 19,
+        "events_checked": 355,
+        "tp": 10,
+        "fp": 9,
+        "fn": 345,
+        "precision": 0.5263157894736842,
+        "recall": 0.028169014084507043,
+        "f1": 0.05347593582887701,
+        "baseline_precision": 0.4468421052631579,
+        "baseline_recall": 0.02391549295774648,
+        "baseline_f1": 0.04540106951871658,
+        "p_value": 0.3146853146853147
+      }
     }
   },
   "agreement_main": {
@@ -58,8 +164,9 @@
     "recall_llm_low": 0.21052631578947367
   },
   "cause_agreement": {
-    "pairs_with_event": 37,
-    "same_cause": 29
+    "events_file": "events_v2.csv",
+    "pairs_with_event": 35,
+    "same_cause": 20
   },
   "agreement_by_setting": [
     {

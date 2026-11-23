@@ -15,8 +15,9 @@ Run from the project root:
     python model_testing/breaks.py                                  # auction yields, 2-10Y
     python model_testing/breaks.py --measure bid_to_cover
     python model_testing/breaks.py --bucket Long --penalty 1
+    python model_testing/breaks.py --events events_v2.csv           # the 133-event list, ±3 months
 
-Outputs (results/<measure>_<bucket>_pen<penalty>/):
+Outputs (results/<measure>_<bucket>_pen<penalty>/, or results/events_v2/... for events_v2.csv):
     README.md           the results, readable on GitHub
     breaks.csv          every break: true positive (matched to an event) or false positive
     event_outcomes.csv  every country-event pair checked: true positive or false negative
@@ -29,6 +30,7 @@ results/README.md and settings_comparison.png compare every setting run so far.
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -57,11 +59,13 @@ COUNTRIES = {
     "korea": "South Korea", "spain": "Spain", "switzerland": "Switzerland",
     "eu": "European Union",
 }
-# "euro" in events.csv: euro-area members in the data, plus the EU itself.
-EURO = {
-    "Austria", "Belgium", "Finland", "France", "Germany", "Greece", "Ireland", "Italy",
-    "Lithuania", "Netherlands", "Slovakia", "Slovenia", "Spain", "European Union",
-}
+# "euro" in the events file: euro-area members in the data, plus the EU
+# itself, each from the day it joined (a "euro" event before then doesn't apply).
+EURO = {c: pd.Timestamp("1999-01-01") for c in [
+    "Austria", "Belgium", "Finland", "France", "Germany", "Ireland", "Italy",
+    "Netherlands", "Spain", "European Union"]}
+EURO |= {"Greece": pd.Timestamp("2001-01-01"), "Slovenia": pd.Timestamp("2007-01-01"),
+         "Slovakia": pd.Timestamp("2009-01-01"), "Lithuania": pd.Timestamp("2015-01-01")}
 
 # Yields mostly shift in level ("l2" = change in the average). Bid-to-cover
 # also changes in how jumpy it is, which "rbf" picks up.
@@ -111,8 +115,23 @@ def find_breaks(series: pd.Series, model: str, penalty: float, min_months: int) 
     return [series.index[i] for i in bkps[:-1]]  # the last one is just the series end
 
 
-def in_scope(scope: str, country: str) -> bool:
-    return scope == "all" or (scope == "euro" and country in EURO) or scope == country
+def in_scope(scope: str, country: str, date: pd.Timestamp) -> bool:
+    """Does an event apply to this country? scope: all, euro, or countries separated by ';'."""
+    if scope == "all":
+        return True
+    if scope == "euro":
+        return country in EURO and date >= EURO[country]
+    return country in [s.strip() for s in scope.split(";")]
+
+
+# Matching window per events list. events_v2.csv has about one event per
+# country per year, so ±6 months would let almost any date match (random
+# breaks reach ~72% precision); its events are at least 3 months apart.
+WINDOWS = {"events.csv": 6, "events_v2.csv": 3}
+
+
+def relevant_events(events: pd.DataFrame, country: str) -> pd.DataFrame:
+    return events[[in_scope(r.countries, country, r.date) for r in events.itertuples()]]
 
 
 def main():
@@ -121,10 +140,20 @@ def main():
     parser.add_argument("--bucket", choices=["Short", "Intermediate", "Long"], default="Intermediate")
     parser.add_argument("--penalty", type=float, default=2.0, help="higher = fewer breaks")
     parser.add_argument("--min-months", type=int, default=6, help="shortest segment allowed")
+    parser.add_argument("--events", default="events.csv",
+                        help="events file in model_testing/; any other than events.csv "
+                             "writes to results/<its name>/")
+    parser.add_argument("--tolerance", type=int, default=None,
+                        help="months a break may be from its event (default: %s)" % WINDOWS)
     args = parser.parse_args()
+    if args.tolerance is None:
+        args.tolerance = WINDOWS.get(args.events, scoring.TOLERANCE_MONTHS)
 
-    events = pd.read_csv(HERE / "events.csv", parse_dates=["date"])
-    out = HERE / "results" / f"{args.measure}_{args.bucket.lower()}_pen{args.penalty:g}"
+    events = pd.read_csv(HERE / args.events, parse_dates=["date"])
+    base = HERE / "results"
+    if args.events != "events.csv":
+        base = base / Path(args.events).stem
+    out = base / f"{args.measure}_{args.bucket.lower()}_pen{args.penalty:g}"
     (out / "charts").mkdir(parents=True, exist_ok=True)
 
     stretches, found, relevant, codes = {}, {}, {}, {}
@@ -134,9 +163,10 @@ def main():
             continue
         stretches[country], codes[country] = parts, code
         found[country] = [b for s in parts for b in find_breaks(s, MODELS[args.measure], args.penalty, args.min_months)]
-        relevant[country] = events[[in_scope(s, country) for s in events["countries"]]]
+        relevant[country] = relevant_events(events, country)
 
-    stats, break_rows, event_rows = scoring.evaluate(found, stretches, relevant, args.min_months)
+    stats, break_rows, event_rows = scoring.evaluate(found, stretches, relevant, args.min_months,
+                                                     tolerance=pd.Timedelta(days=31 * args.tolerance))
     breaks_df, events_df = pd.DataFrame(break_rows), pd.DataFrame(event_rows)
     breaks_df.to_csv(out / "breaks.csv", index=False)
     events_df.to_csv(out / "event_outcomes.csv", index=False)
@@ -165,7 +195,8 @@ def main():
     stats = {
         "folder": out.name, "measure": args.measure, "bucket": args.bucket,
         "penalty": args.penalty, "min_months": args.min_months,
-        "tolerance": scoring.TOLERANCE_MONTHS, "simulations": scoring.SIMULATIONS,
+        "events_file": args.events, "events_link": Path(os.path.relpath(HERE / args.events, out)).as_posix(),
+        "tolerance": args.tolerance, "simulations": scoring.SIMULATIONS,
         "countries": int(breaks_df["country"].nunique()) if len(breaks_df) else 0,
         "months_analysed": sum(len(s) for parts in stretches.values() for s in parts),
         **stats,
@@ -186,7 +217,8 @@ def describe(stats: dict) -> str:
 TERMS = [
     "| Term | Meaning here |",
     "|---|---|",
-    "| True positive (TP) | a break matched to a known event within ±6 months |",
+    "| True positive (TP) | a break matched to a known event within the window "
+    "(±6 months for events.csv, ±3 for events_v2.csv) |",
     "| False positive (FP) | a break with no event left to match (a lead, or noise) |",
     "| False negative (FN) | a known event with no break matched to it (missed) |",
     "| Precision | TP / (TP + FP): share of breaks that match an event |",
@@ -221,7 +253,7 @@ def run_report(stats, per_event, per_country, breaks_df, events_df, analysed) ->
     lines = [
         f"# Breaks: {describe(stats)}",
         "",
-        f"Breaks are scored against [events.csv](../../events.csv), one break per event, "
+        f"Breaks are scored against [{stats['events_file']}]({stats['events_link']}), one break per event, "
         f"within ±{stats['tolerance']} months; shortest segment {stats['min_months']} months. "
         f"{stats['breaks']} breaks in {stats['countries']} countries; "
         f"{stats['events_checked']} country-event pairs checked.",
@@ -251,7 +283,7 @@ def run_report(stats, per_event, per_country, breaks_df, events_df, analysed) ->
         "",
         "## False positives (breaks with no event left to match)",
         "",
-        "Leads worth looking into: something changed, but it isn't in events.csv "
+        f"Leads worth looking into: something changed, but it isn't in {stats['events_file']} "
         "(or its event was already matched to another break).",
         "",
         *([f"- {r.country}: {r.break_month}" + (f" ({r.note})" if r.note else "")
@@ -291,13 +323,14 @@ def write_index(results: Path):
     runs = [json.loads(p.read_text(encoding="utf-8"))
             for p in sorted(results.glob("*/summary.json"))]
     runs = [r for r in runs if "precision" in r]  # skip any folder from an older version
+    events_file = runs[-1].get("events_file", "events.csv") if runs else "events.csv"
     lines = [
         "# Break detection results",
         "",
         "One folder per setting tested by `breaks.py`; open a folder's README for "
         "recall by event, scores by country, the false positives and negatives, "
-        "and the charts. Breaks are scored against `events.csv`, one break per "
-        "event within ±6 months.",
+        f"and the charts. Breaks are scored against `{events_file}`, one break per "
+        f"event within ±{runs[-1]['tolerance'] if runs else 6} months.",
         "",
         "| Run | TP | FP | FN | Precision | Recall | F1 | Random F1 | p-value |",
         "|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|",
@@ -314,6 +347,31 @@ def write_index(results: Path):
     settings_chart(runs, results / "settings_comparison.png")
 
 
+def place_labels(ax, labels: list, avoid: list = ()):
+    """
+    Direct labels next to points: each tries right-above, right-below,
+    left-above, left-below and takes the first spot that overlaps no label
+    already placed and no point (its own, the others', or any in avoid).
+    """
+    fig = ax.figure
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    points = [ax.transData.transform(xy) for xy in [xy for _, xy in labels] + list(avoid)]
+    placed = []
+    spots = [((7, 4), "left"), ((7, -13), "left"), ((-7, 4), "right"), ((-7, -13), "right")]
+    for text, xy in labels:
+        for k, (offset, ha) in enumerate(spots):
+            t = ax.annotate(text, xy, xytext=offset, textcoords="offset points", ha=ha,
+                            fontsize=8.5, color=scoring.INK_2)
+            box = t.get_window_extent(renderer).expanded(1.05, 1.15)
+            clash = any(box.overlaps(b) for b in placed) or any(box.contains(*p) for p in points)
+            inside = ax.get_window_extent(renderer).contains(box.x0, box.y0)
+            if (not clash and inside) or k == len(spots) - 1:
+                placed.append(box)
+                break
+            t.remove()
+
+
 def settings_chart(runs: list, path: Path):
     """Precision vs recall per setting, each next to its random baseline."""
     fig, ax = plt.subplots(figsize=(9, 6.5))
@@ -325,6 +383,7 @@ def settings_chart(runs: list, path: Path):
         keep = (p > 0) & (p <= 1)
         ax.plot(r[keep], p[keep], color=scoring.GRID, lw=1, zorder=1)
         ax.text(r[keep][-1], p[keep][-1], f" F1 = {f}", color=scoring.MUTED, fontsize=8, va="center")
+    labels = []
     for colour, run in zip(scoring.SERIES, runs):
         ax.plot([run["baseline_recall"], run["recall"]], [run["baseline_precision"], run["precision"]],
                 color=colour, lw=1, ls=":", zorder=2)
@@ -332,11 +391,11 @@ def settings_chart(runs: list, path: Path):
                    edgecolor=colour, lw=1.6, zorder=3)
         ax.scatter(run["recall"], run["precision"], s=80, color=colour, edgecolor="white", lw=1.5,
                    zorder=4, label=f"{describe(run)}: {scoring.counts(run)}, F1 {run['f1']:.2f}")
-        ax.annotate(f"pen {run['penalty']:g}" + ("" if run["measure"] == "auction_yield" and
-                                                  run["bucket"] == "Intermediate" else
-                                                  f", {run['bucket'] if run['measure'] == 'auction_yield' else 'bid-to-cover'}"),
-                    (run["recall"], run["precision"]), xytext=(7, 4), textcoords="offset points",
-                    fontsize=8.5, color=scoring.INK_2)
+        labels.append((f"pen {run['penalty']:g}" + ("" if run["measure"] == "auction_yield" and
+                                                     run["bucket"] == "Intermediate" else
+                                                     f", {run['bucket'] if run['measure'] == 'auction_yield' else 'bid-to-cover'}"),
+                       (run["recall"], run["precision"])))
+    place_labels(ax, labels, avoid=[(r["baseline_recall"], r["baseline_precision"]) for r in runs])
     ax.scatter([], [], s=60, facecolor="white", edgecolor=scoring.MUTED, lw=1.6,
                label="Hollow = random baseline for that setting (same number of breaks)")
     ax.set_xlim(0, 1); ax.set_ylim(0, 1)
@@ -383,7 +442,7 @@ def chart(stretches, breaks_df, events_df, country, args, path):
                  f"breaks found by ruptures (penalty {args.penalty:g})", loc="left",
                  color=scoring.INK, fontsize=11, pad=22)
     ax.text(0, 1.015, f"TP {tp} · FP {fp} · FN {fn}    precision {precision:.0%} · "
-            f"recall {recall:.0%} · F1 {f1:.2f}    (match = within ±{scoring.TOLERANCE_MONTHS} months)",
+            f"recall {recall:.0%} · F1 {f1:.2f}    (match = within ±{args.tolerance} months of an event in {args.events})",
             transform=ax.transAxes, fontsize=9, color=scoring.INK_2, va="bottom")
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3, frameon=False, fontsize=8.5,
               labelcolor=scoring.INK_2)
