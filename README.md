@@ -12,6 +12,12 @@ For the **last 12 months** nothing is averaged: every single auction is shown
 as a dot, next to the **daily market yield** for the same maturity wherever the
 country publishes one, so moves between auctions show up too.
 
+**Data as of 22 November 2026.** The refresh of 23 November was skipped:
+France's source, Agence France Trésor, returned errors (HTTP 503) all
+morning, and a run without France would also drop it from the global
+charts. The analysis was rerun on the 22 November data; the next refresh
+will bring every country up to date.
+
 ![10-year government bond yields: daily market vs every auction, last 12 months](results/auctions/global/global_10year_recent_yield_12m.png)
 
 ## Market yields, all countries
